@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" dir="{% if request.locale.iso_code == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{{ shop.name | escape }} — {{ 'gift_card.title' | t }}</title>
+  <style>:root{--bg:#f7f5f0;--surface:#fff;--ink:#272a25;--olive:#636e4e;--line:#e3e0d7;--max:1280px}</style>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body>
+  <main class="site-width section-space gift-card-page">
+    <p class="eyebrow">{{ shop.name | escape }}</p>
+    <h1>{{ 'gift_card.title' | t }}</h1>
+    <p>{{ 'gift_card.balance' | t }}: <strong>{{ gift_card.balance | money_with_currency }}</strong></p>
+    <p>{{ 'gift_card.initial_value' | t }}: {{ gift_card.initial_value | money_with_currency }}</p>
+    <div class="gift-card-page__code">
+      <label for="GiftCardCode">{{ 'gift_card.code' | t }}</label>
+      <input id="GiftCardCode" type="text" readonly value="{{ gift_card.code | escape }}" aria-label="{{ 'gift_card.code' | t }}">
+    </div>
+    {% if gift_card.expired or gift_card.enabled == false %}
+      <p role="status">{{ 'gift_card.inactive' | t }}</p>
+    {% elsif gift_card.expires_on != blank %}
+      <p>{{ 'gift_card.expires' | t }}: {{ gift_card.expires_on | date: format: 'date' }}</p>
+    {% endif %}
+    <p><a class="button button--primary" href="{{ shop.url }}">{{ 'gift_card.shop' | t }}</a></p>
+  </main>
+</body>
+</html>
