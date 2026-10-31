@@ -1,0 +1,43 @@
+{% liquid
+  assign media_image = block.settings.image
+  if media_image == blank and block.settings.product != blank and block.settings.product.available
+    assign media_image = block.settings.product.featured_image
+  endif
+  if media_image == blank and block.settings.collection != blank
+    for candidate in block.settings.collection.products limit: 20
+      if candidate.available and candidate.featured_image != blank
+        assign media_image = candidate.featured_image
+        break
+      endif
+    endfor
+  endif
+  assign media_href = block.settings.link
+  if media_href == blank and block.settings.collection != blank
+    assign media_href = block.settings.collection.url
+  endif
+%}
+{% if media_image != blank %}
+  <div class="atelier-block atelier-media atelier-media--{{ block.settings.ratio }}" {{ block.shopify_attributes }}>
+    {% if media_href != blank %}<a href="{{ media_href }}" class="atelier-media__link" aria-label="{% if block.settings.alt_label != blank %}{{ block.settings.alt_label | escape }}{% else %}{{ 'general.view_all' | t }}{% endif %}">{% endif %}
+      {{ media_image | image_url: width: 1600 | image_tag: widths: '360,540,750,990,1200,1600', sizes: '(max-width: 749px) 100vw, 50vw', loading: 'lazy', class: 'atelier-media__image' }}
+    {% if media_href != blank %}</a>{% endif %}
+  </div>
+{% elsif request.design_mode %}
+  <div class="atelier-block atelier-media atelier-media--{{ block.settings.ratio }} atelier-media--empty" {{ block.shopify_attributes }}><p>Choose a real product, collection or image.</p></div>
+{% endif %}
+{% schema %}
+{
+  "name": "Atelier media",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Real image override" },
+    { "type": "product", "id": "product", "label": "Featured product photo" },
+    { "type": "collection", "id": "collection", "label": "Product collection fallback" },
+    { "type": "url", "id": "link", "label": "Optional link override" },
+    { "type": "text", "id": "alt_label", "label": "Link description" },
+    { "type": "select", "id": "ratio", "label": "Image ratio", "default": "portrait", "options": [
+      { "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "landscape", "label": "Landscape" }
+    ] }
+  ],
+  "presets": [ { "name": "Atelier media" } ]
+}
+{% endschema %}

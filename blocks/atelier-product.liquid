@@ -1,0 +1,16 @@
+{% if block.settings.product != blank %}
+  <div class="atelier-block atelier-product" {{ block.shopify_attributes }}>
+    {% render 'product-card', card_product: block.settings.product %}
+  </div>
+{% elsif request.design_mode %}
+  <div class="atelier-block atelier-product atelier-product--empty" {{ block.shopify_attributes }}>Select a real product in the editor.</div>
+{% endif %}
+{% schema %}
+{
+  "name": "Atelier product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Shopify product" }
+  ],
+  "presets": [ { "name": "Atelier product" } ]
+}
+{% endschema %}

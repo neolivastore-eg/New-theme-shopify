@@ -1,0 +1,17 @@
+{% if block.settings.body != blank %}
+  <div class="atelier-block atelier-copy atelier-align--{{ block.settings.alignment }} rte" {{ block.shopify_attributes }}>
+    {{ block.settings.body }}
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Atelier copy",
+  "settings": [
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Thoughtful products for your daily routine.</p>" },
+    { "type": "select", "id": "alignment", "label": "Align text", "default": "start", "options": [
+      { "value": "start", "label": "Start" }, { "value": "center", "label": "Center" }
+    ] }
+  ],
+  "presets": [ { "name": "Atelier copy" } ]
+}
+{% endschema %}
