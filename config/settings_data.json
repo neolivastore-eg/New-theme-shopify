@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#F7F5F0",
@@ -6,6 +15,7 @@
     "color_accent": "#636E4E",
     "color_border": "#E3E0D7",
     "page_width": 1280,
-    "show_brand_name": true
+    "show_brand_name": true,
+    "logo": "shopify://shop_images/d7d39038-c498-4af5-b3cb-ef08b61e167f_removalai_preview.png"
   }
 }
