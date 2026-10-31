@@ -1,0 +1,61 @@
+<section class="site-width section-space campaign-section" id="CampaignSection-{{ section.id }}">
+  {% if section.settings.eyebrow != blank or section.settings.heading != blank %}
+    <div class="section-heading campaign-section__heading">
+      <div>
+        {% if section.settings.eyebrow != blank %}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
+      </div>
+      {% if section.settings.view_all_label != blank and section.settings.view_all_link != blank %}
+        <a class="campaign-section__all" href="{{ section.settings.view_all_link }}">{{ section.settings.view_all_label | escape }}</a>
+      {% endif %}
+    </div>
+  {% endif %}
+  {% if section.blocks.size > 0 %}
+    <div class="campaign-cards campaign-cards--{{ section.settings.columns }}">
+      {% for block in section.blocks %}
+        <article class="campaign-card{% if block.settings.image != blank %} campaign-card--media{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 1400 | image_tag: class: 'campaign-card__image', widths: '400,600,800,1000,1200,1400', sizes: '(max-width: 749px) 100vw, (max-width: 1100px) 50vw, 34vw', loading: 'lazy' }}
+          {% endif %}
+          <div class="campaign-card__content">
+            {% if block.settings.eyebrow != blank %}<p class="eyebrow">{{ block.settings.eyebrow | escape }}</p>{% endif %}
+            {% if block.settings.heading != blank %}<h3>{{ block.settings.heading | escape }}</h3>{% endif %}
+            {% if block.settings.text != blank %}<div class="campaign-card__text rte">{{ block.settings.text }}</div>{% endif %}
+            {% if block.settings.link != blank and block.settings.button_label != blank %}
+              <a class="campaign-card__link" href="{{ block.settings.link }}">{{ block.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Campaign cards",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "DISCOVER" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your next ritual" },
+    { "type": "select", "id": "columns", "label": "Desktop columns", "options": [
+      { "value": "2", "label": "Two" },
+      { "value": "3", "label": "Three" }
+    ], "default": "2" },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View all" },
+    { "type": "url", "id": "view_all_link", "label": "View all link" }
+  ],
+  "blocks": [
+    { "type": "campaign", "name": "Campaign card", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Real campaign image" },
+      { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE EDIT" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Explore the edit" },
+      { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Discover a collection for your routine.</p>" },
+      { "type": "text", "id": "button_label", "label": "Link text", "default": "Explore" },
+      { "type": "url", "id": "link", "label": "Destination" }
+    ] }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    { "name": "Campaign cards", "blocks": [ { "type": "campaign" }, { "type": "campaign" } ] }
+  ]
+}
+{% endschema %}
