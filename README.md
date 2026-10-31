@@ -44,3 +44,10 @@ See `PROJECT_PLAN.md`.
 - Header contains a native Shopify localization form only when multiple languages are available to the visitor.
 - Neoliva Arabic locale exists but is **unpublished** at the store level as of 2026-10-31; do not publish Arabic or change live store settings without merchant review of translations.
 - The theme's translated locale dictionaries do not translate all product records or campaign content automatically.
+
+## Reusable editorial system (v0.5)
+- `sections/atelier-composition.liquid` supports actual reusable nested `/blocks` and `@app` insertion, with split/grid/centered layouts.
+- Six design primitives live in `/blocks` and can be assembled in Shopify Theme Editor. No React dependency is loaded for this static editorial content.
+- The new homepage story is sourced from a live Shopify skincare collection and has no synthetic product imagery or hard-coded prices.
+- Full roadmap, visual acceptance rules, preview gates and Wonder-reference tracking: [docs/SECTION_SYSTEM.md](docs/SECTION_SYSTEM.md).
+
