@@ -22,12 +22,14 @@ jobs:
           node --check assets/theme.js
           node --check assets/predictive-search.js
           node --check assets/cart-drawer.js
+          node --check assets/logo-dock.js
           node scripts/commerce-audit.mjs
           node scripts/homepage-audit.mjs
           node scripts/atelier-blocks-audit.mjs
           node scripts/foundation-audit.mjs
           node scripts/foundation-pages-audit.mjs
           node scripts/home01-logo-banner-audit.mjs
+          node scripts/logo-dock-audit.mjs
       - name: Theme Check
         uses: shopify/theme-check-action@v2
         with:
