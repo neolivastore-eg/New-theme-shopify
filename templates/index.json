@@ -16,7 +16,8 @@
         "eyebrow": "THE EDIT",
         "collection": "skin-care-1",
         "button_label": "Shop skincare"
-      }
+      },
+      "disabled": true
     },
     "campaigns": {
       "type": "campaign-grid",
@@ -197,9 +198,30 @@
         "content",
         "media"
       ]
+    },
+    "logo_banner": {
+      "type": "logo-banner",
+      "settings": {
+        "overline": "THE NEOLIVA EDIT",
+        "tagline": "WHERE BEAUTY BEGINS",
+        "footer_label": "DISCOVER NEOLIVA",
+        "accessible_label": "Neoliva beauty introduction",
+        "background": "#EDE6D9",
+        "foreground": "#252C26",
+        "accent": "#68795F",
+        "panel_background": "#FFFFFF",
+        "panel_foreground": "#272A25",
+        "image_overlay": "#17251E",
+        "overlay_opacity": 10,
+        "panel_position": "center",
+        "desktop_height": 720,
+        "mobile_height": 680,
+        "motion": true
+      }
     }
   },
   "order": [
+    "logo_banner",
     "hero",
     "campaigns",
     "collections",
