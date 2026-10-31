@@ -38,6 +38,7 @@
       floating.classList.add('nl-logo-dock-image');
       floating.removeAttribute('sizes');
       floating.removeAttribute('srcset');
+      floating.src = source.currentSrc || source.src;
       floating.setAttribute('alt', '');
       floating.setAttribute('aria-hidden', 'true');
       // Natural logo aspect ratio is preserved. Do not inherit the target's
