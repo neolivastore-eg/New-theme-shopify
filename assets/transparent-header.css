@@ -1,0 +1,77 @@
+/* HOME-01: liquid-transparent header over the logo banner; graceful solid no-JS fallback.
+   In modern browsers :has applies the overlay at first paint. JS adds an equivalent
+   host class for layout measurements and browsers without :has. */
+html.js body.template-index:has([data-logo-banner]) .nl-header-section:has(> .site-header--home-overlay),
+html.js .nl-home-overlay-host{
+  position:sticky;
+  top:0;
+  z-index:48;
+  margin-bottom:calc(-1 * var(--nl-overlay-header-height,75px));
+}
+html.js body.template-index:has([data-logo-banner]) .site-header--home-overlay,
+html.js .nl-home-overlay-host > .site-header--home-overlay{
+  --nl-header-surface-opacity:0;
+  position:relative;
+  isolation:isolate;
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+  color:var(--ink);
+}
+html.js body.template-index:has([data-logo-banner]) .site-header--home-overlay::before,
+html.js .nl-home-overlay-host > .site-header--home-overlay::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:var(--nl-header-surface-opacity,0);
+  background:rgba(247,245,240,.96);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+}
+html.js .site-header--home-overlay .site-header__inner{
+  position:relative;
+  z-index:1;
+}
+html.js .site-header--home-overlay.nl-header--scrolled{
+  border-bottom-color:rgba(39,42,37,.08);
+}
+html.js .site-header--home-overlay .site-header__brand,
+html.js .site-header--home-overlay .desktop-navigation,
+html.js .site-header--home-overlay .site-header__actions,
+html.js .site-header--home-overlay .mobile-navigation{
+  color:var(--ink);
+}
+html.js .site-header--home-overlay .mobile-navigation__panel,
+html.js .site-header--home-overlay .desktop-navigation__submenu,
+html.js .site-header--home-overlay .header-search__panel{
+  color:var(--ink);
+  background:var(--surface);
+}
+/* Menus and search must remain readable even before the scroll transition. */
+html.js .site-header--home-overlay:has(details[open])::before{
+  opacity:1;
+}
+html.js .site-header--home-overlay .icon-button:focus-visible,
+html.js .site-header--home-overlay .site-header__brand:focus-visible{
+  outline:2px solid var(--olive);
+  outline-offset:3px;
+}
+/* Existing cart drawer is rendered inside the header and must always retain
+   its own fixed opaque surface and pointer interactions. */
+@media(max-width:720px){
+  html.js body.template-index:has([data-logo-banner]) .nl-header-section:has(> .site-header--home-overlay),
+  html.js .nl-home-overlay-host{
+    --nl-overlay-header-height:64px;
+  }
+  html.js .site-header--home-overlay .site-header__inner{
+    gap:.35rem;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html.js .site-header--home-overlay,
+  html.js .site-header--home-overlay::before{
+    transition:none!important;
+  }
+}
