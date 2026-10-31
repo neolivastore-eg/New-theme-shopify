@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="{{ settings.color_background }}">
   <link rel="canonical" href="{{ canonical_url }}">
-  <title>{% if page_title != blank %}{{ page_title | escape }} · {% endif %}{{ shop.name | escape }}</title>
-  {% if page_description != blank %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {% if template.name == 'index' %}
+    <title>{% if page_title != blank and page_title != shop.name %}{{ page_title | escape }} | {{ shop.name | escape }}{% else %}{{ 'seo.home_title' | t | escape }}{% endif %}</title>
+    <meta name="description" content="{% if page_description != blank %}{{ page_description | escape }}{% else %}{{ 'seo.home_description' | t | escape }}{% endif %}">
+  {% else %}
+    <title>{% if page_title != blank and page_title != shop.name %}{{ page_title | escape }} · {% endif %}{{ shop.name | escape }}</title>
+    {% if page_description != blank %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {% endif %}
   <style>:root{--bg:{{ settings.color_background }};--surface:{{ settings.color_surface }};--ink:{{ settings.color_text }};--olive:{{ settings.color_accent }};--line:{{ settings.color_border }};--max:{{ settings.page_width }}px}</style>
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'merchandising.css' | asset_url | stylesheet_tag }}

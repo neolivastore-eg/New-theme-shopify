@@ -23,6 +23,16 @@
           <button class="button button--primary" type="submit">{{ 'general.search' | t }}</button>
         </form>
       </div></details>
+      {% if localization.available_languages.size > 1 %}
+        {% form 'localization', id: 'NeolivaLanguageSelector', class: 'language-selector' %}
+          <label for="NeolivaLocale-{{ section.id }}" class="visually-hidden">{{ 'general.language' | t }}</label>
+          <select id="NeolivaLocale-{{ section.id }}" name="locale_code" aria-label="{{ 'general.language' | t }}" data-submit-on-change>
+            {% for language in localization.available_languages %}
+              <option value="{{ language.iso_code | escape }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | escape }}</option>
+            {% endfor %}
+          </select>
+        {% endform %}
+      {% endif %}
       <a class="icon-button" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">Bag ({{ cart.item_count }})</a>
     </div>
   </div>
