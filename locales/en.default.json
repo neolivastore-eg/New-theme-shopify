@@ -16,7 +16,8 @@
     "search": "Search",
     "search_placeholder": "Search products",
     "view_all": "View all",
-    "no_results": "No matching products"
+    "no_results": "No matching products",
+    "language": "Language"
   },
   "products": {
     "add_to_cart": "Add to cart",
@@ -53,5 +54,9 @@
     "search_count": "{{ count }} results",
     "apply": "Apply filters",
     "clear": "Clear filters"
+  },
+  "seo": {
+    "home_title": "Neoliva | Skincare, Haircare & Makeup in Egypt",
+    "home_description": "Explore skincare, haircare, makeup and personal care essentials at Neoliva Egypt. Browse beauty categories and shop online."
   }
 }
