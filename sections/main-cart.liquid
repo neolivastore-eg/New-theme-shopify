@@ -1,18 +1,52 @@
-<section class="site-width section-space">
+<section class="site-width section-space" id="CartMain-{{ section.id }}">
   <h1>{{ 'cart.title' | t }}</h1>
   {% if cart.item_count > 0 %}
-    <form action="{{ routes.cart_url }}" method="post">
-      {% for line_item in cart.items %}
-      <div class="cart-item">
-        {% if line_item.image != blank %}{{ line_item.image | image_url: width: 200 | image_tag: loading: 'lazy' }}{% endif %}
-        <div><a href="{{ line_item.url }}">{{ line_item.product.title | escape }}</a><p>{{ line_item.final_line_price | money }}</p></div>
-        <input type="number" name="updates[]" min="0" value="{{ line_item.quantity }}" aria-label="{{ 'products.quantity' | t }}">
+    <form action="{{ routes.cart_url }}" method="post" id="CartForm-{{ section.id }}">
+      <div class="cart-items">
+        {% for line_item in cart.items %}
+          <div class="cart-item">
+            <a href="{{ line_item.url }}" aria-label="{{ line_item.product.title | escape }}">
+              {% if line_item.image != blank %}
+                {{ line_item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: line_item.image.alt }}
+              {% endif %}
+            </a>
+            <div class="cart-item__details">
+              <a href="{{ line_item.url }}" class="cart-item__title">{{ line_item.product.title | escape }}</a>
+              {% unless line_item.product.has_only_default_variant %}
+                <p class="cart-item__variant">{{ line_item.variant.title | escape }}</p>
+              {% endunless %}
+              {% for property in line_item.properties %}
+                {% assign first_character = property.first | slice: 0 %}
+                {% if property.last != blank and first_character != '_' %}
+                  <p class="cart-item__property">{{ property.first | escape }}: {{ property.last | escape }}</p>
+                {% endif %}
+              {% endfor %}
+              <p class="cart-item__price">{{ line_item.final_line_price | money }}</p>
+              <a class="cart-item__remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" aria-label="{{ 'cart.remove_item' | t: title: line_item.product.title | escape }}">{{ 'cart.remove' | t }}</a>
+            </div>
+            <div class="cart-item__quantity">
+              <label for="CartQuantity-{{ forloop.index }}">{{ 'cart.quantity_for' | t: title: line_item.product.title | escape }}</label>
+              <input id="CartQuantity-{{ forloop.index }}" type="number" name="updates[]" min="0" step="1" value="{{ line_item.quantity }}" inputmode="numeric">
+            </div>
+          </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-      <p><strong>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</strong></p>
-      <button class="button" type="submit" name="update">{{ 'cart.update' | t }}</button>
-      <button class="button button--primary" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+      <div class="cart-summary">
+        <p><strong>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</strong></p>
+        <p class="cart-summary__note">{{ 'cart.checkout_note' | t }}</p>
+        <div class="cart-summary__actions">
+          <button class="button" type="submit" name="update">{{ 'cart.update' | t }}</button>
+          <button class="button button--primary" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        </div>
+      </div>
     </form>
-  {% else %}<div class="empty-state"><p>{{ 'cart.empty' | t }}</p><a class="button" href="{{ routes.all_products_collection_url }}">{{ 'general.view_all' | t }}</a></div>{% endif %}
+  {% else %}
+    <div class="empty-state">
+      <p>{{ 'cart.empty' | t }}</p>
+      <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'general.view_all' | t }}</a>
+    </div>
+  {% endif %}
 </section>
-{% schema %}{"name":"Main cart","settings":[]}{% endschema %}
+{% schema %}
+{"name":"Main cart","settings":[]}
+{% endschema %}
