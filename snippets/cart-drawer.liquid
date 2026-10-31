@@ -1,0 +1,17 @@
+<div class="cart-drawer" id="NeolivaCartDrawer" data-cart-drawer data-currency="{{ cart.currency.iso_code | default: shop.currency | escape }}" data-cart-route="{{ routes.cart_url }}" data-empty="{{ 'cart.empty' | t | escape }}" data-error="{{ 'cart.error' | t | escape }}" data-remove="{{ 'cart.remove' | t | escape }}" data-quantity="{{ 'products.quantity' | t | escape }}" hidden>
+  <div class="cart-drawer__overlay" data-cart-drawer-close aria-hidden="true"></div>
+  <section class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerHeading" tabindex="-1">
+    <div class="cart-drawer__header">
+      <h2 id="CartDrawerHeading">{{ 'cart.title' | t }}</h2>
+      <button type="button" class="icon-button" data-cart-drawer-close aria-label="{{ 'general.close' | t }}">×</button>
+    </div>
+    <p class="cart-drawer__message" data-cart-message role="status" aria-live="polite"></p>
+    <div class="cart-drawer__items" data-cart-drawer-items></div>
+    <div class="cart-drawer__footer">
+      <p><span>{{ 'cart.subtotal' | t }}</span> <strong data-cart-subtotal></strong></p>
+      <p class="cart-summary__note">{{ 'cart.checkout_note' | t }}</p>
+      <a class="button" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+      <a class="button button--primary" href="{{ routes.cart_url }}?checkout">{{ 'cart.checkout' | t }}</a>
+    </div>
+  </section>
+</div>

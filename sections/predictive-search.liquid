@@ -1,0 +1,26 @@
+{% if predictive_search.performed %}
+  <div class="predictive-search__body" data-predictive-result-body>
+    {% if predictive_search.resources.products.size > 0 %}
+      <p class="predictive-search__heading">{{ 'general.search_suggestions' | t }}</p>
+      <ul class="predictive-search__list">
+        {% for item in predictive_search.resources.products %}
+          <li>
+            <a class="predictive-search__item" href="{{ item.url }}">
+              {% if item.featured_image != blank %}{{ item.featured_image | image_url: width: 100 | image_tag: loading: 'lazy', widths: '60,100', sizes: '56px', alt: item.title }}{% endif %}
+              <span class="predictive-search__details">
+                {% if item.vendor != blank %}<small>{{ item.vendor | escape }}</small>{% endif %}
+                <strong>{{ item.title | escape }}</strong>
+                {% if item.available %}<span>{{ item.price | money }}</span>{% else %}<span>{{ 'products.sold_out' | t }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="predictive-search__empty">{{ 'general.no_results' | t }}</p>
+    {% endif %}
+  </div>
+{% endif %}
+{% schema %}
+{"name":"Predictive results","settings":[]}
+{% endschema %}
