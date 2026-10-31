@@ -4,7 +4,8 @@
     "theme_name": "Neoliva Atelier",
     "theme_version": "0.1.0",
     "theme_author": "Neoliva",
-    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes"
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes",
+    "theme_support_email": "support@example.com"
   },
   {
     "name": "Brand & layout",
