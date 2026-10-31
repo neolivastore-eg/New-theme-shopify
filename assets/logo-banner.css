@@ -47,3 +47,19 @@
 @media(prefers-reduced-motion:reduce){
  .nl-logo-banner,.nl-logo-banner *{animation:none!important;transition:none!important}
 }
+
+/* HOME-01 scroll journey: one visual white card morphing into the real header logo. */
+.nl-logo-dock-sticky-host{position:sticky;top:0;z-index:48}
+.nl-logo-banner--dock-enabled .nl-logo-banner__brand-frame{animation:none!important}
+.nl-logo-banner__brand-frame.nl-logo-dock-floating{
+ position:fixed;top:0;left:0;z-index:52;margin:0;min-height:0;max-height:none;
+ transform-origin:top left;pointer-events:none;will-change:transform,opacity;
+ animation:none!important;transition:none!important;
+}
+.nl-logo-dock-floating .nl-logo-banner__brand-name{margin:0}
+body.cart-drawer-open .nl-logo-dock-floating{visibility:hidden!important}
+body:has([data-header-search][open]) .nl-logo-dock-floating,
+body:has([data-mobile-navigation][open]) .nl-logo-dock-floating{visibility:hidden!important}
+@media(prefers-reduced-motion:reduce){
+ .nl-logo-dock-floating{display:none!important}
+}
