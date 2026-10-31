@@ -26,3 +26,14 @@ Each feature needs correct source data, merchant settings, mobile/RTL support, e
 - [ ] Replace editorial placeholders with merchant-selected real photography and link targets.
 - [ ] Run mobile/RTL/accessibility checks and compare with published theme.
 No live-theme deployment or checkout validation is authorized by this source milestone.
+
+## 2026-10-31 — v0.5 reusable Atelier System
+- [x] Architecture: 6 reusable Theme Blocks in `/blocks` (heading, copy, action, media, stack, product).
+- [x] One original nested Section Engine: `atelier-composition` with split/grid/centered layouts and @theme/@app slot.
+- [x] Real Shopify collection imagery fallback, no fake testimonials/urgency or placeholder stock art.
+- [x] Low-cost CSS native motion with reduced-motion fallback and no heavy React/Three dependencies on commerce routes.
+- [x] Homepage demonstration using a nested copy stack plus product photo from existing skin-care collection.
+- [x] Automated tests of nested block references / Shopify schemas / source config. 
+- [ ] Test actual Shopify Theme Editor compatibility, visual screenshots (desktop/mobile), keyboard/RTL.
+- [ ] Reconcile Wonder 98 screenshot index against exact reference files before claiming all 80 are covered.
+- [ ] Follow with predictive search, mobile drawer, and beauty-native PDP.
