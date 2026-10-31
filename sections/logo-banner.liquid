@@ -14,7 +14,7 @@
 %}
 <section
   id="LogoBanner-{{ section.id }}"
-  class="nl-logo-banner nl-logo-banner--{{ section.settings.panel_position }}{% if backdrop != blank %} nl-logo-banner--photographic{% else %} nl-logo-banner--abstract{% endif %}{% if section.settings.motion %} nl-logo-banner--motion{% endif %}{% if section.settings.dock_on_scroll %} nl-logo-banner--dock-enabled{% endif %}"
+  class="nl-logo-banner nl-logo-banner--{{ section.settings.panel_position }}{% if backdrop != blank %} nl-logo-banner--photographic{% else %} nl-logo-banner--abstract{% endif %}{% if section.settings.motion %} nl-logo-banner--motion{% endif %}{% if section.settings.dock_on_scroll %} nl-logo-banner--dock-enabled{% endif %}{% unless section.settings.show_logo_plate %} nl-logo-banner--image-only{% endunless %}"
   style="--nl-banner-base:{{ section.settings.background }};--nl-banner-ink:{{ section.settings.foreground }};--nl-banner-panel:{{ section.settings.panel_background }};--nl-banner-panel-ink:{{ section.settings.panel_foreground }};--nl-banner-accent:{{ section.settings.accent }};--nl-banner-overlay:{{ section.settings.image_overlay }};--nl-banner-overlay-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};--nl-banner-height:{{ section.settings.desktop_height }}px;--nl-banner-mobile-height:{{ section.settings.mobile_height }}px;"
   data-logo-banner
   data-logo-dock="{{ section.settings.dock_on_scroll }}"
@@ -87,6 +87,12 @@
       "type": "image_picker",
       "id": "logo_image",
       "label": "Banner logo override"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo_plate",
+      "label": "Place logo on a background card",
+      "default": false
     },
     {
       "type": "text",
