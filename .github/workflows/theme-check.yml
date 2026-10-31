@@ -22,3 +22,14 @@ jobs:
         with:
           theme_root: '.'
           flags: '--fail-level error'
+      - name: Build Shopify-ready ZIP
+        if: github.ref == 'refs/heads/main'
+        run: zip -q -r neoliva-atelier-shopify.zip assets config layout locales sections snippets templates
+      - name: Save Shopify upload package
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: neoliva-atelier-shopify-upload
+          path: neoliva-atelier-shopify.zip
+          if-no-files-found: error
+          retention-days: 7
