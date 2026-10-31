@@ -1,0 +1,9 @@
+<footer class="site-footer">
+  <div class="site-width site-footer__grid">
+    <div><h2>{{ shop.name | escape }}</h2><div class="rte">{{ section.settings.description }}</div></div>
+    <nav aria-label="Footer">{% for link in section.settings.menu.links %}<p><a href="{{ link.url }}">{{ link.title | escape }}</a></p>{% endfor %}</nav>
+  </div>
+</footer>
+{% schema %}
+{"name":"Footer","settings":[{"type":"richtext","id":"description","label":"Description","default":"<p>Curated care for your everyday rituals.</p>"},{"type":"link_list","id":"menu","label":"Footer navigation","default":"footer"}]}
+{% endschema %}

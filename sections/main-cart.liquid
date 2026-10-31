@@ -1,0 +1,18 @@
+<section class="site-width section-space">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post">
+      {% for line_item in cart.items %}
+      <div class="cart-item">
+        {% if line_item.image != blank %}{{ line_item.image | image_url: width: 200 | image_tag: loading: 'lazy' }}{% endif %}
+        <div><a href="{{ line_item.url }}">{{ line_item.product.title | escape }}</a><p>{{ line_item.final_line_price | money }}</p></div>
+        <input type="number" name="updates[]" min="0" value="{{ line_item.quantity }}" aria-label="{{ 'products.quantity' | t }}">
+      </div>
+      {% endfor %}
+      <p><strong>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</strong></p>
+      <button class="button" type="submit" name="update">{{ 'cart.update' | t }}</button>
+      <button class="button button--primary" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+    </form>
+  {% else %}<div class="empty-state"><p>{{ 'cart.empty' | t }}</p><a class="button" href="{{ routes.all_products_collection_url }}">{{ 'general.view_all' | t }}</a></div>{% endif %}
+</section>
+{% schema %}{"name":"Main cart","settings":[]}{% endschema %}

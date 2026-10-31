@@ -1,0 +1,14 @@
+<section class="hero{% if section.settings.media_position == 'start' %} hero--reverse{% endif %}" style="--hero-bg:{{ section.settings.background }}">
+  <div class="site-width hero__inner">
+    <div class="hero__copy">
+      {% if section.settings.eyebrow != blank %}<span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>{% endif %}
+      <h1 class="hero__heading">{{ section.settings.heading | escape }}</h1>
+      <div class="hero__text rte">{{ section.settings.text }}</div>
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}<a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>{% endif %}
+    </div>
+    <div class="hero__media">{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1700 | image_tag: widths: '360,540,750,990,1200,1500,1700', sizes: '(max-width:720px) 100vw, 50vw', loading: 'eager' }}{% else %}<div class="hero__placeholder">ATELIER</div>{% endif %}</div>
+  </div>
+</section>
+{% schema %}
+{"name":"Editorial hero","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"THE EDIT"},{"type":"text","id":"heading","label":"Heading","default":"Beauty with intention."},{"type":"richtext","id":"text","label":"Description","default":"<p>Discover skincare, haircare, and everyday essentials.</p>"},{"type":"image_picker","id":"image","label":"Hero image"},{"type":"text","id":"button_label","label":"Button label","default":"Explore"},{"type":"url","id":"button_link","label":"Button link"},{"type":"color","id":"background","label":"Background","default":"#EFECE4"},{"type":"select","id":"media_position","label":"Image position","options":[{"value":"end","label":"End"},{"value":"start","label":"Start"}],"default":"end"}],"presets":[{"name":"Editorial hero"}]}
+{% endschema %}

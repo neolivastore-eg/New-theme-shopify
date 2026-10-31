@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Beauty with intention.",
+        "eyebrow": "THE EDIT"
+      }
+    },
+    "collections": {
+      "type": "collection-links",
+      "settings": {
+        "heading": "Find your ritual"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Curated for you"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "collections",
+    "featured"
+  ]
+}

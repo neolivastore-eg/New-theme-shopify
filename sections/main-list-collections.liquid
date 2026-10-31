@@ -1,0 +1,2 @@
+<section class="site-width section-space"><h1>Collections</h1><div class="collection-grid">{% for coll in collections %}<a class="collection-tile" href="{{ coll.url }}">{% if coll.image %}{{ coll.image | image_url: width: 700 | image_tag: loading: 'lazy' }}{% endif %}<h3>{{ coll.title | escape }}</h3></a>{% endfor %}</div></section>
+{% schema %}{"name":"All collections","settings":[]}{% endschema %}

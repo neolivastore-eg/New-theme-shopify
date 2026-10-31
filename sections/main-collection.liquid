@@ -1,0 +1,14 @@
+<section class="site-width section-space"><header><h1>{{ collection.title | escape }}</h1><div class="rte">{{ collection.description }}</div></header>
+  <form class="collection-toolbar" method="get">
+    <span>{{ collection.products_count }}</span>
+    <label>{{ 'collections.sort' | t }} <select name="sort_by" onchange="this.form.submit()">
+      {% assign sort_value = collection.sort_by | default: collection.default_sort_by %}
+      {% for option in collection.sort_options %}<option value="{{ option.value }}" {% if option.value == sort_value %}selected{% endif %}>{{ option.name | escape }}</option>{% endfor %}
+    </select></label>
+  </form>
+  {% paginate collection.products by 24 %}
+  <div class="product-grid">{% for item in collection.products %}{% render 'product-card', card_product: item %}{% else %}<p>{{ 'collections.empty' | t }}</p>{% endfor %}</div>
+  {% render 'pagination', paginate: paginate %}
+  {% endpaginate %}
+</section>
+{% schema %}{"name":"Main collection","settings":[]}{% endschema %}

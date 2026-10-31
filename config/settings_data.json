@@ -1,0 +1,11 @@
+{
+  "current": {
+    "color_background": "#F7F5F0",
+    "color_surface": "#FFFFFF",
+    "color_text": "#272A25",
+    "color_accent": "#636E4E",
+    "color_border": "#E3E0D7",
+    "page_width": 1280,
+    "show_brand_name": true
+  }
+}

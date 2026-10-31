@@ -1,0 +1,65 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Neoliva Atelier",
+    "theme_version": "0.1.0",
+    "theme_author": "Neoliva",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes"
+  },
+  {
+    "name": "Brand & layout",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Store logo"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_brand_name",
+        "label": "Show store name if no logo",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#F7F5F0"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#272A25"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#636E4E"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders",
+        "default": "#E3E0D7"
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1280
+      }
+    ]
+  }
+]

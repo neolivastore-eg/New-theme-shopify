@@ -1,0 +1,6 @@
+<section class="site-width section-space"><div class="rte" style="max-width: 760px; margin-inline: auto; text-align: center;">
+  <h2>{{ section.settings.heading | escape }}</h2>{{ section.settings.body }}</div>
+</section>
+{% schema %}
+{"name":"Rich text","settings":[{"type":"text","id":"heading","label":"Heading","default":"A better everyday ritual"},{"type":"richtext","id":"body","label":"Body","default":"<p>Explore products selected for your routine.</p>"}],"presets":[{"name":"Rich text"}]}
+{% endschema %}

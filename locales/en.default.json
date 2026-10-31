@@ -1,0 +1,34 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+  "general": {
+    "navigation": "Menu",
+    "search": "Search",
+    "search_placeholder": "Search products",
+    "view_all": "View all",
+    "no_results": "No matching products"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "quantity": "Quantity",
+    "variant": "Choose option",
+    "no_image": "No image"
+  },
+  "cart": {
+    "title": "Your bag",
+    "empty": "Your bag is empty",
+    "subtotal": "Subtotal",
+    "update": "Update bag",
+    "checkout": "Checkout"
+  },
+  "collections": {
+    "empty": "No products found",
+    "sort": "Sort by"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

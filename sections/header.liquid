@@ -1,0 +1,31 @@
+<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}">
+  <div class="site-width site-header__inner">
+    <details class="mobile-navigation"><summary class="icon-button" aria-label="{{ 'general.navigation' | t }}">☰</summary>
+      <nav class="mobile-navigation__panel" aria-label="{{ 'general.navigation' | t }}">
+        {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endfor %}
+      </nav>
+    </details>
+    <a href="{{ routes.root_url }}" class="site-header__brand">
+      {% if settings.logo != blank %}{{ settings.logo | image_url: width: 350 | image_tag: class: 'site-header__logo', loading: 'eager' }}{% elsif settings.show_brand_name %}{{ shop.name | escape }}{% endif %}
+    </a>
+    <nav class="desktop-navigation" aria-label="{{ 'general.navigation' | t }}">
+      {% for link in section.settings.menu.links %}
+        {% if link.links.size > 0 %}<details><summary>{{ link.title | escape }}</summary><div class="desktop-navigation__submenu">{% for child in link.links %}<a href="{{ child.url }}">{{ child.title | escape }}</a>{% endfor %}</div></details>
+        {% else %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endif %}
+      {% endfor %}
+    </nav>
+    <div class="site-header__actions">
+      <details class="header-search"><summary class="icon-button" aria-label="{{ 'general.search' | t }}">⌕</summary><div class="header-search__panel">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+          <input type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" aria-label="{{ 'general.search' | t }}" required>
+          <input type="hidden" name="type" value="product">
+          <button class="button button--primary" type="submit">{{ 'general.search' | t }}</button>
+        </form>
+      </div></details>
+      <a class="icon-button" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">Bag ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</header>
+{% schema %}
+{"name":"Header","settings":[{"type":"link_list","id":"menu","label":"Main navigation","default":"main-menu"},{"type":"checkbox","id":"sticky","label":"Sticky header","default":true}]}
+{% endschema %}
