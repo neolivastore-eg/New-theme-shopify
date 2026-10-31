@@ -37,3 +37,14 @@ No live-theme deployment or checkout validation is authorized by this source mil
 - [ ] Test actual Shopify Theme Editor compatibility, visual screenshots (desktop/mobile), keyboard/RTL.
 - [ ] Reconcile Wonder 98 screenshot index against exact reference files before claiming all 80 are covered.
 - [ ] Follow with predictive search, mobile drawer, and beauty-native PDP.
+
+## 2026-10-31 — Foundation v0.6
+- [x] Native deep responsive navigation and accessible search/form fallback.
+- [x] Predictive search, cancellation, keyboard behavior, Shopify section rendering endpoint.
+- [x] Cart drawer Ajax fetch/add/change, safe DOM rendering, focus handling and native checkout.
+- [x] Translation keys for both locales, Theme Check CI and static contract guards.
+- [x] Theme ZIP corrected to include /blocks (v0.5 ZIP excluded it).
+- [ ] Verify Shopify Preview interactively: three-level menu, predictive response, cart mutations/checkout, mobile/RTL.
+- [ ] Complete wider Theme Store baseline: account links, blog/article, password, gift card, PDP app blocks, variant no-JS, selling plans and pickup.
+- [ ] Measure Lighthouse/performance, accessibility and merchant QA.
+- [ ] Do not make decorative sections until merchant-supplied image reference arrives.
