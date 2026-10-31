@@ -32,8 +32,8 @@ assert.match(js,/window.addEventListener\('scroll', schedule, \{ passive: true \
 assert.match(js,/document.addEventListener\('shopify:section:load', init\)/);
 assert.match(js,/prefers-reduced-motion: reduce/);
 assert.match(dock,/data-logo-dock-target/);
-assert.match(dock,/usesFixedHeader/);
-assert.match(dock,/!usesFixedHeader/);
+assert.ok(!dock.includes("stickyHost.classList.add"),'Fixed header must not receive bounded Shopify sticky class');
+assert.match(dock,/site-header--sticky/);
 assert.match(banner,/data-logo-dock-source/);
 
 // Deterministic DOM/event-loop harness: validates progressive opacity, reverse,
