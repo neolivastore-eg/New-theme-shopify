@@ -1,0 +1,10 @@
+<section class="site-width section-space" id="CustomLiquid-{{ section.id }}">
+  {% if section.settings.custom_liquid != blank %}
+    <div class="custom-liquid-content">{{ section.settings.custom_liquid }}</div>
+  {% elsif request.design_mode %}
+    <p class="editorial-placeholder">{{ 'editorial.add_custom_liquid' | t }}</p>
+  {% endif %}
+</section>
+{% schema %}
+{"name":"Custom Liquid","settings":[{"type":"liquid","id":"custom_liquid","label":"Liquid code"}],"presets":[{"name":"Custom Liquid"}]}
+{% endschema %}
