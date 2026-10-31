@@ -1,0 +1,110 @@
+{% liquid
+  assign backdrop = section.settings.desktop_image
+  if backdrop == blank
+    assign backdrop = section.settings.mobile_image
+  endif
+  assign brand_logo = section.settings.logo_image
+  if brand_logo == blank
+    assign brand_logo = settings.logo
+  endif
+  assign banner_link = section.settings.button_link
+  if banner_link == blank and section.settings.collection != blank
+    assign banner_link = section.settings.collection.url
+  endif
+%}
+<section
+  id="LogoBanner-{{ section.id }}"
+  class="nl-logo-banner nl-logo-banner--{{ section.settings.panel_position }}{% if backdrop != blank %} nl-logo-banner--photographic{% else %} nl-logo-banner--abstract{% endif %}{% if section.settings.motion %} nl-logo-banner--motion{% endif %}"
+  style="--nl-banner-base:{{ section.settings.background }};--nl-banner-ink:{{ section.settings.foreground }};--nl-banner-panel:{{ section.settings.panel_background }};--nl-banner-panel-ink:{{ section.settings.panel_foreground }};--nl-banner-accent:{{ section.settings.accent }};--nl-banner-overlay:{{ section.settings.image_overlay }};--nl-banner-overlay-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};--nl-banner-height:{{ section.settings.desktop_height }}px;--nl-banner-mobile-height:{{ section.settings.mobile_height }}px;"
+  aria-label="{{ section.settings.accessible_label | default: shop.name | escape }}"
+>
+  {% if backdrop != blank %}
+    <div class="nl-logo-banner__picture" aria-hidden="true">
+      <picture>
+        {% if section.settings.mobile_image != blank %}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ section.settings.mobile_image | image_url: width: 400 }} 400w, {{ section.settings.mobile_image | image_url: width: 600 }} 600w, {{ section.settings.mobile_image | image_url: width: 800 }} 800w, {{ section.settings.mobile_image | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+            width="{{ section.settings.mobile_image.width }}"
+            height="{{ section.settings.mobile_image.height }}"
+          >
+        {% endif %}
+        {{ backdrop | image_url: width: 2400 | image_tag: class: 'nl-logo-banner__background-image', widths: '600,900,1200,1600,2000,2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: '' }}
+      </picture>
+    </div>
+    <div class="nl-logo-banner__overlay" aria-hidden="true"></div>
+  {% else %}
+    <div class="nl-logo-banner__canvas" aria-hidden="true">
+      <span class="nl-logo-banner__orb nl-logo-banner__orb--one"></span>
+      <span class="nl-logo-banner__orb nl-logo-banner__orb--two"></span>
+      <span class="nl-logo-banner__arc"></span>
+      <span class="nl-logo-banner__baseline"></span>
+    </div>
+  {% endif %}
+
+  <div class="nl-logo-banner__content">
+    <div class="nl-logo-banner__center">
+      {% if section.settings.overline != blank %}
+        <p class="nl-logo-banner__overline">{{ section.settings.overline | escape }}</p>
+      {% endif %}
+      <div class="nl-logo-banner__brand-frame">
+        <h1 class="nl-logo-banner__brand-name">
+          {% if brand_logo != blank %}
+            {{ brand_logo | image_url: width: 1200 | image_tag: class: 'nl-logo-banner__brand-image', widths: '240,400,600,900,1200', sizes: '(max-width:749px) 65vw, 480px', loading: 'eager', alt: shop.name }}
+          {% else %}
+            <span>{{ shop.name | escape }}</span>
+          {% endif %}
+        </h1>
+      </div>
+      {% if section.settings.tagline != blank %}
+        <p class="nl-logo-banner__tagline">{{ section.settings.tagline | escape }}</p>
+      {% endif %}
+      {% if section.settings.button_label != blank and banner_link != blank %}
+        <a class="nl-logo-banner__action" href="{{ banner_link }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>
+      {% endif %}
+    </div>
+    {% if section.settings.footer_label != blank %}
+      <p class="nl-logo-banner__footer-label">{{ section.settings.footer_label | escape }}</p>
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Atelier logo banner",
+  "tag": "section",
+  "class": "nl-logo-banner-section",
+  "settings": [
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo_image", "label": "Banner logo override" },
+    { "type": "text", "id": "accessible_label", "label": "Accessible banner label", "default": "Brand introduction" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE NEOLIVA EDIT" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "WHERE BEAUTY BEGINS" },
+    { "type": "text", "id": "footer_label", "label": "Bottom caption", "default": "DISCOVER NEOLIVA" },
+    { "type": "header", "content": "Art direction" },
+    { "type": "image_picker", "id": "desktop_image", "label": "Real desktop campaign photo" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Real mobile campaign photo" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#EDE6D9" },
+    { "type": "color", "id": "foreground", "label": "Caption text", "default": "#252C26" },
+    { "type": "color", "id": "accent", "label": "Abstract accent", "default": "#68795F" },
+    { "type": "color", "id": "image_overlay", "label": "Image overlay", "default": "#17251E" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 10 },
+    { "type": "color", "id": "panel_background", "label": "Logo panel", "default": "#FFFFFF" },
+    { "type": "color", "id": "panel_foreground", "label": "Logo panel text", "default": "#272A25" },
+    { "type": "select", "id": "panel_position", "label": "Panel position", "default": "center", "options": [
+      { "value": "center", "label": "Center" },
+      { "value": "lower", "label": "Lower" }
+    ] },
+    { "type": "range", "id": "desktop_height", "label": "Desktop height", "min": 520, "max": 920, "step": 40, "unit": "px", "default": 720 },
+    { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 520, "max": 880, "step": 40, "unit": "px", "default": 680 },
+    { "type": "checkbox", "id": "motion", "label": "Gentle entrance motion", "default": true },
+    { "type": "header", "content": "Optional navigation" },
+    { "type": "collection", "id": "collection", "label": "Linked collection" },
+    { "type": "url", "id": "button_link", "label": "Link override" },
+    { "type": "text", "id": "button_label", "label": "Button label" }
+  ],
+  "presets": [
+    { "name": "Atelier logo banner" }
+  ]
+}
+{% endschema %}
