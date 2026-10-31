@@ -18,13 +18,16 @@
   {{ 'atelier-system.css' | asset_url | stylesheet_tag }}
   {{ 'foundation.css' | asset_url | stylesheet_tag }}
   {{ 'logo-banner.css' | asset_url | stylesheet_tag }}
+  {{ 'transparent-header.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
+  <script>document.documentElement.classList.add('js');</script>
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+  <script src="{{ 'transparent-header.js' | asset_url }}" defer></script>
   <script src="{{ 'logo-dock.js' | asset_url }}" defer></script>
 </head>
-<body>
+<body{% if template.name == 'index' %} class="template-index"{% endif %}>
   <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
   {% sections 'header-group' %}
   <main id="MainContent" tabindex="-1">{{ content_for_layout }}</main>
