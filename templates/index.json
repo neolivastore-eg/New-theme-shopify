@@ -4,49 +4,94 @@
       "type": "hero",
       "settings": {
         "heading": "Beauty with intention.",
-        "eyebrow": "THE EDIT"
+        "eyebrow": "THE EDIT",
+        "collection": "skin-care-1",
+        "button_label": "Shop skincare"
       }
     },
     "campaigns": {
       "type": "campaign-grid",
       "settings": {
-        "heading": "Find your everyday essentials",
-        "eyebrow": "EXPLORE",
-        "columns": "2"
+        "heading": "Explore beauty by routine",
+        "eyebrow": "DISCOVER",
+        "columns": "3"
       },
       "blocks": {
         "skincare": {
           "type": "campaign",
           "settings": {
-            "eyebrow": "SKINCARE",
-            "heading": "Your skincare edit",
-            "text": "<p>Discover products for your everyday routine.</p>"
+            "collection": "skin-care-1",
+            "eyebrow": "SKIN CARE",
+            "heading": "Skin Care",
+            "text": "<p>Explore skincare essentials.</p>",
+            "button_label": "Shop skincare"
           }
         },
         "haircare": {
           "type": "campaign",
           "settings": {
-            "eyebrow": "HAIRCARE",
-            "heading": "Your haircare edit",
-            "text": "<p>Find your next haircare essential.</p>"
+            "collection": "hair-care-1",
+            "eyebrow": "HAIR CARE",
+            "heading": "Hair Care",
+            "text": "<p>Explore haircare essentials.</p>",
+            "button_label": "Shop haircare"
+          }
+        },
+        "makeup": {
+          "type": "campaign",
+          "settings": {
+            "collection": "makeup",
+            "eyebrow": "MAKEUP",
+            "heading": "Makeup",
+            "text": "<p>Explore makeup products.</p>",
+            "button_label": "Shop makeup"
           }
         }
       },
       "block_order": [
         "skincare",
-        "haircare"
+        "haircare",
+        "makeup"
       ]
     },
     "collections": {
       "type": "collection-links",
       "settings": {
-        "heading": "Find your ritual"
-      }
+        "heading": "Shop by category"
+      },
+      "blocks": {
+        "skincare": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "skin-care-1"
+          }
+        },
+        "haircare": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "hair-care-1"
+          }
+        },
+        "makeup": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "makeup"
+          }
+        }
+      },
+      "block_order": [
+        "skincare",
+        "haircare",
+        "makeup"
+      ]
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Curated for you"
+        "heading": "Skincare essentials",
+        "eyebrow": "THE EDIT",
+        "collection": "skin-care-1",
+        "product_limit": 8
       }
     },
     "benefits": {
@@ -59,21 +104,21 @@
           "type": "benefit",
           "settings": {
             "heading": "Delivery",
-            "text": "Check available shipping options."
+            "text": "Cairo & Giza: 1–2 business days. Other governorates: 2–3 business days."
           }
         },
         "payments": {
           "type": "benefit",
           "settings": {
             "heading": "Payments",
-            "text": "Payment choices appear at checkout."
+            "text": "Cash on delivery is available."
           }
         },
         "questions": {
           "type": "benefit",
           "settings": {
             "heading": "Questions?",
-            "text": "Contact us for product information."
+            "text": "Contact us for product information and orders."
           }
         }
       },

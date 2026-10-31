@@ -16,7 +16,8 @@
     "variant": "اختر النوع",
     "no_image": "لا توجد صورة",
     "unavailable": "غير متاح",
-    "enable_js_options": "يرجى تفعيل JavaScript لتغيير اختيار المنتج."
+    "enable_js_options": "يرجى تفعيل JavaScript لتغيير اختيار المنتج.",
+    "from_price": "يبدأ من"
   },
   "cart": {
     "title": "سلة التسوق",
