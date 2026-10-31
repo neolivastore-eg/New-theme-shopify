@@ -49,8 +49,7 @@ assert.match(css,/background:transparent/);
 assert.match(css,/box-shadow:none/);
 assert.match(css,/min-height:0/);
 assert.match(css,/padding:0/);
-assert.match(read('assets/logo-dock.js'),/floating\.style\.backgroundColor = computed\.backgroundColor/,
- 'The floating scroll-copy must inherit the image-only transparent background');
+assert.match(read('assets/logo-banner.css'),/\.nl-logo-dock-image\{/,'Floating image must have transparent paint and no box');
 
 const dockScript=read('assets/logo-dock.js');
 assert.match(dockScript,/floating\.classList\.add\('nl-logo-dock-image'\)/,'Logo-only animation must clone IMG itself');
