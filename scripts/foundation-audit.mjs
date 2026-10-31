@@ -31,5 +31,5 @@ for(const locale of ['en.default','ar']){
  assert.ok(dict.general.close && dict.general.search_suggestions);
  assert.ok(dict.cart.view_cart && dict.cart.error);
 }
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.4');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.5');
 console.log('Foundation JS and commerce template contracts passed');

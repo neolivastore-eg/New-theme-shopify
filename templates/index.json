@@ -210,7 +210,8 @@
         "motion": true,
         "dock_on_scroll": true,
         "dock_start": 10,
-        "dock_end": 80
+        "dock_end": 80,
+        "show_logo_plate": false
       }
     }
   },
