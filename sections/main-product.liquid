@@ -1,5 +1,6 @@
 {% liquid
   assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'ProductForm-' | append: section.id
   assign can_purchase = false
   if current_variant != blank and current_variant.available
     assign can_purchase = true
@@ -30,14 +31,14 @@
           <s class="product-info__compare">{{ current_variant.compare_at_price | money }}</s>
         {% endif %}
         {% if current_variant.unit_price_measurement %}
-          <span class="product-info__unit">{{ current_variant.unit_price | unit_price_with_measurement: current_variant.unit_price_measurement }}</span>
+          <span class="product-info__unit">{{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}</span>
         {% endif %}
       {% else %}
         <span class="product-info__price">{{ 'products.unavailable' | t }}</span>
       {% endif %}
     </div>
 
-    {% form 'product', product, class: 'product-form', id: 'ProductForm-' | append: section.id %}
+    {% form 'product', product, class: 'product-form', id: product_form_id %}
       {% unless product.has_only_default_variant %}
         <div class="product-options" role="group" aria-label="{{ 'products.variant' | t }}">
           {% for option in product.options_with_values %}
