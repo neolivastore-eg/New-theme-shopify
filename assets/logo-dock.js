@@ -47,7 +47,7 @@
       floating.alt = '';
     } else {
       floating.classList.add('nl-logo-dock-card');
-      const style = getComputedStyle(frame);
+      const style = window.getComputedStyle(frame);
       floating.style.backgroundColor = style.backgroundColor;
       floating.style.color = style.color;
       floating.style.boxShadow = style.boxShadow;
@@ -129,10 +129,10 @@
     }
 
     function schedule() {
-      if (active && !frameId) frameId = requestAnimationFrame(render);
+      if (active && !frameId) frameId = window.requestAnimationFrame(render);
     }
     function cancelPlay() {
-      if (playerId) cancelAnimationFrame(playerId);
+      if (playerId) window.cancelAnimationFrame(playerId);
       playerId = 0;
     }
     function onScroll() {
@@ -168,10 +168,10 @@
           forcedProgress=clamp((now-begunAt)/1600);
           scrub.value=String(Math.round(forcedProgress*100));
           render();
-          if (forcedProgress<1) playerId=requestAnimationFrame(tick);
+          if (forcedProgress<1) playerId=window.requestAnimationFrame(tick);
           else playerId=0;
         };
-        playerId=requestAnimationFrame(tick);
+        playerId=window.requestAnimationFrame(tick);
       });
     }
 
@@ -187,7 +187,7 @@
     cleanup=()=>{
       active=false;
       cancelPlay();
-      if (frameId) cancelAnimationFrame(frameId);
+      if (frameId) window.cancelAnimationFrame(frameId);
       window.removeEventListener('scroll',onScroll);
       window.removeEventListener('resize',schedule);
       window.removeEventListener('orientationchange',schedule);
@@ -211,7 +211,7 @@
   document.addEventListener('shopify:section:load',init);
   document.addEventListener('shopify:section:unload',()=>{
     cleanup(); cleanup=()=>{};
-    requestAnimationFrame(init);
+    window.requestAnimationFrame(init);
   });
   if (reduced.addEventListener) reduced.addEventListener('change',init);
   else reduced.addListener(init);
