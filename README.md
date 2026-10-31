@@ -38,3 +38,9 @@ After successful checking, upload **only to an unpublished theme** with Shopify 
 - Do not test purchase fulfillment or payments on the real store.
 
 See `PROJECT_PLAN.md`.
+
+## Home SEO and language readiness (v0.4.1)
+- A localized homepage title/description prevents duplicate "Neoliva · Neoliva" and missing home description. Merchant-authored homepage SEO metadata still takes precedence when available.
+- Header contains a native Shopify localization form only when multiple languages are available to the visitor.
+- Neoliva Arabic locale exists but is **unpublished** at the store level as of 2026-10-31; do not publish Arabic or change live store settings without merchant review of translations.
+- The theme's translated locale dictionaries do not translate all product records or campaign content automatically.
