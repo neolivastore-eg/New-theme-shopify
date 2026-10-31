@@ -26,7 +26,12 @@
 
     const floating = source.cloneNode(true);
     floating.classList.add('nl-logo-dock-floating');
-    floating.classList.remove('nl-logo-banner__brand-frame');
+    // Retain the native card styles: this is the SAME visual identity plate, not a generic box.
+    const computed = window.getComputedStyle(source);
+    floating.style.backgroundColor = computed.backgroundColor;
+    floating.style.color = computed.color;
+    floating.style.boxShadow = computed.boxShadow;
+    floating.style.padding = computed.padding;
     floating.setAttribute('aria-hidden', 'true');
     floating.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
     floating.querySelectorAll('[tabindex]').forEach(node => node.removeAttribute('tabindex'));
