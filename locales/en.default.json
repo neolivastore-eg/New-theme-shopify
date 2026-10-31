@@ -14,14 +14,20 @@
     "sold_out": "Sold out",
     "quantity": "Quantity",
     "variant": "Choose option",
-    "no_image": "No image"
+    "no_image": "No image",
+    "unavailable": "Unavailable",
+    "enable_js_options": "Enable JavaScript to change the selected option."
   },
   "cart": {
     "title": "Your bag",
     "empty": "Your bag is empty",
     "subtotal": "Subtotal",
     "update": "Update bag",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "remove_item": "Remove {{ title }}",
+    "quantity_for": "Quantity for {{ title }}",
+    "checkout_note": "Shipping and discounts are calculated at checkout."
   },
   "collections": {
     "empty": "No products found",

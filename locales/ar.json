@@ -14,14 +14,20 @@
     "sold_out": "غير متوفر",
     "quantity": "الكمية",
     "variant": "اختر النوع",
-    "no_image": "لا توجد صورة"
+    "no_image": "لا توجد صورة",
+    "unavailable": "غير متاح",
+    "enable_js_options": "يرجى تفعيل JavaScript لتغيير اختيار المنتج."
   },
   "cart": {
     "title": "سلة التسوق",
     "empty": "السلة فارغة",
     "subtotal": "الإجمالي",
     "update": "تحديث السلة",
-    "checkout": "إتمام الشراء"
+    "checkout": "إتمام الشراء",
+    "remove": "إزالة",
+    "remove_item": "إزالة {{ title }}",
+    "quantity_for": "الكمية الخاصة بـ {{ title }}",
+    "checkout_note": "يتم حساب الشحن والخصومات عند إتمام الطلب."
   },
   "collections": {
     "empty": "لا توجد منتجات",
