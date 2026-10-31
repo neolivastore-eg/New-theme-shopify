@@ -1,0 +1,27 @@
+{% liquid
+  assign action_href = block.settings.link
+  if action_href == blank and block.settings.collection != blank
+    assign action_href = block.settings.collection.url
+  endif
+%}
+{% if block.settings.label != blank and action_href != blank %}
+  <div class="atelier-block atelier-action" {{ block.shopify_attributes }}>
+    <a class="button{% if block.settings.style == 'primary' %} button--primary{% endif %} atelier-action__link" href="{{ action_href }}">{{ block.settings.label | escape }}<span aria-hidden="true">↗</span></a>
+  </div>
+{% elsif request.design_mode %}
+  <div class="atelier-block atelier-action" {{ block.shopify_attributes }}><span class="atelier-action__hint">Choose a collection or link to show this button.</span></div>
+{% endif %}
+{% schema %}
+{
+  "name": "Atelier action",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Button label", "default": "Explore" },
+    { "type": "collection", "id": "collection", "label": "Shopify collection" },
+    { "type": "url", "id": "link", "label": "Optional link override" },
+    { "type": "select", "id": "style", "label": "Style", "default": "primary", "options": [
+      { "value": "primary", "label": "Filled" }, { "value": "outline", "label": "Outline" }
+    ] }
+  ],
+  "presets": [ { "name": "Atelier action" } ]
+}
+{% endschema %}

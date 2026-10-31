@@ -22,6 +22,7 @@ jobs:
           node --check assets/theme.js
           node scripts/commerce-audit.mjs
           node scripts/homepage-audit.mjs
+          node scripts/atelier-blocks-audit.mjs
       - name: Theme Check
         uses: shopify/theme-check-action@v2
         with:

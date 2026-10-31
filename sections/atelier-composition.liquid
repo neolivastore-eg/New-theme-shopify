@@ -1,0 +1,31 @@
+<section class="atelier-composition atelier-composition--{{ section.settings.layout }} atelier-composition--{{ section.settings.surface }} section-space{% if section.settings.reveal %} atelier-reveal{% endif %}" id="AtelierComposition-{{ section.id }}" style="--atelier-accent: {{ section.settings.accent }};">
+  <div class="site-width atelier-composition__canvas">
+    {% content_for 'blocks' %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Atelier composition",
+  "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "split", "options": [
+      { "value": "split", "label": "Editorial split" },
+      { "value": "grid", "label": "Editorial grid" },
+      { "value": "centered", "label": "Centered" }
+    ] },
+    { "type": "select", "id": "surface", "label": "Surface", "default": "cream", "options": [
+      { "value": "cream", "label": "Warm cream" },
+      { "value": "white", "label": "White" },
+      { "value": "dark", "label": "Dark" }
+    ] },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#636E4E" },
+    { "type": "checkbox", "id": "reveal", "label": "Subtle motion (accessible)", "default": true }
+  ],
+  "blocks": [ { "type": "@theme" }, { "type": "@app" } ],
+  "presets": [
+    { "name": "Editorial composition", "blocks": [
+      { "type": "atelier-heading", "settings": { "eyebrow": "THE EDIT", "heading": "Beauty, considered." } },
+      { "type": "atelier-copy", "settings": { "body": "<p>Discover a routine that feels like yours.</p>" } }
+    ] }
+  ]
+}
+{% endschema %}

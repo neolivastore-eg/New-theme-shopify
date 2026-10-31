@@ -1,0 +1,18 @@
+<div class="atelier-block atelier-stack atelier-stack--{{ block.settings.layout }} atelier-stack--align-{{ block.settings.alignment }}" {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+</div>
+{% schema %}
+{
+  "name": "Atelier stack",
+  "blocks": [ { "type": "@theme" }, { "type": "@app" } ],
+  "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "vertical", "options": [
+      { "value": "vertical", "label": "Vertical" }, { "value": "horizontal", "label": "Horizontal" }
+    ] },
+    { "type": "select", "id": "alignment", "label": "Alignment", "default": "start", "options": [
+      { "value": "start", "label": "Start" }, { "value": "center", "label": "Center" }
+    ] }
+  ],
+  "presets": [ { "name": "Atelier stack" } ]
+}
+{% endschema %}
