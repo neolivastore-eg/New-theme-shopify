@@ -14,7 +14,9 @@
     "sold_out": "غير متوفر",
     "quantity": "الكمية",
     "variant": "اختر النوع",
-    "no_image": "لا توجد صورة"
+    "no_image": "لا توجد صورة",
+    "unavailable": "غير متاح",
+    "enable_js_options": "يرجى تفعيل JavaScript لتغيير اختيار المنتج."
   },
   "cart": {
     "title": "سلة التسوق",
