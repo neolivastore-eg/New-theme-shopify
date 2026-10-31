@@ -10,7 +10,8 @@
     "no_results": "No matching products",
     "language": "Language",
     "search_suggestions": "Suggested products",
-    "close": "Close"
+    "close": "Close",
+    "account": "Account"
   },
   "products": {
     "add_to_cart": "Add to cart",
@@ -33,7 +34,8 @@
     "quantity_for": "Quantity for {{ title }}",
     "checkout_note": "Shipping and discounts are calculated at checkout.",
     "view_cart": "View bag",
-    "error": "Couldn't update the bag. Please retry or use the full cart page."
+    "error": "Couldn't update the bag. Please retry or use the full cart page.",
+    "total": "Total"
   },
   "collections": {
     "empty": "No products found",
@@ -53,5 +55,32 @@
   "seo": {
     "home_title": "Neoliva | Skincare, Haircare & Makeup in Egypt",
     "home_description": "Explore skincare, haircare, makeup and personal care essentials at Neoliva Egypt. Browse beauty categories and shop online."
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Your message has been sent."
+  },
+  "editorial": {
+    "read_more": "Read more",
+    "no_articles": "No articles published yet.",
+    "back_to_blog": "Back to articles",
+    "add_custom_liquid": "Enter Liquid content in the editor."
+  },
+  "password": {
+    "label": "Store password",
+    "enter": "Enter store"
+  },
+  "gift_card": {
+    "title": "Gift card",
+    "balance": "Remaining balance",
+    "initial_value": "Original value",
+    "code": "Gift card code",
+    "inactive": "This gift card is inactive or expired.",
+    "expires": "Expires on",
+    "shop": "Shop now"
   }
 }

@@ -1,0 +1,28 @@
+<section class="site-width section-space editorial-list" id="BlogMain-{{ section.id }}">
+  <header class="page-intro"><h1>{{ blog.title | escape }}</h1>
+    {% if blog.description != blank %}<div class="rte">{{ blog.description }}</div>{% endif %}
+  </header>
+  {% paginate blog.articles by section.settings.articles_per_page %}
+    {% if blog.articles.size > 0 %}
+      <div class="editorial-list__grid">
+        {% for article in blog.articles %}
+          <article class="editorial-list__card">
+            <a href="{{ article.url }}">
+              {% if article.image != blank %}{{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '350,600,900', sizes: '(max-width:749px) 100vw, 33vw' }}{% endif %}
+              <h2>{{ article.title | escape }}</h2>
+            </a>
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'date' }}</time>
+            {% if article.excerpt != blank %}<div class="rte">{{ article.excerpt }}</div>{% elsif article.content != blank %}<p>{{ article.content | strip_html | truncate: 160 }}</p>{% endif %}
+            <a class="text-link" href="{{ article.url }}">{{ 'editorial.read_more' | t }}</a>
+          </article>
+        {% endfor %}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {% else %}
+      <p>{{ 'editorial.no_articles' | t }}</p>
+    {% endif %}
+  {% endpaginate %}
+</section>
+{% schema %}
+{"name":"Main blog","settings":[{"type":"range","id":"articles_per_page","label":"Articles per page","min":3,"max":24,"step":3,"default":9}]}
+{% endschema %}

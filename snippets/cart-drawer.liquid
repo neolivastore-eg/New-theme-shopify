@@ -8,7 +8,7 @@
     <p class="cart-drawer__message" data-cart-message role="status" aria-live="polite"></p>
     <div class="cart-drawer__items" data-cart-drawer-items></div>
     <div class="cart-drawer__footer">
-      <p><span>{{ 'cart.subtotal' | t }}</span> <strong data-cart-subtotal></strong></p>
+      <p><span>{{ 'cart.total' | t }}</span> <strong data-cart-subtotal></strong></p>
       <p class="cart-summary__note">{{ 'cart.checkout_note' | t }}</p>
       <a class="button" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
       <form action="{{ routes.cart_url }}" method="post"><button class="button button--primary" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button></form>

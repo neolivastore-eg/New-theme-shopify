@@ -1,0 +1,15 @@
+<article class="site-width section-space editorial-article" id="ArticleMain-{{ section.id }}" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="page-intro">
+    <p class="eyebrow"><a href="{{ blog.url }}">{{ blog.title | escape }}</a></p>
+    <h1 itemprop="headline">{{ article.title | escape }}</h1>
+    <time itemprop="datePublished" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'date' }}</time>
+  </header>
+  {% if article.image != blank %}
+    <div class="editorial-article__hero">{{ article.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '400,750,1100,1600', sizes: '(max-width:749px) 100vw, 75vw' }}</div>
+  {% endif %}
+  <div class="rte editorial-article__body" itemprop="articleBody">{{ article.content }}</div>
+  <a class="text-link" href="{{ blog.url }}">{{ 'editorial.back_to_blog' | t }}</a>
+</article>
+{% schema %}
+{"name":"Main article","settings":[]}
+{% endschema %}

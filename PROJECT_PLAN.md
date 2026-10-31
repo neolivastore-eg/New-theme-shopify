@@ -48,3 +48,13 @@ No live-theme deployment or checkout validation is authorized by this source mil
 - [ ] Complete wider Theme Store baseline: account links, blog/article, password, gift card, PDP app blocks, variant no-JS, selling plans and pickup.
 - [ ] Measure Lighthouse/performance, accessibility and merchant QA.
 - [ ] Do not make decorative sections until merchant-supplied image reference arrives.
+
+## 2026-10-31 — Foundation v0.7 required routes
+- [x] Article, blog, contact, password and gift-card templates.
+- [x] Custom Liquid section for merchant/editor integrations.
+- [x] Native contact form, account link, accelerated checkout, product structured-data and actual cart discount display.
+- [x] Locale translations + source contract test of Shopify required templates.
+- [ ] Verify all template routes in actual unpublished theme (some need merchant blog/gift card/password state).
+- [ ] Browser exercise for real product add/cart edit, keyboard and mobile filters, Arabic RTL when published.
+- [ ] Commercial Theme Store readiness beyond template coverage remains open (performance/a11y, product selling plans, pickup, reviews via app, complete content).
+- [ ] Art-directed Wonder sections intentionally deferred until owner sends their exact screenshots.
