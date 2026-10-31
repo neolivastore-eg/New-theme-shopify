@@ -22,6 +22,12 @@
                 {% endif %}
               {% endfor %}
               <p class="cart-item__price">{{ line_item.final_line_price | money }}</p>
+              {% if line_item.original_line_price > line_item.final_line_price %}
+                <p class="cart-item__original-price"><s>{{ line_item.original_line_price | money }}</s></p>
+              {% endif %}
+              {% for allocation in line_item.line_level_discount_allocations %}
+                <p class="cart-item__discount">{{ allocation.discount_application.title | escape }} −{{ allocation.amount | money }}</p>
+              {% endfor %}
               <a class="cart-item__remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" aria-label="{{ 'cart.remove_item' | t: title: line_item.product.title | escape }}">{{ 'cart.remove' | t }}</a>
             </div>
             <div class="cart-item__quantity">
@@ -32,7 +38,11 @@
         {% endfor %}
       </div>
       <div class="cart-summary">
-        <p><strong>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</strong></p>
+        <p><strong>{{ 'cart.subtotal' | t }}: {{ cart.items_subtotal_price | money }}</strong></p>
+        {% for discount in cart.cart_level_discount_applications %}
+          <p class="cart-summary__discount">{{ discount.title | escape }} −{{ discount.total_allocated_amount | money }}</p>
+        {% endfor %}
+        <p><strong>{{ 'cart.total' | t }}: {{ cart.total_price | money }}</strong></p>
         <p class="cart-summary__note">{{ 'cart.checkout_note' | t }}</p>
         <div class="cart-summary__actions">
           <button class="button" type="submit" name="update">{{ 'cart.update' | t }}</button>

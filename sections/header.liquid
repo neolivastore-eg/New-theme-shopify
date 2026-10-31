@@ -74,6 +74,7 @@
           </select>
         {% endform %}
       {% endif %}
+      {% if shop.customer_accounts_enabled %}<a class="icon-button site-header__account" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{{ 'general.account' | t }}</a>{% endif %}
       <a class="icon-button cart-link--fallback" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">{{ 'cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</a>
       <button class="icon-button" type="button" data-cart-drawer-open aria-label="{{ 'cart.title' | t }}" hidden>{{ 'cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</button>
     </div>
