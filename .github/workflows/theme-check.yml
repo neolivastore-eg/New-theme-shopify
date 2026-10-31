@@ -20,9 +20,12 @@ jobs:
       - name: Commerce source contract checks
         run: |
           node --check assets/theme.js
+          node --check assets/predictive-search.js
+          node --check assets/cart-drawer.js
           node scripts/commerce-audit.mjs
           node scripts/homepage-audit.mjs
           node scripts/atelier-blocks-audit.mjs
+          node scripts/foundation-audit.mjs
       - name: Theme Check
         uses: shopify/theme-check-action@v2
         with:
@@ -30,7 +33,7 @@ jobs:
           flags: '--fail-level error'
       - name: Build Shopify-ready ZIP
         if: github.ref == 'refs/heads/main'
-        run: zip -q -r neoliva-atelier-shopify.zip assets config layout locales sections snippets templates
+        run: zip -q -r neoliva-atelier-shopify.zip assets blocks config layout locales sections snippets templates
       - name: Save Shopify upload package
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4

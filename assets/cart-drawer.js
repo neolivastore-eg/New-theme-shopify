@@ -2,7 +2,7 @@
 /* Optional Shopify Ajax cart drawer. The normal cart form remains usable without JS. */
 (() => {
   const root = () => window.Shopify?.routes?.root || '/';
-  const api = (path) => root().replace(/\\/$/, '/') + path;
+  const api = (path) => (root().endsWith('/') ? root() : root() + '/') + path;
   const drawer = document.querySelector('[data-cart-drawer]');
   if (!drawer) return;
   const panel = drawer.querySelector('.cart-drawer__panel');
