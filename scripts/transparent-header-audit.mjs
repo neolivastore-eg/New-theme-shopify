@@ -22,7 +22,9 @@ assert.match(layout,/transparent-header.js/);
 assert.match(layout,/transparent-header.css/);
 assert.match(layout,/document.documentElement.classList.add\('js'\)/);
 assert.match(layout,/logo-dock.js/);
-assert.match(css,/margin-bottom:calc\(-1 \* var\(--nl-overlay-header-height,75px\)\)/);
+assert.match(css,/position:fixed/,'Header wrapper must be viewport-fixed, not bounded sticky');
+assert.match(css,/top:var\(--nl-header-top,0px\)/);
+assert.ok(!css.includes('margin-bottom:calc(-1 * var(--nl-overlay-header-height'),'Remove bounded sticky layout');
 assert.match(css,/body.template-index:has\(\[data-logo-banner\]\)/);
 assert.match(css,/backdrop-filter:blur/);
 assert.match(css,/\.mobile-navigation__panel/);
@@ -30,6 +32,8 @@ assert.match(js,/window.addEventListener\('scroll', schedule, \{ passive: true \
 assert.match(js,/document.addEventListener\('shopify:section:load', init\)/);
 assert.match(js,/prefers-reduced-motion: reduce/);
 assert.match(dock,/data-logo-dock-target/);
+assert.match(dock,/usesFixedHeader/);
+assert.match(dock,/!usesFixedHeader/);
 assert.match(banner,/data-logo-dock-source/);
 
 // Deterministic DOM/event-loop harness: validates progressive opacity, reverse,
@@ -42,7 +46,7 @@ function style(){
   const data=new Map();
   return {setProperty:(k,v)=>data.set(k,String(v)),getPropertyValue:k=>data.get(k)||'',removeProperty:k=>data.delete(k)};
 }
-let scrollY=0, open=false, headerHeight=64, reduced=false, rafId=0;
+let scrollY=0, open=false, announcementHeight=42, reduced=false, rafId=0;
 const callbacks=new Map(), winListeners=new Map(), docListeners=new Map(), headerListeners=new Map();
 const host={style:style(),classList:classes()};
 const headerEl={
@@ -50,11 +54,12 @@ const headerEl={
  style:style(),dataset:{homeScrollDistance:'160'},isConnected:true,
  closest:sel=>sel==='.shopify-section'?host:null,
  querySelector:sel=>sel==='details[open]'&&open?{}:null,
- getBoundingClientRect:()=>({height:headerHeight}),
+ getBoundingClientRect:()=>({height:64}),
  addEventListener:(type,fn)=>headerListeners.set(type,fn),
  removeEventListener:type=>headerListeners.delete(type)
 };
 const bannerEl={isConnected:true};
+const announcementEl={isConnected:true,getBoundingClientRect:()=>({bottom:announcementHeight-scrollY})};
 const windowMock={
  get scrollY(){return scrollY;},get pageYOffset(){return scrollY;},
  matchMedia:()=>({get matches(){return reduced},addEventListener:(_name,fn)=>winListeners.set('change',fn)}),
@@ -65,7 +70,7 @@ const windowMock={
 };
 const docMock={
  readyState:'complete',
- querySelector:sel=>sel==='[data-logo-banner]'?bannerEl:sel==='[data-site-header].site-header--home-overlay'?headerEl:null,
+ querySelector:sel=>sel==='[data-logo-banner]'?bannerEl:sel==='[data-site-header].site-header--home-overlay'?headerEl:sel==='.announcement-bar'?announcementEl:null,
  addEventListener:(type,fn)=>docListeners.set(type,fn),
  removeEventListener:type=>docListeners.delete(type)
 };
@@ -73,24 +78,29 @@ const flush=()=>{for(const [id,fn] of [...callbacks]){callbacks.delete(id);fn()}
 vm.runInNewContext(js,{window:windowMock,document:docMock});
 flush();
 assert.equal(host.classList.contains('nl-home-overlay-host'),true);
-assert.equal(host.style.getPropertyValue('--nl-overlay-header-height'),'64px');
+assert.equal(host.style.getPropertyValue('--nl-header-top'),'42.00px','At scroll top header is below announcement');
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'0.000','Transparent at top');
 scrollY=80;winListeners.get('scroll')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'0.500','Half-transparent halfway');
+assert.equal(host.style.getPropertyValue('--nl-header-top'),'0.00px','Announcement scrolls away; header is at viewport top');
 scrollY=200;winListeners.get('scroll')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'1.000','Solid after threshold');
 assert.equal(headerEl.classList.contains('nl-header--scrolled'),true);
+scrollY=1700;winListeners.get('scroll')();flush();
+assert.equal(host.style.getPropertyValue('--nl-header-top'),'0.00px','Far down the page header stays at viewport top');
+assert.equal(host.classList.contains('nl-home-overlay-host'),true,'Fixed header class remains active past hero');
 scrollY=0;winListeners.get('scroll')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'0.000','Returns transparent after scrolling up');
+assert.equal(host.style.getPropertyValue('--nl-header-top'),'42.00px','Scrolling up restores announcement offset');
 open=true;headerListeners.get('toggle')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'1.000','Menu should get opaque readable surface');
 open=false;headerListeners.get('toggle')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'0.000');
-headerHeight=75;winListeners.get('resize')();flush();
-assert.equal(host.style.getPropertyValue('--nl-overlay-header-height'),'75px','Responsive real header height');
+announcementHeight=60;winListeners.get('resize')();flush();
+assert.equal(host.style.getPropertyValue('--nl-header-top'),'60.00px','Responsive announcement offset remeasured');
 reduced=true;winListeners.get('change')();flush();
 scrollY=1;winListeners.get('scroll')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'0.000','Reduced motion has no fade at top');
 scrollY=10;winListeners.get('scroll')();flush();
 assert.equal(headerEl.style.getPropertyValue('--nl-header-surface-opacity'),'1.000','Reduced motion jumps to solid');
-console.log('HOME-01 transparent header transition, reverse, menu, resize and reduced-motion checks passed');
+console.log('HOME-01 viewport-fixed header deep scroll, alpha, announcement offset, reverse, menu and reduced motion passed');
