@@ -65,6 +65,7 @@
       <button class="button button--primary product-form__submit" type="submit" data-add-to-cart {% unless can_purchase %}disabled{% endunless %}>
         {% if can_purchase %}{{ 'products.add_to_cart' | t }}{% elsif current_variant == blank %}{{ 'products.unavailable' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}
       </button>
+      {% if section.settings.show_dynamic_checkout and can_purchase %}{{ form | payment_button }}{% endif %}
       <p class="product-form__error" data-cart-add-status role="status" aria-live="polite"></p>
     {% endform %}
     </div>
@@ -73,11 +74,57 @@
     {% for block in section.blocks %}
       {% case block.type %}
         {% when 'trust_text' %}<div class="product-trust" {{ block.shopify_attributes }}>{{ block.settings.message | escape }}</div>
+        {% when '@app' %}{% render block %}
         {% when 'accordion' %}<details class="product-accordion" {{ block.shopify_attributes }}><summary>{{ block.settings.heading | escape }}</summary><div class="rte">{{ block.settings.body }}</div></details>
       {% endcase %}
     {% endfor %}
   </div>
 </section>
+<script type="application/ld+json">{{ product | structured_data }}</script>
 {% schema %}
-{"name":"Main product","settings":[],"blocks":[{"type":"trust_text","name":"Trust text","settings":[{"type":"text","id":"message","label":"Text","default":"Carefully curated essentials"}]},{"type":"accordion","name":"Collapsible content","settings":[{"type":"text","id":"heading","label":"Heading","default":"More details"},{"type":"richtext","id":"body","label":"Content"}]}]}
+{
+  "name": "Main product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show accelerated checkout",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "trust_text",
+      "name": "Trust text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "message",
+          "label": "Text",
+          "default": "Carefully curated essentials"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Collapsible content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "More details"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
