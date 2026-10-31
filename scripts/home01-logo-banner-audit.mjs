@@ -36,5 +36,5 @@ assert.match(read('layout/theme.liquid'),/logo-dock.js/);
 const themeSettings=JSON.parse(read('config/settings_data.json')).current;
 assert.equal(themeSettings.logo,'shopify://shop_images/d7d39038-c498-4af5-b3cb-ef08b61e167f_removalai_preview.png',
  'Use the Neoliva alternate transparent logo from the Custom Storefront v1 theme, not white-L04.png');
-assert.ok(section.includes('assign brand_logo = settings.logo'),'Logo banner must inherit the theme's logo');
+assert.ok(section.includes('assign brand_logo = settings.logo'),"Logo banner must inherit the theme logo");
 assert.ok(read('sections/header.liquid').includes('settings.logo | image_url'),'Header must inherit the same theme logo');
