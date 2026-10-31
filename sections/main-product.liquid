@@ -38,6 +38,7 @@
       {% endif %}
     </div>
 
+    <div data-ajax-product-root>
     {% form 'product', product, class: 'product-form', id: product_form_id %}
       {% unless product.has_only_default_variant %}
         <div class="product-options" role="group" aria-label="{{ 'products.variant' | t }}">
@@ -64,7 +65,9 @@
       <button class="button button--primary product-form__submit" type="submit" data-add-to-cart {% unless can_purchase %}disabled{% endunless %}>
         {% if can_purchase %}{{ 'products.add_to_cart' | t }}{% elsif current_variant == blank %}{{ 'products.unavailable' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}
       </button>
+      <p class="product-form__error" data-cart-add-status role="status" aria-live="polite"></p>
     {% endform %}
+    </div>
 
     {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
     {% for block in section.blocks %}

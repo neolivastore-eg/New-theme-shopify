@@ -154,7 +154,7 @@
   });
   document.addEventListener('submit', async event => {
     const form=event.target;
-    if (!(form instanceof HTMLFormElement) || !form.matches('[data-ajax-product-form]')) return;
+    if (!(form instanceof HTMLFormElement) || !form.closest('[data-ajax-product-root]')) return;
     const button=form.querySelector('[data-add-to-cart]');
     if (!button || button.disabled || !form.querySelector('input[name=id]')) return;
     event.preventDefault();

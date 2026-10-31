@@ -11,7 +11,7 @@
       <p><span>{{ 'cart.subtotal' | t }}</span> <strong data-cart-subtotal></strong></p>
       <p class="cart-summary__note">{{ 'cart.checkout_note' | t }}</p>
       <a class="button" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
-      <a class="button button--primary" href="{{ routes.cart_url }}?checkout">{{ 'cart.checkout' | t }}</a>
+      <form action="{{ routes.cart_url }}" method="post"><button class="button button--primary" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button></form>
     </div>
   </section>
 </div>

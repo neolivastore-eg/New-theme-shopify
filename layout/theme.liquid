@@ -16,8 +16,11 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'merchandising.css' | asset_url | stylesheet_tag }}
   {{ 'atelier-system.css' | asset_url | stylesheet_tag }}
+  {{ 'foundation.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
