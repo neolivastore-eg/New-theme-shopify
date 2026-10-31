@@ -1,4 +1,4 @@
-<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}" data-site-header>
+<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}{% if template.name == 'index' and section.settings.sticky and section.settings.transparent_home %} site-header--home-overlay{% endif %}" data-site-header data-home-scroll-distance="{{ section.settings.transparency_distance }}">
   <div class="site-width site-header__inner">
     <details class="mobile-navigation" data-mobile-navigation>
       <summary class="icon-button" aria-label="{{ 'general.navigation' | t }}">☰</summary>
@@ -82,8 +82,38 @@
   {% render 'cart-drawer' %}
 </header>
 {% schema %}
-{"name":"Header","settings":[
-{"type":"link_list","id":"menu","label":"Main navigation","default":"main-menu"},
-{"type":"checkbox","id":"sticky","label":"Sticky header","default":true}
-]}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main navigation",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_home",
+      "label": "Transparent over homepage hero",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "transparency_distance",
+      "label": "Solid after scrolling",
+      "min": 60,
+      "max": 300,
+      "step": 20,
+      "unit": "px",
+      "default": 160
+    }
+  ],
+  "class": "nl-header-section"
+}
 {% endschema %}
