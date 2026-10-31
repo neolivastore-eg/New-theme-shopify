@@ -1,5 +1,19 @@
 'use strict';
+
 document.documentElement.classList.add('js');
+
+function enableOptionSelectors(root = document) {
+  root.querySelectorAll('[data-option-value-selector]').forEach((selector) => {
+    selector.disabled = false;
+  });
+}
+
+enableOptionSelectors();
+
+document.addEventListener('shopify:section:load', (event) => {
+  if (event.target) enableOptionSelectors(event.target);
+});
+
 document.addEventListener('change', (event) => {
   const target = event.target;
   if (!(target instanceof Element)) return;
@@ -9,21 +23,23 @@ document.addEventListener('change', (event) => {
     return;
   }
 
-  const selector = target.closest('[data-variant-selector]');
+  const selector = target.closest('[data-option-value-selector]');
   if (!selector) return;
-  const container = selector.closest('[data-product-form-root]');
-  if (!container) return;
-  const selected = selector.options[selector.selectedIndex];
-  if (!selected) return;
 
-  const price = container.querySelector('[data-product-price]');
-  if (price && selected.dataset.price) price.textContent = selected.dataset.price;
-  const button = container.querySelector('[data-add-to-cart]');
-  if (button) button.disabled = selected.disabled;
+  const root = selector.closest('[data-product-root]');
+  if (!root) return;
 
-  if (selected.value) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('variant', selected.value);
-    window.history.replaceState({}, '', url.toString());
-  }
+  const selectors = Array.from(root.querySelectorAll('[data-option-value-selector]'));
+  const ids = selectors.map((entry) => entry.value);
+  if (!ids.length || ids.some((value) => !value)) return;
+
+  const selected = selector.selectedOptions[0];
+  const productUrl = selected?.dataset.productUrl || root.dataset.productUrl;
+  if (!productUrl) return;
+
+  const url = new URL(productUrl, window.location.origin);
+  // A variant ID may no longer represent the newly selected option combination.
+  url.searchParams.delete('variant');
+  url.searchParams.set('option_values', ids.join(','));
+  window.location.assign(url.toString());
 });
