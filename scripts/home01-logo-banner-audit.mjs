@@ -26,7 +26,7 @@ assert.equal(home.order[0],'logo_banner');
 assert.equal(home.sections.logo_banner.type,'logo-banner');
 assert.equal(home.sections.hero.disabled,true,'Keep old hero for rollback, not duplicate visible masthead');
 assert.ok(home.order.includes('hero'));
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.3');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.4');
 console.log('HOME-01 native image art direction, editorial logo frame and homepage integration passed');
 
 assert.match(read('sections/logo-banner.liquid'),/data-logo-dock-source/);
