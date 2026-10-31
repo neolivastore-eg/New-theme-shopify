@@ -22,5 +22,3 @@ jobs:
         with:
           theme_root: '.'
           flags: '--fail-level error'
-          token: ${{ github.token }}
-          base: main
