@@ -12,77 +12,116 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "eyebrow": "THE EDIT",
         "heading": "Beauty with intention.",
-        "eyebrow": "THE EDIT"
+        "collection": "skin-care-1",
+        "button_label": "Shop skincare"
       }
     },
     "campaigns": {
       "type": "campaign-grid",
-      "settings": {
-        "heading": "Find your everyday essentials",
-        "eyebrow": "EXPLORE",
-        "columns": "2"
-      },
       "blocks": {
         "skincare": {
           "type": "campaign",
           "settings": {
-            "eyebrow": "SKINCARE",
-            "heading": "Your skincare edit",
-            "text": "<p>Discover products for your everyday routine.</p>"
+            "eyebrow": "SKIN CARE",
+            "heading": "Skin Care",
+            "text": "<p>Explore skincare essentials.</p>",
+            "button_label": "Shop skincare"
           }
         },
         "haircare": {
           "type": "campaign",
           "settings": {
-            "eyebrow": "HAIRCARE",
-            "heading": "Your haircare edit",
-            "text": "<p>Find your next haircare essential.</p>"
+            "eyebrow": "HAIR CARE",
+            "heading": "Hair Care",
+            "text": "<p>Explore haircare essentials.</p>",
+            "button_label": "Shop haircare"
+          }
+        },
+        "makeup": {
+          "type": "campaign",
+          "settings": {
+            "eyebrow": "MAKEUP",
+            "heading": "Makeup",
+            "text": "<p>Explore makeup products.</p>",
+            "button_label": "Shop makeup"
           }
         }
       },
       "block_order": [
         "skincare",
-        "haircare"
-      ]
+        "haircare",
+        "makeup"
+      ],
+      "settings": {
+        "eyebrow": "DISCOVER",
+        "heading": "Explore beauty by routine",
+        "columns": "3"
+      }
     },
     "collections": {
       "type": "collection-links",
+      "blocks": {
+        "skincare": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "skin-care-1"
+          }
+        },
+        "haircare": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "hair-care-1"
+          }
+        },
+        "makeup": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "makeup"
+          }
+        }
+      },
+      "block_order": [
+        "skincare",
+        "haircare",
+        "makeup"
+      ],
       "settings": {
-        "heading": "Find your ritual"
+        "heading": "Shop by category"
       }
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Curated for you"
+        "eyebrow": "THE EDIT",
+        "heading": "Skincare essentials",
+        "collection": "skin-care-1",
+        "product_limit": 8
       }
     },
     "benefits": {
       "type": "benefits-strip",
-      "settings": {
-        "heading": "The Neoliva experience"
-      },
       "blocks": {
         "delivery": {
           "type": "benefit",
           "settings": {
             "heading": "Delivery",
-            "text": "Check available shipping options."
+            "text": "Cairo & Giza: 1–2 business days. Other governorates: 2–3 business days."
           }
         },
         "payments": {
           "type": "benefit",
           "settings": {
             "heading": "Payments",
-            "text": "Payment choices appear at checkout."
+            "text": "Cash on delivery is available."
           }
         },
         "questions": {
           "type": "benefit",
           "settings": {
             "heading": "Questions?",
-            "text": "Contact us for product information."
+            "text": "Contact us for product information and orders."
           }
         }
       },
@@ -90,7 +129,10 @@
         "delivery",
         "payments",
         "questions"
-      ]
+      ],
+      "settings": {
+        "heading": "The Neoliva experience"
+      }
     }
   },
   "order": [
