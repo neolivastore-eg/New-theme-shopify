@@ -30,5 +30,12 @@
   "pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "catalog": {
+    "filter_and_sort": "Filter and sort",
+    "product_count": "{{ count }} products",
+    "search_count": "{{ count }} results",
+    "apply": "Apply filters",
+    "clear": "Clear filters"
   }
 }

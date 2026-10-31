@@ -1,13 +1,54 @@
-<section class="site-width section-space"><h1>{{ 'general.search' | t }}</h1>
-  <form action="{{ routes.search_url }}" role="search" method="get" class="search-form">
-    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" required>
+<section class="site-width section-space search-page" id="SearchMain-{{ section.id }}">
+  <header class="page-intro"><h1>{{ 'general.search' | t }}</h1></header>
+  <form action="{{ routes.search_url }}" role="search" method="get" class="search-form search-form--page">
+    <label class="visually-hidden" for="SearchInput-{{ section.id }}">{{ 'general.search' | t }}</label>
+    <input id="SearchInput-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" required>
     <input type="hidden" name="type" value="product">
+    <input type="hidden" name="options[prefix]" value="last">
     <button class="button button--primary" type="submit">{{ 'general.search' | t }}</button>
   </form>
   {% if search.performed %}
-    {% paginate search.results by 24 %}<div class="product-grid section-space">
-      {% for item in search.results %}{% if item.object_type == 'product' %}{% render 'product-card', card_product: item %}{% endif %}{% else %}<p>{{ 'general.no_results' | t }}</p>{% endfor %}
-    </div>{% render 'pagination', paginate: paginate %}{% endpaginate %}
+    <p class="search-summary">{{ 'catalog.search_count' | t: count: search.results_count }}</p>
+    {% if search.results_count > 0 %}
+      {% if search.filters.size > 0 %}
+        <form class="catalog-controls" action="{{ routes.search_url }}" method="get" aria-label="{{ 'catalog.filter_and_sort' | t }}">
+          <input type="hidden" name="q" value="{{ search.terms | escape }}">
+          <input type="hidden" name="type" value="product">
+          <input type="hidden" name="options[prefix]" value="last">
+          <div class="catalog-filters">
+            {% for filter in search.filters %}
+              {% if filter.type == 'list' or filter.type == 'boolean' %}
+                <details class="catalog-filter">
+                  <summary>{{ filter.label | escape }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary>
+                  <div class="catalog-filter__values">
+                    {% for value in filter.values %}
+                      <label class="catalog-filter__value">
+                        <input type="checkbox" name="{{ filter.param_name | escape }}" value="{{ value.value | escape }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                        <span>{{ value.label | escape }} ({{ value.count }})</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                </details>
+              {% endif %}
+            {% endfor %}
+            <button class="button" type="submit">{{ 'catalog.apply' | t }}</button>
+            <a class="text-link" href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=product">{{ 'catalog.clear' | t }}</a>
+          </div>
+        </form>
+      {% endif %}
+      {% paginate search.results by section.settings.products_per_page %}
+        <div class="product-grid">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}{% render 'product-card', card_product: item %}{% endif %}
+          {% endfor %}
+        </div>
+        {% render 'pagination', paginate: paginate %}
+      {% endpaginate %}
+    {% else %}
+      <div class="empty-state"><p>{{ 'general.no_results' | t }}</p><a class="button" href="{{ routes.all_products_collection_url }}">{{ 'general.view_all' | t }}</a></div>
+    {% endif %}
   {% endif %}
 </section>
-{% schema %}{"name":"Main search","settings":[]}{% endschema %}
+{% schema %}
+{"name":"Main search","settings":[{"type":"range","id":"products_per_page","label":"Products per page","min":8,"max":48,"step":4,"default":24}]}
+{% endschema %}
