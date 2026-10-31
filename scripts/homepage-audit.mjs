@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 const read=(path)=>readFileSync(path,'utf8');
 const homepage=JSON.parse(read('templates/index.json'));
 const handles=new Set(['skin-care-1','hair-care-1','makeup']);
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.5.0');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.6.0');
 for(const key of ['hero','campaigns','collections','featured','editorial','benefits'])
   assert.ok(homepage.order.includes(key),`Homepage missing ${key}`);
 for(const key of ['hero','featured'])

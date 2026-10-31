@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=path=>readFileSync(path,'utf8');
+const header=read('sections/header.liquid');
+const drawer=read('snippets/cart-drawer.liquid');
+const predictive=read('sections/predictive-search.liquid');
+const pjs=read('assets/predictive-search.js');
+const cartjs=read('assets/cart-drawer.js');
+const layout=read('layout/theme.liquid');
+const css=read('assets/foundation.css');
+assert.match(header,/routes\.predictive_search_url/);
+assert.match(header,/data-mobile-navigation/);
+assert.match(header,/grandchild\.title/);
+assert.match(header,/data-cart-drawer-open/);
+assert.match(header,/render 'cart-drawer'/);
+assert.match(predictive,/predictive_search\.resources\.products/);
+assert.match(predictive,/item\.available/);
+assert.match(pjs,/AbortController/);
+assert.match(pjs,/event\.key === 'Escape'/);
+assert.match(cartjs,/cart\/change\.js/);
+assert.match(cartjs,/cart\/add\.js/);
+assert.match(cartjs,/item\.key/);
+assert.match(cartjs,/replaceChildren/);
+assert.match(cartjs,/data-ajax-product-root/);
+assert.match(drawer,/name="checkout"/);
+assert.match(drawer,/aria-modal="true"/);
+assert.match(css,/\[hidden\]\{display:none!important\}/);
+for(const asset of ['foundation.css','predictive-search.js','cart-drawer.js'])assert.ok(layout.includes(asset),'Missing include: '+asset);
+for(const locale of ['en.default','ar']){
+ const dict=JSON.parse(read('locales/'+locale+'.json'));
+ assert.ok(dict.general.close && dict.general.search_suggestions);
+ assert.ok(dict.cart.view_cart && dict.cart.error);
+}
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.6.0');
+console.log('Foundation JS and commerce template contracts passed');

@@ -51,3 +51,11 @@ See `PROJECT_PLAN.md`.
 - The new homepage story is sourced from a live Shopify skincare collection and has no synthetic product imagery or hard-coded prices.
 - Full roadmap, visual acceptance rules, preview gates and Wonder-reference tracking: [docs/SECTION_SYSTEM.md](docs/SECTION_SYSTEM.md).
 
+
+## v0.6 — commerce foundation before visual sections
+- Header: 3-level desktop/mobile Shopify navigation, keyboard-friendly native details, native search/cart fallback without JavaScript.
+- Search: Shopify predictive search via routes.predictive_search_url, abort/debounce and keyboard navigation. Standard GET search remains the fallback.
+- Cart: Shopify Ajax Cart API with line-item keys, real totals and quantity edits, while retaining native /cart and POST checkout.
+- Product forms: native Shopify product form with optional Ajax add; canonical variant URL remains the source of truth.
+- /blocks now included in the distributable ZIP; installability still requires real-store validation.
+- NOT YET CERTIFIED: end-to-end purchase, RTL, mobile accessibility, performance, app compatibility and Theme Store compliance.
