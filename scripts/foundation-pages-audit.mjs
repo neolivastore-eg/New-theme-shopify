@@ -26,5 +26,5 @@ assert.ok(read('sections/main-cart.liquid').includes('cart_level_discount_applic
 assert.ok(read('sections/header.liquid').includes('routes.account_url'));
 const dicts=['en.default','ar'].map(code=>JSON.parse(read('locales/'+code+'.json')));
 for(const dict of dicts)for(const key of ['contact','editorial','password','gift_card'])assert.ok(dict[key], 'Missing locale '+key);
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.5');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.6');
 console.log('Required Shopify page templates, commerce and translation contracts passed');
