@@ -14,8 +14,12 @@
 %}
 <section
   id="LogoBanner-{{ section.id }}"
-  class="nl-logo-banner nl-logo-banner--{{ section.settings.panel_position }}{% if backdrop != blank %} nl-logo-banner--photographic{% else %} nl-logo-banner--abstract{% endif %}{% if section.settings.motion %} nl-logo-banner--motion{% endif %}"
+  class="nl-logo-banner nl-logo-banner--{{ section.settings.panel_position }}{% if backdrop != blank %} nl-logo-banner--photographic{% else %} nl-logo-banner--abstract{% endif %}{% if section.settings.motion %} nl-logo-banner--motion{% endif %}{% if section.settings.dock_on_scroll %} nl-logo-banner--dock-enabled{% endif %}"
   style="--nl-banner-base:{{ section.settings.background }};--nl-banner-ink:{{ section.settings.foreground }};--nl-banner-panel:{{ section.settings.panel_background }};--nl-banner-panel-ink:{{ section.settings.panel_foreground }};--nl-banner-accent:{{ section.settings.accent }};--nl-banner-overlay:{{ section.settings.image_overlay }};--nl-banner-overlay-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};--nl-banner-height:{{ section.settings.desktop_height }}px;--nl-banner-mobile-height:{{ section.settings.mobile_height }}px;"
+  data-logo-banner
+  data-logo-dock="{{ section.settings.dock_on_scroll }}"
+  data-logo-dock-start="{{ section.settings.dock_start }}"
+  data-logo-dock-end="{{ section.settings.dock_end }}"
   aria-label="{{ section.settings.accessible_label | default: shop.name | escape }}"
 >
   {% if backdrop != blank %}
@@ -48,7 +52,7 @@
       {% if section.settings.overline != blank %}
         <p class="nl-logo-banner__overline">{{ section.settings.overline | escape }}</p>
       {% endif %}
-      <div class="nl-logo-banner__brand-frame">
+      <div class="nl-logo-banner__brand-frame" data-logo-dock-source>
         <h1 class="nl-logo-banner__brand-name">
           {% if brand_logo != blank %}
             {{ brand_logo | image_url: width: 1200 | image_tag: class: 'nl-logo-banner__brand-image', widths: '240,400,600,900,1200', sizes: '(max-width:749px) 65vw, 480px', loading: 'eager', alt: shop.name }}
@@ -209,6 +213,36 @@
       "id": "motion",
       "label": "Gentle entrance motion",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Scroll-linked logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "dock_on_scroll",
+      "label": "Dock logo to sticky header",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "dock_start",
+      "label": "Dock motion start",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "%",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "dock_end",
+      "label": "Dock motion finish",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 80
     },
     {
       "type": "header",

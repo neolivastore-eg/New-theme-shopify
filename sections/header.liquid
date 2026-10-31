@@ -25,7 +25,7 @@
         {% endfor %}
       </nav>
     </details>
-    <a href="{{ routes.root_url }}" class="site-header__brand">
+    <a href="{{ routes.root_url }}" class="site-header__brand" data-logo-dock-target>
       {% if settings.logo != blank %}
         {{ settings.logo | image_url: width: 350 | image_tag: class: 'site-header__logo', loading: 'eager', alt: shop.name }}
       {% elsif settings.show_brand_name %}{{ shop.name | escape }}{% endif %}
