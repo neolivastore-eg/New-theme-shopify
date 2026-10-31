@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 const read=(path)=>readFileSync(path,'utf8');
 const homepage=JSON.parse(read('templates/index.json'));
 const handles=new Set(['skin-care-1','hair-care-1','makeup']);
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.4.0');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.4.1');
 for(const key of ['hero','campaigns','collections','featured','benefits'])
   assert.ok(homepage.order.includes(key),`Homepage missing ${key}`);
 for(const key of ['hero','featured'])
@@ -29,3 +29,12 @@ assert.ok(read('snippets/product-card.liquid').includes('products.sold_out'));
 assert.ok(JSON.parse(read('locales/en.default.json')).products.from_price);
 assert.ok(JSON.parse(read('locales/ar.json')).products.from_price);
 console.log('Home merchandising contract checks passed');
+
+assert.ok(read('layout/theme.liquid').includes("seo.home_title"),'Localizable home title missing');
+assert.ok(read('layout/theme.liquid').includes("seo.home_description"),'Localizable home description missing');
+assert.ok(read('sections/header.liquid').includes("form 'localization'"),'Shopify native localization form missing');
+for(const lang of ['en.default','ar']){
+  const content=JSON.parse(read(`locales/${lang}.json`));
+  assert.ok(content.general.language,'Missing locale picker label');
+  assert.ok(content.seo.home_title && content.seo.home_description,'Missing SEO language keys');
+}

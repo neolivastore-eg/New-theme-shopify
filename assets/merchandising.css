@@ -57,3 +57,9 @@
 .campaign-card--media:after{background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.8) 100%)}
 .hero__media img{object-fit:contain;background:#f4f2ed}
 @media(prefers-reduced-motion:no-preference){.collection-tile:hover{transform:translateY(-3px)}}
+
+/* v0.4.1: accessible native localization form; only visible for active languages. */
+.language-selector{flex:0 0 auto}
+.language-selector select{min-height:44px;max-width:100px;background:var(--surface);color:var(--ink);border:1px solid var(--line);padding-inline:.45rem;border-radius:3px;cursor:pointer;font-size:.82rem}
+.language-selector select:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+@media(max-width:720px){.language-selector select{max-width:74px;font-size:.76rem}}
