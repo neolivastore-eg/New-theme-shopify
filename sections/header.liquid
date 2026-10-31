@@ -1,28 +1,69 @@
-<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}">
+<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}" data-site-header>
   <div class="site-width site-header__inner">
-    <details class="mobile-navigation"><summary class="icon-button" aria-label="{{ 'general.navigation' | t }}">☰</summary>
+    <details class="mobile-navigation" data-mobile-navigation>
+      <summary class="icon-button" aria-label="{{ 'general.navigation' | t }}">☰</summary>
       <nav class="mobile-navigation__panel" aria-label="{{ 'general.navigation' | t }}">
-        {% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endfor %}
+        {% for link in section.settings.menu.links %}
+          {% if link.links.size > 0 %}
+            <details class="mobile-navigation__group">
+              <summary>{{ link.title | escape }}</summary>
+              <div class="mobile-navigation__children">
+                <a href="{{ link.url }}">{{ 'general.view_all' | t }} {{ link.title | escape }}</a>
+                {% for child in link.links %}
+                  {% if child.links.size > 0 %}
+                    <details><summary>{{ child.title | escape }}</summary>
+                      <div class="mobile-navigation__children">
+                        <a href="{{ child.url }}">{{ 'general.view_all' | t }} {{ child.title | escape }}</a>
+                        {% for grandchild in child.links %}<a href="{{ grandchild.url }}">{{ grandchild.title | escape }}</a>{% endfor %}
+                      </div>
+                    </details>
+                  {% else %}<a href="{{ child.url }}">{{ child.title | escape }}</a>{% endif %}
+                {% endfor %}
+              </div>
+            </details>
+          {% else %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endif %}
+        {% endfor %}
       </nav>
     </details>
     <a href="{{ routes.root_url }}" class="site-header__brand">
-      {% if settings.logo != blank %}{{ settings.logo | image_url: width: 350 | image_tag: class: 'site-header__logo', loading: 'eager' }}{% elsif settings.show_brand_name %}{{ shop.name | escape }}{% endif %}
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 350 | image_tag: class: 'site-header__logo', loading: 'eager', alt: shop.name }}
+      {% elsif settings.show_brand_name %}{{ shop.name | escape }}{% endif %}
     </a>
     <nav class="desktop-navigation" aria-label="{{ 'general.navigation' | t }}">
       {% for link in section.settings.menu.links %}
-        {% if link.links.size > 0 %}<details><summary>{{ link.title | escape }}</summary><div class="desktop-navigation__submenu">{% for child in link.links %}<a href="{{ child.url }}">{{ child.title | escape }}</a>{% endfor %}</div></details>
+        {% if link.links.size > 0 %}
+          <details class="desktop-navigation__group">
+            <summary>{{ link.title | escape }}</summary>
+            <div class="desktop-navigation__submenu">
+              <a class="desktop-navigation__parent" href="{{ link.url }}">{{ 'general.view_all' | t }} {{ link.title | escape }}</a>
+              {% for child in link.links %}
+                {% if child.links.size > 0 %}
+                  <div class="desktop-navigation__column">
+                    <a href="{{ child.url }}"><strong>{{ child.title | escape }}</strong></a>
+                    {% for grandchild in child.links %}<a href="{{ grandchild.url }}">{{ grandchild.title | escape }}</a>{% endfor %}
+                  </div>
+                {% else %}<a href="{{ child.url }}">{{ child.title | escape }}</a>{% endif %}
+              {% endfor %}
+            </div>
+          </details>
         {% else %}<a href="{{ link.url }}">{{ link.title | escape }}</a>{% endif %}
       {% endfor %}
     </nav>
     <div class="site-header__actions">
-      <details class="header-search"><summary class="icon-button" aria-label="{{ 'general.search' | t }}">⌕</summary><div class="header-search__panel">
-        <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-          <input type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" aria-label="{{ 'general.search' | t }}" required>
-          <input type="hidden" name="type" value="product">
-          <input type="hidden" name="options[prefix]" value="last">
-          <button class="button button--primary" type="submit">{{ 'general.search' | t }}</button>
-        </form>
-      </div></details>
+      <details class="header-search" data-header-search>
+        <summary class="icon-button" aria-label="{{ 'general.search' | t }}">⌕</summary>
+        <div class="header-search__panel">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-form search-form--predictive" data-predictive-search data-predictive-url="{{ routes.predictive_search_url }}" autocomplete="off">
+            <label class="visually-hidden" for="HeaderSearch-{{ section.id }}">{{ 'general.search' | t }}</label>
+            <input id="HeaderSearch-{{ section.id }}" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" aria-label="{{ 'general.search' | t }}" aria-controls="PredictiveResults-{{ section.id }}" aria-expanded="false" autocomplete="off" data-predictive-input required>
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+            <button class="button button--primary" type="submit">{{ 'general.search' | t }}</button>
+            <div class="predictive-search" id="PredictiveResults-{{ section.id }}" data-predictive-results aria-live="polite" hidden></div>
+          </form>
+        </div>
+      </details>
       {% if localization.available_languages.size > 1 %}
         {% form 'localization', id: 'NeolivaLanguageSelector', class: 'language-selector' %}
           <label for="NeolivaLocale-{{ section.id }}" class="visually-hidden">{{ 'general.language' | t }}</label>
@@ -33,10 +74,15 @@
           </select>
         {% endform %}
       {% endif %}
-      <a class="icon-button" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">Bag ({{ cart.item_count }})</a>
+      <a class="icon-button cart-link--fallback" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">{{ 'cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</a>
+      <button class="icon-button" type="button" data-cart-drawer-open aria-label="{{ 'cart.title' | t }}" hidden>{{ 'cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</button>
     </div>
   </div>
+  {% render 'cart-drawer' %}
 </header>
 {% schema %}
-{"name":"Header","settings":[{"type":"link_list","id":"menu","label":"Main navigation","default":"main-menu"},{"type":"checkbox","id":"sticky","label":"Sticky header","default":true}]}
+{"name":"Header","settings":[
+{"type":"link_list","id":"menu","label":"Main navigation","default":"main-menu"},
+{"type":"checkbox","id":"sticky","label":"Sticky header","default":true}
+]}
 {% endschema %}

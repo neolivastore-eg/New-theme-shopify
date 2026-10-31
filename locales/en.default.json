@@ -17,7 +17,9 @@
     "search_placeholder": "Search products",
     "view_all": "View all",
     "no_results": "No matching products",
-    "language": "Language"
+    "language": "Language",
+    "search_suggestions": "Suggested products",
+    "close": "Close"
   },
   "products": {
     "add_to_cart": "Add to cart",
@@ -38,7 +40,9 @@
     "remove": "Remove",
     "remove_item": "Remove {{ title }}",
     "quantity_for": "Quantity for {{ title }}",
-    "checkout_note": "Shipping and discounts are calculated at checkout."
+    "checkout_note": "Shipping and discounts are calculated at checkout.",
+    "view_cart": "View bag",
+    "error": "Couldn't update the bag. Please retry or use the full cart page."
   },
   "collections": {
     "empty": "No products found",
