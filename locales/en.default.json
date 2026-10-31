@@ -23,7 +23,11 @@
     "empty": "Your bag is empty",
     "subtotal": "Subtotal",
     "update": "Update bag",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "remove_item": "Remove {{ title }}",
+    "quantity_for": "Quantity for {{ title }}",
+    "checkout_note": "Shipping and discounts are calculated at checkout."
   },
   "collections": {
     "empty": "No products found",
