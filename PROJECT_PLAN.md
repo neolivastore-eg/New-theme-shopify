@@ -58,3 +58,11 @@ No live-theme deployment or checkout validation is authorized by this source mil
 - [ ] Browser exercise for real product add/cart edit, keyboard and mobile filters, Arabic RTL when published.
 - [ ] Commercial Theme Store readiness beyond template coverage remains open (performance/a11y, product selling plans, pickup, reviews via app, complete content).
 - [ ] Art-directed Wonder sections intentionally deferred until owner sends their exact screenshots.
+
+## HOME-01 design from 31 Oct 2026 user video
+- [x] Implement logo banner in pure Liquid/CSS with theme editor settings, native logo/text fallback, responsive real photo inputs and reduced-motion behavior.
+- [x] Place first on homepage and disable old hero while preserving its configuration.
+- [x] Source QA contract and standalone reference-to-code acceptance document.
+- [ ] Set merchant-approved official logo and photos through Shopify theme editor (none selected in v0.7 preview).
+- [ ] Real mobile/desktop screenshot + theme editor control QA before visual sign-off.
+- [ ] Then build HOME-02 typography based on its own video frames.
