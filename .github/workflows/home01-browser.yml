@@ -8,6 +8,7 @@ on:
       - 'assets/logo-dock.js'
       - 'sections/header.liquid'
       - 'scripts/browser-header-check.mjs'
+      - 'scripts/browser-logo-morph-check.mjs'
       - '.github/workflows/home01-browser.yml'
   push:
     branches: [main]
@@ -34,6 +35,8 @@ jobs:
           fi
       - name: Test real mobile and desktop deep scroll on unpublished Shopify preview
         run: node scripts/browser-header-check.mjs
+      - name: Verify natural logo interpolation at multiple scroll positions
+        run: node scripts/browser-logo-morph-check.mjs
       - name: Save visual proof
         if: always()
         uses: actions/upload-artifact@v4
