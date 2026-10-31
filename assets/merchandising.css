@@ -46,3 +46,14 @@
   .editorial-story__media img{height:auto;max-height:550px}
 }
 @media(prefers-reduced-motion:reduce){.campaign-card,.editorial-story{scroll-behavior:auto}}
+
+/* v0.4: cards use authentic Shopify product photography, never collection cover art. */
+.collection-tile{overflow:hidden;border:1px solid var(--line);border-radius:4px;transition:transform .2s ease}
+.collection-tile img{width:100%;aspect-ratio:1.2;object-fit:contain;background:#f4f2ed;padding:.75rem}
+.collection-tile__empty{aspect-ratio:1.2;background:#f4f2ed}
+.collection-tile h3{margin:0;padding:1rem;font-size:clamp(1rem,1.5vw,1.3rem)}
+.collection-tile:focus-visible{outline:2px solid var(--olive);outline-offset:3px}
+.campaign-card--media .campaign-card__image{object-fit:contain;background:#f4f2ed}
+.campaign-card--media:after{background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.8) 100%)}
+.hero__media img{object-fit:contain;background:#f4f2ed}
+@media(prefers-reduced-motion:no-preference){.collection-tile:hover{transform:translateY(-3px)}}
