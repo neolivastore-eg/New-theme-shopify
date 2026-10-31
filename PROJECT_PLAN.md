@@ -16,3 +16,13 @@ Motion for JavaScript or GSAP only in sections that use it; lazy optional 3D (Th
 
 ## Gates
 Each feature needs correct source data, merchant settings, mobile/RTL support, empty-state handling, accessibility, performance budget and documented test evidence.
+
+## 31 October 2026 — Homepage merchandising v0.3 (source milestone)
+- [x] Source sections: campaign cards, shopping information and image-with-text.
+- [x] Editable schema controls, block defaults, RTL-friendly CSS and responsive layout.
+- [x] Homepage template wired to campaign cards and shopping information.
+- [ ] Confirm CI Theme Check and source validation on this branch.
+- [ ] Upload to an UNPUBLISHED theme on Neoliva and verify real collection/product/image rendering.
+- [ ] Replace editorial placeholders with merchant-selected real photography and link targets.
+- [ ] Run mobile/RTL/accessibility checks and compare with published theme.
+No live-theme deployment or checkout validation is authorized by this source milestone.

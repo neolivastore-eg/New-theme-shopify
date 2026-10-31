@@ -9,6 +9,7 @@
   {% if page_description != blank %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
   <style>:root{--bg:{{ settings.color_background }};--surface:{{ settings.color_surface }};--ink:{{ settings.color_text }};--olive:{{ settings.color_accent }};--line:{{ settings.color_border }};--max:{{ settings.page_width }}px}</style>
   {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'merchandising.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
 </head>
