@@ -27,6 +27,7 @@ jobs:
           node scripts/atelier-blocks-audit.mjs
           node scripts/foundation-audit.mjs
           node scripts/foundation-pages-audit.mjs
+          node scripts/home01-logo-banner-audit.mjs
       - name: Theme Check
         uses: shopify/theme-check-action@v2
         with:

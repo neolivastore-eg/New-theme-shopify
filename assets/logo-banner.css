@@ -1,0 +1,49 @@
+/* NEOLIVA ATELIER — HOME-01 brand logo banner; photographic or non-photographic, original geometry */
+.nl-logo-banner{background:var(--nl-banner-base);color:var(--nl-banner-ink);position:relative;isolation:isolate;overflow:hidden;min-height:var(--nl-banner-height);min-height:max(580px,var(--nl-banner-height));display:grid;align-items:center}
+.nl-logo-banner__picture,.nl-logo-banner__overlay,.nl-logo-banner__canvas{position:absolute;inset:0;pointer-events:none}
+.nl-logo-banner__picture picture,.nl-logo-banner__background-image{display:block;width:100%;height:100%}
+.nl-logo-banner__background-image{object-fit:cover;object-position:center}
+.nl-logo-banner__overlay{z-index:1;background:var(--nl-banner-overlay);opacity:var(--nl-banner-overlay-opacity)}
+.nl-logo-banner__canvas{z-index:0;overflow:hidden;background:
+  radial-gradient(ellipse at 82% 22%,rgba(255,255,255,.66) 0%,transparent 36%),
+  linear-gradient(148deg,#f4eee5 4%,var(--nl-banner-base) 38%,#d9ddce 100%)}
+.nl-logo-banner__orb{position:absolute;display:block;border-radius:50%;filter:blur(.3px)}
+.nl-logo-banner__orb--one{width:clamp(320px,54vw,780px);aspect-ratio:1;top:-32%;inset-inline-start:-18%;background:#d8c5b4;transform:rotate(-15deg) scale(1.1)}
+.nl-logo-banner__orb--two{width:clamp(300px,44vw,640px);aspect-ratio:1;bottom:-46%;inset-inline-end:-10%;background:var(--nl-banner-accent);opacity:.72}
+.nl-logo-banner__arc{position:absolute;width:clamp(330px,65vw,1040px);height:80%;inset-inline-end:-28%;top:-15%;border:clamp(48px,9vw,150px) solid rgba(255,255,255,.26);border-radius:50%;transform:rotate(16deg)}
+.nl-logo-banner__baseline{position:absolute;inset-inline:0;bottom:0;height:clamp(20px,4vw,48px);background:linear-gradient(90deg,#d3bea7 0%,#e4d7c8 40%,#72836c 100%);opacity:.75}
+.nl-logo-banner__content{z-index:2;position:relative;display:grid;grid-template-rows:1fr auto;align-items:center;justify-items:center;min-height:var(--nl-banner-height);width:min(100% - 2rem,1320px);margin-inline:auto;padding-block:clamp(2.5rem,5vw,5rem) clamp(1.5rem,3vw,2.5rem)}
+.nl-logo-banner__center{display:flex;flex-direction:column;align-items:center;max-width:min(100%,900px);width:100%;text-align:center}
+.nl-logo-banner--lower .nl-logo-banner__center{transform:translateY(clamp(28px,8vh,90px))}
+.nl-logo-banner__overline{font-size:.72rem;letter-spacing:.22em;font-weight:650;margin:0 0 clamp(1.2rem,2.6vw,2.3rem);text-transform:uppercase}
+.nl-logo-banner__brand-frame{background:var(--nl-banner-panel);color:var(--nl-banner-panel-ink);width:min(100%,clamp(280px,50vw,630px));min-height:clamp(180px,22vw,275px);padding:clamp(1.7rem,4vw,4.4rem);display:grid;place-items:center;box-shadow:0 32px 85px rgba(35,43,34,.10)}
+.nl-logo-banner__brand-name{margin:0;font-size:clamp(3rem,7.3vw,7.7rem);line-height:1.02;letter-spacing:-.085em;font-weight:430;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;text-align:center;overflow-wrap:anywhere;max-width:100%;text-wrap:balance}
+.nl-logo-banner__brand-image{display:block;width:min(100%,480px);max-height:185px;height:auto;object-fit:contain}
+.nl-logo-banner__tagline{letter-spacing:.2em;font-size:.74rem;font-weight:600;text-transform:uppercase;margin:clamp(1.4rem,3vw,2.6rem) 0 0}
+.nl-logo-banner__action{display:inline-flex;align-items:center;gap:1rem;min-height:44px;margin-top:1rem;padding:.55rem 0;border-bottom:1px solid currentColor;text-transform:uppercase;letter-spacing:.09em;font-size:.75rem;font-weight:650}
+.nl-logo-banner__action:hover{text-decoration:none;gap:1.3rem}
+.nl-logo-banner__action:focus-visible{outline:3px solid currentColor;outline-offset:5px}
+.nl-logo-banner__footer-label{margin:0;text-transform:uppercase;letter-spacing:.22em;font-size:.7rem;font-weight:650;text-align:center;position:relative}
+.nl-logo-banner--photographic .nl-logo-banner__overline,.nl-logo-banner--photographic .nl-logo-banner__tagline,.nl-logo-banner--photographic .nl-logo-banner__footer-label,.nl-logo-banner--photographic .nl-logo-banner__action{color:#fff;text-shadow:0 1px 6px #0009}
+@media(min-width:750px) and (prefers-reduced-motion:no-preference){
+ .nl-logo-banner--motion .nl-logo-banner__brand-frame{animation:nl-logo-panel-enter .8s cubic-bezier(.16,1,.3,1) both}
+ .nl-logo-banner--motion .nl-logo-banner__overline,.nl-logo-banner--motion .nl-logo-banner__tagline{animation:nl-logo-caption-enter .9s ease-out both;animation-delay:.12s}
+ @keyframes nl-logo-panel-enter{from{opacity:0;transform:translateY(22px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+ @keyframes nl-logo-caption-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+}
+@media(max-width:749px){
+ .nl-logo-banner{min-height:var(--nl-banner-mobile-height)}
+ .nl-logo-banner__content{min-height:var(--nl-banner-mobile-height);width:calc(100% - 2rem);padding-block:3rem 1.5rem}
+ .nl-logo-banner__overline{font-size:.61rem;letter-spacing:.17em;margin-bottom:1.6rem}
+ .nl-logo-banner__brand-frame{width:min(100%,400px);min-height:clamp(164px,48vw,235px);padding:clamp(1.4rem,6vw,2.6rem)}
+ .nl-logo-banner__brand-name{font-size:clamp(2.7rem,11vw,5.1rem)}
+ .nl-logo-banner__brand-image{max-height:150px}
+ .nl-logo-banner__tagline,.nl-logo-banner__footer-label{font-size:.65rem;letter-spacing:.14em}
+ .nl-logo-banner__orb--one{width:110vw;inset-inline-start:-48%;top:-18%}
+ .nl-logo-banner__orb--two{width:100vw;inset-inline-end:-40%;bottom:-24%}
+ .nl-logo-banner__arc{width:130vw;inset-inline-end:-75%;top:0}
+ .nl-logo-banner--lower .nl-logo-banner__center{transform:translateY(30px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .nl-logo-banner,.nl-logo-banner *{animation:none!important;transition:none!important}
+}
