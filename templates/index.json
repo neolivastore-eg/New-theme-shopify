@@ -207,7 +207,10 @@
         "panel_position": "center",
         "desktop_height": 720,
         "mobile_height": 680,
-        "motion": true
+        "motion": true,
+        "dock_on_scroll": true,
+        "dock_start": 10,
+        "dock_end": 80
       }
     }
   },
