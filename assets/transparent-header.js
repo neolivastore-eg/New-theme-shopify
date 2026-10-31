@@ -1,8 +1,9 @@
 'use strict';
 /*
  * HOME-01 transparent overlay header. The header section is in the native Shopify
- * header group; CSS overlays it on the first homepage section. This controller
- * only changes the translucent surface as the document scrolls. The existing
+ * header group; its old sticky wrapper was constrained by that group.
+ * CSS fixes the header to the viewport, and this controller keeps it below
+ * any visible announcement bar while controlling the translucent surface. The existing
  * logo-dock.js is responsible for the separate scroll-to-header logo motion.
  */
 (() => {
@@ -22,7 +23,8 @@
     host.classList.add('nl-home-overlay-host');
     let frame = 0;
     let active = true;
-    const initialStyle = host.style.getPropertyValue('--nl-overlay-header-height');
+    const initialTop = host.style.getPropertyValue('--nl-header-top');
+    const announcement = document.querySelector('.announcement-bar');
     const initialSurface = header.style.getPropertyValue('--nl-header-surface-opacity');
     const initialScrolled = header.classList.contains('nl-header--scrolled');
     const distance = Math.max(60, Number(header.dataset.homeScrollDistance) || 160);
@@ -31,9 +33,13 @@
     function render() {
       frame = 0;
       if (!active || !header.isConnected || !banner.isConnected) return;
-      // The banner can begin below an announcement strip. The header always
-      // uses real viewport coordinates for sticky positioning.
+      // The top announcement is allowed to scroll away. Once it is gone,
+      // the fixed header remains at the viewport top for the entire page.
       const scroll = Math.max(0, window.scrollY || window.pageYOffset || 0);
+      // Computed against the viewport every time, even after resizing, scrolling
+      // back upward, or editing the announcement content in Shopify.
+      const announcementBottom = announcement?.isConnected ? announcement.getBoundingClientRect().bottom : 0;
+      host.style.setProperty('--nl-header-top', Math.max(0, announcementBottom).toFixed(2) + 'px');
       const menuOpen = Boolean(header.querySelector('details[open]'));
       const opacity = menuOpen ? 1 : reducedMotion.matches ? (scroll > 2 ? 1 : 0) : clamp(scroll / distance);
       header.style.setProperty('--nl-header-surface-opacity', opacity.toFixed(3));
@@ -46,7 +52,6 @@
 
     function measure() {
       if (!active) return;
-      host.style.setProperty('--nl-overlay-header-height', header.getBoundingClientRect().height + 'px');
       schedule();
     }
 
@@ -68,8 +73,8 @@
       header.removeEventListener('toggle', onToggle, true);
       header.removeEventListener('click', schedule);
       document.removeEventListener('shopify:section:reorder', measure);
-      if (initialStyle) host.style.setProperty('--nl-overlay-header-height', initialStyle);
-      else host.style.removeProperty('--nl-overlay-header-height');
+      if (initialTop) host.style.setProperty('--nl-header-top', initialTop);
+      else host.style.removeProperty('--nl-header-top');
       if (initialSurface) header.style.setProperty('--nl-header-surface-opacity', initialSurface);
       else header.style.removeProperty('--nl-header-surface-opacity');
       header.classList.toggle('nl-header--scrolled', initialScrolled);

@@ -25,3 +25,11 @@
 - Do not publish the theme until merchant approves appearance and behavior.
 
 **Safety:** This is written only to the unpublished `New-theme-shopify/shopify-preview`. The MAIN Refresh theme and shop products are unchanged.
+
+## v0.8.4 Root-cause fix: not sticky inside a short Shopify header group
+
+The original v0.8.3 implementation used `position:sticky` on a Shopify header *section wrapper*. This wrapper can be bounded by its containing header group, so after users scroll beyond the group's height the header **disappears**. The earlier short-range JS tests checked only the opacity, not the actual CSS positioning.
+
+v0.8.4 uses `position:fixed` on the homepage header's native section wrapper (`.nl-header-section`), outside document flow, for the **entire viewport** and **every following section**. CSS `:has` enables overlay from initial paint; JS sets `--nl-header-top` to the remaining onscreen announcement-strip bottom, clamped to zero. As the announcement scrolls out, the header pins to top:0 and remains there for deep scrolling (1,700px and beyond). Returning to top restores transparency and the announcement offset. Header logo docking no longer enables the conflicting sticky-wrapper class on this fixed-home configuration. All non-home page templates retain their existing header behavior.
+
+Source regression coverage: CSS must contain `position:fixed`; the JS test now explicitly simulates deep scrolling, reversal, open menu, resized announcement and reduced motion. CSS/DOM tests are not proof of a complete visual browser journey; mobile/desktop interactive inspection remains an acceptance gate.

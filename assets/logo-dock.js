@@ -19,10 +19,12 @@
     const target = header?.querySelector('[data-logo-dock-target]');
     if (!banner || !source || !header || !target || mq.matches) return;
 
-    // The Shopify header section wrapper, not merely its inner header,
-    // must be sticky so the dock stays visible as the page scrolls.
+    // The transparent homepage header is independently FIXED to the viewport.
+    // Never apply the older sticky-host helper here: Shopify section groups
+    // bound sticky children and were the reason the header scrolled away.
     const stickyHost = header.closest('.shopify-section');
-    if (stickyHost) stickyHost.classList.add('nl-logo-dock-sticky-host');
+    const usesFixedHeader = header.classList.contains('site-header--home-overlay');
+    if (stickyHost && !usesFixedHeader) stickyHost.classList.add('nl-logo-dock-sticky-host');
 
     const floating = source.cloneNode(true);
     floating.classList.add('nl-logo-dock-floating');
@@ -120,7 +122,7 @@
       target.style.pointerEvents = '';
       if (originalTabIndex === null) target.removeAttribute('tabindex');
       else target.setAttribute('tabindex', originalTabIndex);
-      stickyHost?.classList.remove('nl-logo-dock-sticky-host');
+      if (!usesFixedHeader) stickyHost?.classList.remove('nl-logo-dock-sticky-host');
     };
     schedule();
   }
