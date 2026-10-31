@@ -1,0 +1,33 @@
+<section class="editorial-story{% if section.settings.reverse %} editorial-story--reverse{% endif %}{% if section.settings.image == blank %} editorial-story--text-only{% endif %}" id="EditorialStory-{{ section.id }}" style="--editorial-story-bg: {{ section.settings.background }};">
+  <div class="site-width editorial-story__inner">
+    {% if section.settings.image != blank %}
+      <div class="editorial-story__media">
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '400,640,900,1200,1600', sizes: '(max-width: 749px) 100vw, 50vw', loading: 'lazy' }}
+      </div>
+    {% endif %}
+    <div class="editorial-story__copy">
+      {% if section.settings.eyebrow != blank %}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
+      {% if section.settings.text != blank %}<div class="rte">{{ section.settings.text }}</div>{% endif %}
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Real editorial image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR APPROACH" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Beauty for everyday life" },
+    { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Explore products selected with your routine in mind.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "reverse", "label": "Image on the right", "default": false },
+    { "type": "color", "id": "background", "label": "Background", "default": "#EFECE4" }
+  ],
+  "presets": [ { "name": "Image with text" } ]
+}
+{% endschema %}

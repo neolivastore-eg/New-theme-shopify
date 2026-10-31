@@ -1,0 +1,48 @@
+/* Neoliva Atelier — reusable editorial / merchandising sections.
+   Merchant-supplied photography only; no demo or stock image URLs. */
+.campaign-section__heading{margin-bottom:1.5rem}
+.campaign-section__heading h2{margin:.35rem 0 0}
+.campaign-section__heading .eyebrow{margin:0}
+.campaign-section__all{text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.campaign-cards{display:grid;gap:1rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.campaign-cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.campaign-card{background:#ece9e1;min-width:0;min-height:clamp(320px,34vw,490px);position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:end}
+.campaign-card--media{color:#fff;background:#272a25}
+.campaign-card--media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 15%,rgba(0,0,0,.78) 100%);z-index:-1}
+.campaign-card__image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.campaign-card__content{position:relative;width:100%;padding:clamp(1.3rem,3vw,2.7rem)}
+.campaign-card__content .eyebrow{margin:0 0 .6rem}
+.campaign-card h3{font-size:clamp(1.65rem,2.9vw,2.7rem);margin:0;max-width:16ch}
+.campaign-card__text{max-width:42ch;font-size:.93rem}
+.campaign-card__text p{margin:.6rem 0}
+.campaign-card__link{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;min-height:44px;border-bottom:1px solid currentColor;font-weight:650}
+.campaign-card__link:focus-visible,.benefits-item a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.benefits-section{background:var(--surface);border-block:1px solid var(--line)}
+.benefits-section__inner{padding-block:clamp(2rem,4.2vw,3.5rem)}
+.benefits-section__heading{text-align:center;margin:0 0 2rem;font-size:clamp(1.3rem,2.3vw,1.8rem)}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem;padding:0;margin:0;list-style:none}
+.benefits-grid:has(>li:nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))}
+.benefits-item{min-width:0;padding-inline:1rem;border-inline-start:1px solid var(--line)}
+.benefits-item h3{font-size:1.08rem;margin:0 0 .5rem;letter-spacing:-.01em}
+.benefits-item p{font-size:.88rem;margin:.3rem 0;opacity:.8}
+.benefits-item a{font-size:.87rem;text-decoration:underline;text-underline-offset:3px;display:inline-block;margin-top:.5rem}
+.editorial-story{background:var(--editorial-story-bg,#efece4)}
+.editorial-story__inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(2rem,6vw,6rem);padding-block:clamp(2.5rem,6vw,6rem)}
+.editorial-story__media img{width:100%;height:clamp(320px,43vw,640px);object-fit:cover;display:block}
+.editorial-story__copy{max-width:550px}
+.editorial-story__copy h2{margin:.6rem 0 1.1rem}
+.editorial-story__copy .button{margin-top:1rem}
+.editorial-story--reverse .editorial-story__media{grid-column:2;grid-row:1}
+.editorial-story--reverse .editorial-story__copy{grid-column:1;grid-row:1}
+.editorial-story--text-only .editorial-story__inner{grid-template-columns:minmax(0,700px);justify-content:center}
+@media(max-width:1000px){.benefits-grid:has(>li:nth-child(4)){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){
+  .campaign-cards,.campaign-cards--3,.benefits-grid,.benefits-grid:has(>li:nth-child(4)){grid-template-columns:1fr}
+  .campaign-card{min-height:340px}
+  .campaign-card h3{font-size:clamp(1.7rem,7vw,2.3rem)}
+  .benefits-grid{gap:1.3rem}
+  .editorial-story__inner{grid-template-columns:1fr}
+  .editorial-story--reverse .editorial-story__media,.editorial-story--reverse .editorial-story__copy{grid-column:auto;grid-row:auto}
+  .editorial-story__media img{height:auto;max-height:550px}
+}
+@media(prefers-reduced-motion:reduce){.campaign-card,.editorial-story{scroll-behavior:auto}}

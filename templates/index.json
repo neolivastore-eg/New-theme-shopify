@@ -7,6 +7,36 @@
         "eyebrow": "THE EDIT"
       }
     },
+    "campaigns": {
+      "type": "campaign-grid",
+      "settings": {
+        "heading": "Find your everyday essentials",
+        "eyebrow": "EXPLORE",
+        "columns": "2"
+      },
+      "blocks": {
+        "skincare": {
+          "type": "campaign",
+          "settings": {
+            "eyebrow": "SKINCARE",
+            "heading": "Your skincare edit",
+            "text": "<p>Discover products for your everyday routine.</p>"
+          }
+        },
+        "haircare": {
+          "type": "campaign",
+          "settings": {
+            "eyebrow": "HAIRCARE",
+            "heading": "Your haircare edit",
+            "text": "<p>Find your next haircare essential.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "skincare",
+        "haircare"
+      ]
+    },
     "collections": {
       "type": "collection-links",
       "settings": {
@@ -18,11 +48,47 @@
       "settings": {
         "heading": "Curated for you"
       }
+    },
+    "benefits": {
+      "type": "benefits-strip",
+      "settings": {
+        "heading": "The Neoliva experience"
+      },
+      "blocks": {
+        "delivery": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Delivery",
+            "text": "Check available shipping options."
+          }
+        },
+        "payments": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Payments",
+            "text": "Payment choices appear at checkout."
+          }
+        },
+        "questions": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Questions?",
+            "text": "Contact us for product information."
+          }
+        }
+      },
+      "block_order": [
+        "delivery",
+        "payments",
+        "questions"
+      ]
     }
   },
   "order": [
     "hero",
+    "campaigns",
     "collections",
-    "featured"
+    "featured",
+    "benefits"
   ]
 }
