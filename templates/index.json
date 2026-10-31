@@ -136,6 +136,67 @@
         "payments",
         "questions"
       ]
+    },
+    "editorial": {
+      "type": "atelier-composition",
+      "settings": {
+        "layout": "split",
+        "surface": "cream",
+        "accent": "#636E4E",
+        "reveal": true
+      },
+      "blocks": {
+        "content": {
+          "type": "atelier-stack",
+          "settings": {
+            "layout": "vertical",
+            "alignment": "start"
+          },
+          "blocks": {
+            "headline": {
+              "type": "atelier-heading",
+              "settings": {
+                "eyebrow": "THE NEOLIVA EDIT",
+                "heading": "Everyday beauty, thoughtfully chosen.",
+                "size": "large",
+                "level": "h2",
+                "alignment": "start"
+              }
+            },
+            "detail": {
+              "type": "atelier-copy",
+              "settings": {
+                "body": "<p>Explore skincare essentials and discover what fits your routine.</p>",
+                "alignment": "start"
+              }
+            },
+            "link": {
+              "type": "atelier-action",
+              "settings": {
+                "label": "Explore skin care",
+                "collection": "skin-care-1",
+                "style": "primary"
+              }
+            }
+          },
+          "block_order": [
+            "headline",
+            "detail",
+            "link"
+          ]
+        },
+        "media": {
+          "type": "atelier-media",
+          "settings": {
+            "collection": "skin-care-1",
+            "ratio": "portrait"
+          }
+        }
+      },
+      "block_order": [
+        "content",
+        "media"
+      ]
     }
   },
   "order": [
@@ -143,6 +204,7 @@
     "campaigns",
     "collections",
     "featured",
+    "editorial",
     "benefits"
   ]
 }
