@@ -1,35 +1,75 @@
-{% assign current_variant = product.selected_or_first_available_variant %}
-<section class="site-width section-space product-page">
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign can_purchase = false
+  if current_variant != blank and current_variant.available
+    assign can_purchase = true
+  endif
+%}
+<section class="site-width section-space product-page" id="ProductMain-{{ section.id }}" data-product-root data-product-url="{{ product.url | escape }}">
   <div class="product-gallery">
     {% for media in product.media %}
-      <div class="product-gallery__item">
-      {% if media.media_type == 'image' %}{{ media.preview_image | image_url: width: 1400 | image_tag: widths: '360,600,900,1200,1400', loading: 'lazy' }}
-      {% else %}{{ media | media_tag: image_size: '800x', controls: true }}{% endif %}
+      <div class="product-gallery__item" data-media-id="{{ media.id }}">
+        {% if media.media_type == 'image' %}
+          {{ media.preview_image | image_url: width: 1400 | image_tag: widths: '360,600,900,1200,1400', sizes: '(max-width: 720px) 50vw, (max-width: 1100px) 40vw, 30vw', loading: 'lazy', alt: media.alt }}
+        {% else %}
+          {{ media | media_tag: image_size: '800x', controls: true }}
+        {% endif %}
       </div>
-    {% else %}<div>{{ 'products.no_image' | t }}</div>{% endfor %}
+    {% else %}
+      <div class="product-gallery__empty">{{ 'products.no_image' | t }}</div>
+    {% endfor %}
   </div>
   <div class="product-info" data-product-form-root>
-    {% if product.vendor != blank %}<div class="eyebrow">{{ product.vendor | escape }}</div>{% endif %}
+    {% if product.vendor != blank %}<p class="eyebrow">{{ product.vendor | escape }}</p>{% endif %}
     <h1 class="product-info__title">{{ product.title | escape }}</h1>
-    <div class="product-info__price" data-product-price>{{ current_variant.price | money }}</div>
-    <div class="rte">{{ product.description }}</div>
-    {% form 'product', product, class: 'product-form' %}
+
+    <div class="product-info__prices" aria-live="polite" aria-atomic="true">
+      {% if current_variant != blank %}
+        <span class="product-info__price">{{ current_variant.price | money }}</span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <s class="product-info__compare">{{ current_variant.compare_at_price | money }}</s>
+        {% endif %}
+        {% if current_variant.unit_price_measurement %}
+          <span class="product-info__unit">{{ current_variant.unit_price | unit_price_with_measurement: current_variant.unit_price_measurement }}</span>
+        {% endif %}
+      {% else %}
+        <span class="product-info__price">{{ 'products.unavailable' | t }}</span>
+      {% endif %}
+    </div>
+
+    {% form 'product', product, class: 'product-form', id: 'ProductForm-' | append: section.id %}
       {% unless product.has_only_default_variant %}
-      <div class="form-field"><label for="Variants-{{ section.id }}">{{ 'products.variant' | t }}</label>
-        <select id="Variants-{{ section.id }}" name="id" data-variant-selector>
-          {% for variant in product.variants %}
-          <option value="{{ variant.id }}" data-price="{{ variant.price | money | escape }}" {% if current_variant.id == variant.id %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title | escape }}</option>
+        <div class="product-options" role="group" aria-label="{{ 'products.variant' | t }}">
+          {% for option in product.options_with_values %}
+            <div class="form-field">
+              <label for="Option-{{ section.id }}-{{ option.position }}">{{ option.name | escape }}</label>
+              <select id="Option-{{ section.id }}-{{ option.position }}" data-option-value-selector data-option-position="{{ option.position }}" disabled>
+                {% for option_value in option.values %}
+                  <option value="{{ option_value.id }}" data-product-url="{{ option_value.product_url | escape }}" {% if option_value.selected %}selected{% endif %}>{{ option_value | escape }}{% unless option_value.available %} — {{ 'products.sold_out' | t }}{% endunless %}</option>
+                {% endfor %}
+              </select>
+            </div>
           {% endfor %}
-        </select>
+        </div>
+        <noscript><p class="product-form__notice">{{ 'products.enable_js_options' | t }}</p></noscript>
+      {% endunless %}
+      {% if current_variant != blank %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+      {% endif %}
+      <div class="form-field">
+        <label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
+        <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="{% if current_variant.quantity_rule.min %}{{ current_variant.quantity_rule.min }}{% else %}1{% endif %}" {% if current_variant.quantity_rule.max %}max="{{ current_variant.quantity_rule.max }}"{% endif %} step="{% if current_variant.quantity_rule.increment %}{{ current_variant.quantity_rule.increment }}{% else %}1{% endif %}" value="{% if current_variant.quantity_rule.min %}{{ current_variant.quantity_rule.min }}{% else %}1{% endif %}">
       </div>
-      {% else %}<input type="hidden" name="id" value="{{ current_variant.id }}">{% endunless %}
-      <div class="form-field"><label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label><input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1"></div>
-      <button class="button button--primary product-form__submit" type="submit" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>{% if current_variant.available %}{{ 'products.add_to_cart' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}</button>
+      <button class="button button--primary product-form__submit" type="submit" data-add-to-cart {% unless can_purchase %}disabled{% endunless %}>
+        {% if can_purchase %}{{ 'products.add_to_cart' | t }}{% elsif current_variant == blank %}{{ 'products.unavailable' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}
+      </button>
     {% endform %}
+
+    {% if product.description != blank %}<div class="rte product-description">{{ product.description }}</div>{% endif %}
     {% for block in section.blocks %}
       {% case block.type %}
-      {% when 'trust_text' %}<div class="product-trust" {{ block.shopify_attributes }}>{{ block.settings.message | escape }}</div>
-      {% when 'accordion' %}<details class="product-accordion" {{ block.shopify_attributes }}><summary>{{ block.settings.heading | escape }}</summary>{{ block.settings.body }}</details>
+        {% when 'trust_text' %}<div class="product-trust" {{ block.shopify_attributes }}>{{ block.settings.message | escape }}</div>
+        {% when 'accordion' %}<details class="product-accordion" {{ block.shopify_attributes }}><summary>{{ block.settings.heading | escape }}</summary><div class="rte">{{ block.settings.body }}</div></details>
       {% endcase %}
     {% endfor %}
   </div>
