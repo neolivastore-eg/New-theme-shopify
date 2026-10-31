@@ -48,7 +48,7 @@
  .nl-logo-banner,.nl-logo-banner *{animation:none!important;transition:none!important}
 }
 
-/* HOME-01 scroll journey: one visual white card morphing into the real header logo. */
+/* HOME-01 scroll journey: preserve aspect ratio from hero image into actual header image. */
 .nl-logo-dock-sticky-host{position:sticky;top:0;z-index:48}
 .nl-logo-banner--dock-enabled .nl-logo-banner__brand-frame{animation:none!important}
 .nl-logo-banner__brand-frame.nl-logo-dock-floating{
@@ -91,5 +91,48 @@ body:has([data-mobile-navigation][open]) .nl-logo-dock-floating{visibility:hidde
 @media(max-width:749px){
   .nl-logo-banner--image-only .nl-logo-banner__brand-frame{
     width:min(86vw,420px);
+  }
+}
+
+/* v0.8.6. The moving visual is an image, not an entire white (now
+   transparent) card. Do not let max-width or object-fit resize the image
+   independently while CSS transform handles motion. */
+.nl-logo-dock-image{
+  position:fixed!important;
+  top:0;left:0;
+  z-index:52;
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:none!important;
+  max-height:none!important;
+  padding:0!important;
+  margin:0;
+  background:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+  object-fit:fill;
+  transform-origin:top left;
+  pointer-events:none;
+  will-change:transform,opacity;
+  transition:none!important;
+  animation:none!important;
+}
+.nl-logo-dock-image[hidden]{display:none!important;}
+/* Match the header logo's image rectangle to its actual intrinsic ratio.
+   The legacy 160x52 image box used object-fit contain (with dead letterboxing);
+   animating toward that oversized box made the logo appear to squash. */
+.site-header--home-overlay .site-header__logo{
+  width:auto;
+  height:52px;
+  max-height:52px;
+  max-width:min(160px, 32vw);
+  object-fit:contain;
+}
+@media(max-width:749px){
+  .site-header--home-overlay .site-header__logo{
+    height:43px;
+    max-height:43px;
+    max-width:125px;
   }
 }
