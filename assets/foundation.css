@@ -1,3 +1,4 @@
+[hidden]{display:none!important}
 /* v0.6 — foundation UX: navigation, accessible search, cart drawer. */
 .site-header__actions{flex-shrink:0}
 .mobile-navigation__panel{max-height:min(80vh,670px);overflow:auto;max-width:calc(100vw - 1rem)}
