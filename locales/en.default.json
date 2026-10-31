@@ -16,7 +16,8 @@
     "variant": "Choose option",
     "no_image": "No image",
     "unavailable": "Unavailable",
-    "enable_js_options": "Enable JavaScript to change the selected option."
+    "enable_js_options": "Enable JavaScript to change the selected option.",
+    "from_price": "From"
   },
   "cart": {
     "title": "Your bag",
