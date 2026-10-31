@@ -12,18 +12,24 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "THE EDIT",
         "heading": "Beauty with intention.",
+        "eyebrow": "THE EDIT",
         "collection": "skin-care-1",
         "button_label": "Shop skincare"
       }
     },
     "campaigns": {
       "type": "campaign-grid",
+      "settings": {
+        "heading": "Explore beauty by routine",
+        "eyebrow": "DISCOVER",
+        "columns": "3"
+      },
       "blocks": {
         "skincare": {
           "type": "campaign",
           "settings": {
+            "collection": "skin-care-1",
             "eyebrow": "SKIN CARE",
             "heading": "Skin Care",
             "text": "<p>Explore skincare essentials.</p>",
@@ -33,6 +39,7 @@
         "haircare": {
           "type": "campaign",
           "settings": {
+            "collection": "hair-care-1",
             "eyebrow": "HAIR CARE",
             "heading": "Hair Care",
             "text": "<p>Explore haircare essentials.</p>",
@@ -42,6 +49,7 @@
         "makeup": {
           "type": "campaign",
           "settings": {
+            "collection": "makeup",
             "eyebrow": "MAKEUP",
             "heading": "Makeup",
             "text": "<p>Explore makeup products.</p>",
@@ -53,15 +61,13 @@
         "skincare",
         "haircare",
         "makeup"
-      ],
-      "settings": {
-        "eyebrow": "DISCOVER",
-        "heading": "Explore beauty by routine",
-        "columns": "3"
-      }
+      ]
     },
     "collections": {
       "type": "collection-links",
+      "settings": {
+        "heading": "Shop by category"
+      },
       "blocks": {
         "skincare": {
           "type": "collection_item",
@@ -86,22 +92,22 @@
         "skincare",
         "haircare",
         "makeup"
-      ],
-      "settings": {
-        "heading": "Shop by category"
-      }
+      ]
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "THE EDIT",
         "heading": "Skincare essentials",
+        "eyebrow": "THE EDIT",
         "collection": "skin-care-1",
         "product_limit": 8
       }
     },
     "benefits": {
       "type": "benefits-strip",
+      "settings": {
+        "heading": "The Neoliva experience"
+      },
       "blocks": {
         "delivery": {
           "type": "benefit",
@@ -129,10 +135,7 @@
         "delivery",
         "payments",
         "questions"
-      ],
-      "settings": {
-        "heading": "The Neoliva experience"
-      }
+      ]
     }
   },
   "order": [
