@@ -59,3 +59,11 @@ See `PROJECT_PLAN.md`.
 - Product forms: native Shopify product form with optional Ajax add; canonical variant URL remains the source of truth.
 - /blocks now included in the distributable ZIP; installability still requires real-store validation.
 - NOT YET CERTIFIED: end-to-end purchase, RTL, mobile accessibility, performance, app compatibility and Theme Store compliance.
+
+## v0.7 required operating templates
+- OS 2.0 pages: blog, article, contact page, password page, gift card, existing product/collection/cart/search and policy.
+- Merchant Custom Liquid section; native Shopify contact form; customer account link conditional on shop settings.
+- Product accelerated checkout uses the official payment_button filter; product structured_data uses Shopify's native filter, without invented price or stock.
+- Cart page shows line item and cart-level discounts from Shopify data.
+- These are minimal operational routes, not final branded editorials. Styling waits for merchant section screenshots.
+- Shopify Theme Check proves static syntax/config; do not claim real payment/RTL/accessibility QA until executed.
