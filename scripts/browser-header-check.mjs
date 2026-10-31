@@ -16,6 +16,34 @@ for(const options of points){
   const page=await context.newPage();
   await page.goto(target,{waitUntil:'domcontentloaded',timeout:45000});
   await page.waitForSelector('[data-logo-banner]',{timeout:18000});
+
+  await page.waitForSelector('[data-logo-banner].nl-logo-banner--image-only .nl-logo-banner__brand-image',{timeout:15000});
+  const logoProof=await page.evaluate(async()=>{
+    const img=document.querySelector('[data-logo-banner] .nl-logo-banner__brand-image');
+    const frame=img?.closest('[data-logo-dock-source]');
+    if (!img || !frame) return {error:'Missing actual logo image or source'};
+    try {await img.decode()}catch{}
+    const style=getComputedStyle(frame);
+    const result={url:img.currentSrc || img.src,loaded:img.complete&&img.naturalWidth>0,naturalWidth:img.naturalWidth,naturalHeight:img.naturalHeight,background:style.backgroundColor,shadow:style.boxShadow,padding:style.padding,alphaFraction:null};
+    try {
+      const canvas=document.createElement('canvas');
+      canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+      const context=canvas.getContext('2d',{willReadFrequently:true});
+      context.drawImage(img,0,0);
+      const imageData=context.getImageData(0,0,canvas.width,canvas.height).data;
+      let zero=0;
+      for(let i=3;i<imageData.length;i+=4){if(imageData[i]<250)zero++}
+      result.alphaFraction=Number((zero/(canvas.width*canvas.height)).toFixed(4));
+    }catch(error){result.canvasError=String(error)}
+    return result;
+  });
+  console.log(options.name,'logo-alpha-and-frame',JSON.stringify(logoProof));
+  assert.ok(logoProof.loaded,options.name+': real Neoliva logo image must load');
+  assert.match(logoProof.url,/d7d39038-c498/,options.name+': correct green logo asset');
+  assert.ok(logoProof.background === 'rgba(0, 0, 0, 0)' || logoProof.background === 'transparent',options.name+': logo background card must be transparent');
+  assert.equal(logoProof.shadow,'none',options.name+': no surrounding white card shadow');
+  assert.equal(logoProof.padding,'0px',options.name+': no blank padded logo plate');
+
   await page.waitForFunction(()=>!!document.querySelector('.nl-home-overlay-host'),null,{timeout:15000});
   const inspect=async()=>page.evaluate(()=>{
     const header=document.querySelector('[data-site-header].site-header--home-overlay');
