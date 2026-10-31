@@ -40,7 +40,7 @@ for(const options of points){
   console.log(options.name,'logo-alpha-and-frame',JSON.stringify(logoProof));
   assert.ok(logoProof.loaded,options.name+': real Neoliva logo image must load');
   assert.match(logoProof.url,/d7d39038-c498/,options.name+': correct green logo asset');
-  assert.match(logoProof.background,/rgba\\(0, 0, 0, 0\\)|transparent/,options.name+': logo background card must be transparent');
+  assert.ok(logoProof.background === 'rgba(0, 0, 0, 0)' || logoProof.background === 'transparent',options.name+': logo background card must be transparent');
   assert.equal(logoProof.shadow,'none',options.name+': no surrounding white card shadow');
   assert.equal(logoProof.padding,'0px',options.name+': no blank padded logo plate');
 
