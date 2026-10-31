@@ -1,0 +1,44 @@
+name: HOME-01 Browser Deep Scroll
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/transparent-header.css'
+      - 'assets/transparent-header.js'
+      - 'assets/logo-dock.js'
+      - 'sections/header.liquid'
+      - 'scripts/browser-header-check.mjs'
+      - '.github/workflows/home01-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/browser-header-check.mjs'
+      - '.github/workflows/home01-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  viewport-scroll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test dependency
+        run: npm install --no-save --no-package-lock playwright-core
+      - name: Resolve Chrome
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "CHROME_BIN=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install chromium
+          fi
+      - name: Test real mobile and desktop deep scroll on unpublished Shopify preview
+        run: node scripts/browser-header-check.mjs
+      - name: Save visual proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: home01-fixed-header-screenshots
+          path: browser-proof/
+          if-no-files-found: ignore
+          retention-days: 7
