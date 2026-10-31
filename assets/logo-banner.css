@@ -63,3 +63,33 @@ body:has([data-mobile-navigation][open]) .nl-logo-dock-floating{visibility:hidde
 @media(prefers-reduced-motion:reduce){
  .nl-logo-dock-floating{display:none!important}
 }
+
+/* HOME-01 v0.8.5 — the official transparent brand mark itself is the hero:
+   no white identity card, opaque plate, inset or shadow. These rules intentionally
+   occur after all breakpoints to override default frame and mobile padding. */
+.nl-logo-banner--image-only .nl-logo-banner__brand-frame{
+  background:transparent;
+  box-shadow:none;
+  border:0;
+  min-height:0;
+  padding:0;
+  width:min(100%,clamp(270px,62vw,630px));
+}
+.nl-logo-banner--image-only .nl-logo-banner__brand-image{
+  width:100%;
+  max-width:100%;
+  max-height:none;
+  height:auto;
+  object-fit:contain;
+}
+.nl-logo-banner--image-only .nl-logo-banner__brand-name{
+  display:grid;
+  place-items:center;
+  width:100%;
+  margin:0;
+}
+@media(max-width:749px){
+  .nl-logo-banner--image-only .nl-logo-banner__brand-frame{
+    width:min(86vw,420px);
+  }
+}
