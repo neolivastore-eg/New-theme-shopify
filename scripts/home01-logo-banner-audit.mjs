@@ -63,7 +63,7 @@ assert.match(read('assets/logo-banner.css'),/height:43px/);
 const campaign=JSON.parse(read('templates/index.json')).sections.logo_banner.settings;
 assert.equal(campaign.photo_layout,'portrait_campaign');
 assert.equal(campaign.mobile_height,680,'Restore original v0.9.0 scroll distance');
-assert.equal(campaign.desktop_image,'shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg');
+assert.equal(campaign.desktop_image,'shopify://shop_images/neoliva-logo-banner-hanging-gifts-2026.jpg');
 assert.equal(campaign.mobile_image,campaign.desktop_image);
 assert.ok(campaign.dock_on_scroll&&campaign.show_logo_plate===false,'Do not change approved image-only logo scroll-docking');
 assert.match(section,/nl-logo-banner--campaign-portrait/);
