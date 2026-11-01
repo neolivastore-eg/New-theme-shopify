@@ -26,7 +26,7 @@ assert.equal(home.order[0],'logo_banner');
 assert.equal(home.sections.logo_banner.type,'logo-banner');
 assert.equal(home.sections.hero.disabled,true,'Keep old hero for rollback, not duplicate visible masthead');
 assert.ok(home.order.includes('hero'));
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.9.1');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.9.2');
 console.log('HOME-01 native image art direction, editorial logo frame and homepage integration passed');
 
 assert.match(read('sections/logo-banner.liquid'),/data-logo-dock-source/);
@@ -62,7 +62,11 @@ assert.match(read('assets/logo-banner.css'),/height:43px/);
 
 const campaign=JSON.parse(read('templates/index.json')).sections.logo_banner.settings;
 assert.equal(campaign.photo_layout,'portrait_campaign');
-assert.equal(campaign.mobile_height,840);
+assert.equal(campaign.mobile_height,680,'Restore original v0.9.0 banner height');
+const campaignOnlyCss=css.slice(css.indexOf('/* HOME-01 v0.9.2'));
+for(const selector of ['.nl-logo-banner__brand-frame','.nl-logo-banner__brand-image','.nl-logo-banner__center','.nl-logo-banner__content','.nl-logo-banner__footer-label{']){
+  assert.ok(!campaignOnlyCss.includes(selector),'Campaign must not change approved logo geometry: '+selector);
+}
 assert.equal(campaign.desktop_image,'shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg');
 assert.equal(campaign.mobile_image,campaign.desktop_image);
 assert.ok(campaign.dock_on_scroll&&campaign.show_logo_plate===false,'Do not change approved image-only logo scroll-docking');

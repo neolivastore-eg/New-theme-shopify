@@ -92,6 +92,8 @@ for(const options of points){
       heroHeight:heroRect.height,
       overlayDisplay:getComputedStyle(hero.querySelector('.nl-logo-banner__overlay')).display,
       logoTransparent:hero.classList.contains('nl-logo-banner--image-only'),
+      logoWidth:hero.querySelector('[data-logo-dock-source]')?.getBoundingClientRect().width,
+      logoImageWidth:hero.querySelector('.nl-logo-banner__brand-image')?.getBoundingClientRect().width,
       animated:hero.dataset.logoDock==='true'
     };
   });
@@ -105,11 +107,13 @@ for(const options of points){
   assert.equal(portrait.logoTransparent,true,options.name+': logo must remain image-only');
   assert.equal(portrait.animated,true,options.name+': existing scroll logo dock must remain active');
   if(options.name==='mobile'){
-    assert.ok(portrait.heroHeight>=830,options.name+': full portrait image preserved');
+    assert.ok(portrait.heroHeight>=675&&portrait.heroHeight<710,options.name+': restored original 680px hero height');
+    assert.ok(portrait.logoWidth>315&&portrait.logoWidth<355,options.name+': original v0.9.0 mobile logo width must return');
     assert.ok(portrait.photoWidth>=options.viewport.width-2,options.name+': photo should cover width');
   }else{
     assert.ok(portrait.photoWidth<portrait.heroWidth*.55,options.name+': portrait image must be right-hand composition');
     assert.ok(portrait.photoWidth>=450,options.name+': showcase should be prominent');
+    assert.ok(portrait.logoWidth>580&&portrait.logoWidth<=635,options.name+': original v0.9.0 desktop logo width must return');
   }
 
   await page.screenshot({path:output+'/'+options.name+'-top.png',fullPage:false});
