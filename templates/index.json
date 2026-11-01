@@ -223,7 +223,7 @@
         "panel_foreground": "#272A25",
         "panel_position": "center",
         "desktop_height": 720,
-        "mobile_height": 840,
+        "mobile_height": 680,
         "motion": true,
         "dock_on_scroll": true,
         "dock_start": 10,
