@@ -213,6 +213,7 @@
         "footer_label": "DISCOVER NEOLIVA",
         "desktop_image": "shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg",
         "mobile_image": "shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg",
+        "photo_layout": "portrait_campaign",
         "background": "#F6E9DE",
         "foreground": "#252C26",
         "accent": "#68795F",
