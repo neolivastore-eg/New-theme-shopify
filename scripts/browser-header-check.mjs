@@ -71,6 +71,91 @@ for(const options of points){
   assert.ok(top.width>=options.viewport.width-2,options.name+': header must cover viewport');
   assert.ok(top.surface<0.08,options.name+': header should start visually transparent');
   await page.screenshot({path:output+'/'+options.name+'-top.png',fullPage:false});
+
+  // Inspect real intermediate desktop/mobile animation frames — the earlier
+  // browser test only checked at scroll 0 and 2000px, missing the regression.
+  const thresholds=await page.evaluate(()=>{
+    const banner=document.querySelector('[data-logo-banner]');
+    const top=window.scrollY+banner.getBoundingClientRect().top;
+    const h=banner.offsetHeight;
+    return {start:top+h*Number(banner.dataset.logoDockStart)/100,
+      finish:top+h*Number(banner.dataset.logoDockEnd)/100};
+  });
+  const mid=[];
+  for (const fraction of [.25,.5,.75]) {
+    const y=thresholds.start+(thresholds.finish-thresholds.start)*fraction;
+    await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),y);
+    await page.waitForTimeout(200);
+    const snapshot=await page.evaluate(()=>{
+      const banner=document.querySelector('[data-logo-banner]');
+      const image=document.querySelector('.nl-logo-dock-image');
+      const rect=image?.getBoundingClientRect();
+      const headerLogo=document.querySelector('[data-logo-dock-target]');
+      return {
+        progress:Number(banner.dataset.logoDockProgress),
+        hidden:image?.hidden,
+        count:document.querySelectorAll('.nl-logo-dock-image').length,
+        rect:rect?{x:rect.x,y:rect.y,width:rect.width,height:rect.height}:null,
+        opacity:headerLogo?.style.opacity
+      };
+    });
+    console.log(options.name,'logo-at-'+Math.round(fraction*100)+'pct',JSON.stringify(snapshot));
+    assert.ok(Math.abs(snapshot.progress-fraction)<.04,options.name+': scroll motion must track progress');
+    assert.equal(snapshot.hidden,false,options.name+': moving image visible during motion');
+    assert.equal(snapshot.count,1,options.name+': no duplicate image clones');
+    assert.ok(snapshot.rect?.width>4&&snapshot.rect?.height>4,options.name+': image dimensions visible');
+    const ratio=snapshot.rect.width/snapshot.rect.height;
+    assert.ok(ratio>1.70&&ratio<1.85,options.name+': uniform image ratio, no aspect distortion');
+    if(mid.length) assert.ok(snapshot.rect.width<mid[mid.length-1].rect.width,options.name+': size must decrease smoothly');
+    mid.push(snapshot);
+    if(fraction===.5) await page.screenshot({path:output+'/'+options.name+'-logo-mid.png',fullPage:false});
+  }
+  await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),thresholds.finish+15);
+  await page.waitForTimeout(200);
+  const docked=await page.evaluate(()=>({
+    progress:Number(document.querySelector('[data-logo-banner]').dataset.logoDockProgress),
+    hidden:document.querySelector('.nl-logo-dock-image')?.hidden,
+    headerOpacity:Number(document.querySelector('[data-logo-dock-target]')?.style.opacity)
+  }));
+  assert.equal(docked.hidden,true,options.name+': clone disappears after docking');
+  assert.ok(docked.headerOpacity>.99,options.name+': real header logo visible after docking');
+  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  await page.waitForTimeout(200);
+
+  // Shopify auto-scroll and section re-render cannot be reproduced from the
+  // unauthenticated public preview. Simulate documented Shopify.designMode and
+  // shopify:section:load on the same real storefront to test editor controls.
+  await page.evaluate(()=>{
+    window.Shopify=window.Shopify||{};
+    window.Shopify.designMode=true;
+    document.dispatchEvent(new Event('shopify:section:load',{bubbles:true}));
+  });
+  await page.locator('.nl-logo-dock-editor').waitFor({timeout:6000});
+  const editor=page.locator('.nl-logo-dock-editor');
+  await editor.locator('input[type=range]').evaluate(el=>{
+    el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  await page.waitForFunction(()=>document.querySelector('[data-logo-banner]')?.dataset.logoDockProgress==='0.5000');
+  const editorMid=await page.evaluate(()=>({
+    editorCount:document.querySelectorAll('.nl-logo-dock-editor').length,
+    floatingCount:document.querySelectorAll('.nl-logo-dock-image').length,
+    progress:Number(document.querySelector('[data-logo-banner]').dataset.logoDockProgress),
+    visible:!document.querySelector('.nl-logo-dock-image')?.hidden
+  }));
+  console.log(options.name,'editor-scrub',JSON.stringify(editorMid));
+  assert.equal(editorMid.editorCount,1,'Editor controls must not duplicate');
+  assert.equal(editorMid.floatingCount,1,'Editor section reload must dispose old floating logo');
+  assert.equal(editorMid.visible,true,'Editor scrubber must animate logo image without scrolling');
+  await page.screenshot({path:output+'/'+options.name+'-editor-preview.png',fullPage:false});
+  await editor.getByRole('button',{name:'Play'}).click();
+  await page.waitForTimeout(350);
+  const played=await page.evaluate(()=>Number(document.querySelector('[data-logo-banner]').dataset.logoDockProgress));
+  assert.ok(played>.05&&played<.85,options.name+': editor Play drives progressive motion');
+  await editor.getByRole('button',{name:'Use scroll'}).click();
+  await page.waitForTimeout(100);
+  const reset=await page.evaluate(()=>Number(document.querySelector('[data-logo-banner]').dataset.logoDockProgress));
+  assert.ok(reset<.04,options.name+': Use scroll returns to natural top progress');
+
   await page.evaluate(()=>window.scrollTo(0,Math.max(2000,window.innerHeight*2)));
   await page.waitForTimeout(550);
   const down=await inspect();
