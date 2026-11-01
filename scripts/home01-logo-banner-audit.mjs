@@ -26,7 +26,7 @@ assert.equal(home.order[0],'logo_banner');
 assert.equal(home.sections.logo_banner.type,'logo-banner');
 assert.equal(home.sections.hero.disabled,true,'Keep old hero for rollback, not duplicate visible masthead');
 assert.ok(home.order.includes('hero'));
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.9.1');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.9.2');
 console.log('HOME-01 native image art direction, editorial logo frame and homepage integration passed');
 
 assert.match(read('sections/logo-banner.liquid'),/data-logo-dock-source/);
@@ -62,7 +62,7 @@ assert.match(read('assets/logo-banner.css'),/height:43px/);
 
 const campaign=JSON.parse(read('templates/index.json')).sections.logo_banner.settings;
 assert.equal(campaign.photo_layout,'portrait_campaign');
-assert.equal(campaign.mobile_height,840);
+assert.equal(campaign.mobile_height,680,'Restore original v0.9.0 scroll distance');
 assert.equal(campaign.desktop_image,'shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg');
 assert.equal(campaign.mobile_image,campaign.desktop_image);
 assert.ok(campaign.dock_on_scroll&&campaign.show_logo_plate===false,'Do not change approved image-only logo scroll-docking');
@@ -70,3 +70,18 @@ assert.match(section,/nl-logo-banner--campaign-portrait/);
 assert.match(css,/nl-logo-banner--campaign-portrait \.nl-logo-banner__picture/);
 assert.match(css,/object-position:center bottom/);
 assert.match(css,/nl-logo-banner--campaign-portrait \.nl-logo-banner__overlay\{display:none\}/);
+
+/* v0.9.2: The portrait photo must not change the hero logo size or layout. */
+const portraitCSS=css.slice(css.indexOf('/* HOME-01 v0.9.2'));
+for (const forbidden of [
+  '.nl-logo-banner__brand-frame{',
+  '.nl-logo-banner__brand-image{',
+  '.nl-logo-banner__center{',
+  '.nl-logo-banner__content{',
+  '.nl-logo-banner__brand-name{',
+]) assert.ok(!portraitCSS.includes(forbidden),'Photo overrides the approved logo geometry: '+forbidden);
+assert.ok(portraitCSS.includes('width:min(36vw,520px)'));
+assert.ok(css.includes('width:min(100%,clamp(270px,62vw,630px))'));
+assert.ok(css.includes('width:min(86vw,420px)'));
+assert.ok(!portraitCSS.includes('width:min(57vw,260px)'));
+assert.ok(!portraitCSS.includes('width:min(100%,440px)'));
