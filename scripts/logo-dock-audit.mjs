@@ -91,7 +91,7 @@ scrollY=0;listeners.scroll();flush();
 assert.equal(frame.style.opacity,'1','Scroll up restores full-sized hero card');
 assert.equal(target.style.opacity,'0','Scroll up hides header logo again');
 assert.equal(overlays[0].hidden,true);
-assert.match(source,/Shopify\\?\\.designMode/,'Theme Editor must offer interactive logo preview');
+assert.ok(source.includes('window.Shopify?.designMode === true'),'Theme Editor must offer interactive logo preview');
 assert.match(source,/shopify:section:select/,'Theme Editor section selection must schedule re-render');
 assert.match(source,/Logo animation preview/,'Design mode motion preview must be labeled');
 assert.match(source,/floating\\.style\\.width = src\\.width/,'Image copy starts at source painted dimensions');
