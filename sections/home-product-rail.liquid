@@ -1,0 +1,66 @@
+<section class="nv-rail nv-surface--{{ section.settings.surface }} section-space" id="HomeRail-{{ section.id }}" data-nv-rail>
+  <div class="site-width">
+    <div class="nv-rail__heading">
+      <div>
+        {% if section.settings.eyebrow != blank %}<p class="nv-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        <h2 class="nv-serif">{{ section.settings.heading | escape }}</h2>
+      </div>
+      <div class="nv-rail__arrows">
+        <button type="button" class="nv-rail__arrow" data-nv-prev aria-label="Scroll products left">←</button>
+        <button type="button" class="nv-rail__arrow" data-nv-next aria-label="Scroll products right">→</button>
+      </div>
+    </div>
+    {% if section.blocks.size > 1 %}
+      <div class="nv-rail__tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+        {% for block in section.blocks %}
+          <button type="button" class="nv-rail__tab{% if forloop.first %} is-active{% endif %}" role="tab"
+            id="RailTab-{{ section.id }}-{{ forloop.index }}" aria-controls="RailPanel-{{ section.id }}-{{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            data-nv-tab>{{ block.settings.label | default: block.settings.collection.title | default: 'Collection' | escape }}</button>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% for block in section.blocks %}
+      <div class="nv-rail__panel" id="RailPanel-{{ section.id }}-{{ forloop.index }}"
+        {% if section.blocks.size > 1 %}role="tabpanel" aria-labelledby="RailTab-{{ section.id }}-{{ forloop.index }}"{% endif %}
+        {% unless forloop.first %}hidden{% endunless %} {{ block.shopify_attributes }} data-nv-panel>
+        <div class="nv-rail__track" data-nv-track>
+          {% assign product_count = 0 %}
+          {% if block.settings.collection != blank %}
+            {% for item in block.settings.collection.products limit: 35 %}
+              {% if item.available and item.featured_image != blank %}
+                <div class="nv-rail__item">{% render 'product-card', card_product: item %}</div>
+                {% assign product_count = product_count | plus: 1 %}
+                {% if product_count >= section.settings.product_limit %}{% break %}{% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if product_count == 0 and request.design_mode %}
+            <div class="nv-rail__placeholder">Select a collection with available products and real photos.</div>
+          {% endif %}
+        </div>
+        {% if block.settings.collection != blank %}
+          <a class="nv-rail__view-all nv-text-cta" href="{{ block.settings.collection.url }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+ "name":"Editorial product rail",
+ "settings":[
+   {"type":"select","id":"surface","label":"Background","options":[{"value":"white","label":"White"},{"value":"cream","label":"Warm cream"},{"value":"blue","label":"Pale blue"}],"default":"white"},
+   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"THE NEOLIVA EDIT"},
+   {"type":"text","id":"heading","label":"Heading","default":"Discover Your Favourites"},
+   {"type":"range","id":"product_limit","label":"Products per collection","min":2,"max":12,"step":1,"default":8},
+   {"type":"text","id":"button_label","label":"View all label","default":"View the collection"}
+ ],
+ "blocks":[{"type":"tab","name":"Collection tab","settings":[
+   {"type":"text","id":"label","label":"Tab title"},
+   {"type":"collection","id":"collection","label":"Real product collection"}
+ ]}],
+ "max_blocks":4,
+ "presets":[{"name":"Editorial product rail","blocks":[{"type":"tab"}]}]
+}
+{% endschema %}

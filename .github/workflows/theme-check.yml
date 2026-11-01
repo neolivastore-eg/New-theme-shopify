@@ -23,9 +23,11 @@ jobs:
           node --check assets/predictive-search.js
           node --check assets/cart-drawer.js
           node --check assets/logo-dock.js
+          node --check assets/home-video-sections.js
           node --check assets/transparent-header.js
           node scripts/commerce-audit.mjs
           node scripts/homepage-audit.mjs
+          node scripts/home-video-audit.mjs
           node scripts/atelier-blocks-audit.mjs
           node scripts/foundation-audit.mjs
           node scripts/foundation-pages-audit.mjs

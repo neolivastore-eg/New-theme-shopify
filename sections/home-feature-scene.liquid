@@ -1,0 +1,62 @@
+{% liquid
+  assign hero_product = section.settings.product
+  if hero_product == blank and section.settings.collection != blank
+    for candidate in section.settings.collection.products limit: 20
+      if candidate.available and candidate.featured_image != blank
+        assign hero_product = candidate
+        break
+      endif
+    endfor
+  endif
+  assign hero_image = section.settings.image
+  if hero_image == blank and hero_product != blank and hero_product.available
+    assign hero_image = hero_product.featured_image
+  endif
+  assign cta_link = section.settings.link
+  if cta_link == blank and section.settings.collection != blank
+    assign cta_link = section.settings.collection.url
+  endif
+  if cta_link == blank and hero_product != blank
+    assign cta_link = hero_product.url
+  endif
+%}
+<section class="nv-feature nv-feature--{{ section.settings.scene }}{% if section.settings.reverse %} nv-feature--reverse{% endif %} section-space" id="HomeFeature-{{ section.id }}">
+  <div class="site-width nv-feature__inner">
+    <div class="nv-feature__media">
+      {% if hero_image != blank %}
+        {{ hero_image | image_url: width: 1600 | image_tag: class: 'nv-feature__image', loading: 'lazy', widths: '400,700,1000,1200,1600', sizes: '(max-width:749px) 100vw, 50vw' }}
+      {% elsif request.design_mode %}
+        <div class="nv-media-hint">Choose an original editorial photo or a real product.</div>
+      {% endif %}
+    </div>
+    <div class="nv-feature__copy">
+      {% if section.settings.eyebrow != blank %}<p class="nv-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 class="nv-serif">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.body != blank %}<div class="nv-feature__body rte">{{ section.settings.body }}</div>{% endif %}
+      {% if hero_product != blank and hero_product.available %}
+        <a href="{{ hero_product.url }}" class="nv-feature__real-product">
+          <strong>{{ hero_product.title | escape }}</strong><span>{{ hero_product.price | money }}</span>
+        </a>
+      {% endif %}
+      {% if cta_link != blank and section.settings.button_label != blank %}<a class="nv-text-cta" href="{{ cta_link }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+ "name":"Beauty feature scene",
+ "settings":[
+   {"type":"select","id":"scene","label":"Scene colour","options":[{"value":"blue","label":"Pale blue"},{"value":"cream","label":"Warm cream"},{"value":"white","label":"White"},{"value":"olive","label":"Soft olive"}],"default":"blue"},
+   {"type":"checkbox","id":"reverse","label":"Image on right","default":false},
+   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"CURATED WITH CARE"},
+   {"type":"text","id":"heading","label":"Heading","default":"Find your daily essentials"},
+   {"type":"richtext","id":"body","label":"Text","default":"<p>Explore products that fit naturally into your everyday routine.</p>"},
+   {"type":"image_picker","id":"image","label":"Your real editorial image"},
+   {"type":"product","id":"product","label":"Featured real product"},
+   {"type":"collection","id":"collection","label":"Real image and link fallback"},
+   {"type":"url","id":"link","label":"Optional link override"},
+   {"type":"text","id":"button_label","label":"Link label","default":"Explore the edit"}
+ ],
+ "presets":[{"name":"Beauty feature scene"}]
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+{% liquid
+  assign featured = section.settings.product
+  if featured == blank and section.settings.collection != blank
+    for candidate in section.settings.collection.products limit: 30
+      if candidate.available and candidate.featured_image != blank
+        assign featured = candidate
+        break
+      endif
+    endfor
+  endif
+%}
+<section class="nv-routine nv-surface--cream section-space" id="HomeRoutine-{{ section.id }}">
+  <div class="site-width nv-routine__grid">
+    <div class="nv-routine__content">
+      {% if section.settings.eyebrow != blank %}<p class="nv-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 class="nv-serif">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.body != blank %}<div class="rte nv-routine__copy">{{ section.settings.body }}</div>{% endif %}
+      {% if section.settings.link != blank and section.settings.button_label != blank %}<a class="nv-text-cta" href="{{ section.settings.link }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    </div>
+    <div class="nv-routine__media">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: controls: true, autoplay: false, muted: false, loop: false, image_size: '1200x', class: 'nv-routine__video' }}
+      {% elsif section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1500 | image_tag: class: 'nv-routine__cover', widths: '500,750,1000,1500', sizes: '(max-width:749px) 100vw, 50vw', loading: 'lazy' }}
+      {% elsif featured != blank and featured.featured_image != blank %}
+        {{ featured.featured_image | image_url: width: 1500 | image_tag: class: 'nv-routine__cover', widths: '500,750,1000,1500', sizes: '(max-width:749px) 100vw, 50vw', loading: 'lazy' }}
+      {% elsif request.design_mode %}
+        <div class="nv-media-hint">Add your own routine video or a real product photo</div>
+      {% endif %}
+      {% if featured != blank and featured.available %}
+        <a class="nv-routine__product" href="{{ featured.url }}">
+          {% if featured.featured_image != blank %}
+            {{ featured.featured_image | image_url: width: 220 | image_tag: class: 'nv-routine__thumb', loading: 'lazy', widths: '110,220', sizes: '80px' }}
+          {% endif %}
+          <span class="nv-routine__product-info">
+            {% if featured.vendor != blank %}<small>{{ featured.vendor | escape }}</small>{% endif %}
+            <strong>{{ featured.title | escape }}</strong>
+            <span>{{ featured.price | money }}</span>
+          </span>
+          <span class="nv-routine__product-arrow" aria-hidden="true">↗</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+ "name":"Shop the routine",
+ "settings":[
+   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"MAKE IT YOUR OWN"},
+   {"type":"text","id":"heading","label":"Heading","default":"Your Daily Routine"},
+   {"type":"richtext","id":"body","label":"Text","default":"<p>Build your routine around the products you love.</p>"},
+   {"type":"video","id":"video","label":"Real routine video"},
+   {"type":"image_picker","id":"image","label":"Real photo fallback"},
+   {"type":"product","id":"product","label":"Featured real product"},
+   {"type":"collection","id":"collection","label":"Fallback product collection"},
+   {"type":"url","id":"link","label":"Optional link"},
+   {"type":"text","id":"button_label","label":"Link label","default":"Find your routine"}
+ ],
+ "presets":[{"name":"Shop the routine"}]
+}
+{% endschema %}
