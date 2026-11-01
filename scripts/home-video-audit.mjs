@@ -22,13 +22,13 @@ for(let i=0;i<order.length;i++){
 const newTypes=[...new Set(order.map(x=>x[1]))].filter(x=>x.startsWith('home-'));
 for(const type of newTypes){
  const code=read('sections/'+type+'.liquid');
- const m=code.match(/{% schema %}\\s*([\\s\\S]*?)\\s*{% endschema %}/);
+ const m=code.match(/{% schema %}\s*([\s\S]*?)\s*{% endschema %}/);
  assert.ok(m,'Missing schema '+type);
  const schema=JSON.parse(m[1]);
  assert.ok(schema.name.length<=25,'Shopify section schema name too long '+type);
  assert.ok(schema.presets?.length,'Missing Theme Editor preset '+type);
- assert.ok(!/example product title|LE 19\\.99|Lorem ipsum|placeholder\\.png/i.test(code),'Hard-coded dummy merchandising: '+type);
- assert.ok(!/https?:\\/\\/[^"' ]+\\.(jpg|png|webp)/i.test(code),'External image URL '+type);
+ assert.ok(!/example product title|LE 19\.99|Lorem ipsum|placeholder\.png/i.test(code),'Hard-coded dummy merchandising: '+type);
+ assert.ok(!/https?:\/\/[^"' ]+\.(jpg|png|webp)/i.test(code),'External image URL '+type);
 }
 for(const id of ['hero','campaigns','collections','featured','editorial'])
  assert.equal(home.sections[id].disabled,true,'Old sections should be available only as rollback');
@@ -44,29 +44,29 @@ for(const [id,section] of Object.entries(home.sections)){
  }
 }
 const rail=read('sections/home-product-rail.liquid');
-assert.match(rail,/item\\.available and item\\.featured_image/);
+assert.match(rail,/item\.available and item\.featured_image/);
 assert.match(rail,/render 'product-card'/);
 assert.match(rail,/role="tablist"/);
 const story=read('sections/home-story-mosaic.liquid');
-assert.match(story,/candidate\\.available and candidate\\.featured_image/);
+assert.match(story,/candidate\.available and candidate\.featured_image/);
 const routine=read('sections/home-routine-video.liquid');
 assert.match(routine,/video_tag/);
-assert.match(routine,/featured\\.price \\| money/);
+assert.match(routine,/featured\.price \| money/);
 const feature=read('sections/home-feature-scene.liquid');
-assert.match(feature,/hero_product\\.available/);
+assert.match(feature,/hero_product\.available/);
 const hotspots=read('sections/home-shoppable-photo.liquid');
-assert.match(hotspots,/hot_product\\.available/);
+assert.match(hotspots,/hot_product\.available/);
 assert.match(hotspots,/aria-expanded/);
 assert.equal(home.sections.hotspots.block_order.length,0,'Do not assign invented product hotspot targets');
 const vibes=read('sections/home-beauty-vibes.liquid');
-assert.match(vibes,/candidate\\.available and candidate\\.featured_image/);
+assert.match(vibes,/candidate\.available and candidate\.featured_image/);
 const newsletter=read('sections/home-newsletter.liquid');
 assert.match(newsletter,/form 'customer'/);
-assert.match(newsletter,/contact\\[email\\]/);
-assert.match(newsletter,/posted_successfully\\?/);
+assert.match(newsletter,/contact\[email\]/);
+assert.match(newsletter,/posted_successfully\?/);
 const footer=read('sections/footer.liquid');
-assert.match(footer,/section\\.settings\\.menu\\.links/);
-assert.match(footer,/settings\\.logo/);
+assert.match(footer,/section\.settings\.menu\.links/);
+assert.match(footer,/settings\.logo/);
 const layout=read('layout/theme.liquid');
 assert.ok(layout.includes('home-video-sections.css'));
 assert.ok(layout.includes('home-video-sections.js'));
