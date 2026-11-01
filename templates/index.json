@@ -53,7 +53,8 @@
         "skincare",
         "haircare",
         "makeup"
-      ]
+      ],
+      "disabled": true
     },
     "collections": {
       "type": "collection-links",
@@ -84,7 +85,8 @@
         "skincare",
         "haircare",
         "makeup"
-      ]
+      ],
+      "disabled": true
     },
     "featured": {
       "type": "featured-collection",
@@ -93,7 +95,8 @@
         "eyebrow": "THE EDIT",
         "collection": "skin-care-1",
         "product_limit": 8
-      }
+      },
+      "disabled": true
     },
     "benefits": {
       "type": "benefits-strip",
@@ -188,7 +191,8 @@
       "block_order": [
         "content",
         "media"
-      ]
+      ],
+      "disabled": true
     },
     "logo_banner": {
       "type": "logo-banner",
@@ -213,15 +217,350 @@
         "dock_end": 80,
         "show_logo_plate": false
       }
+    },
+    "editorial_line": {
+      "type": "home-editorial-line",
+      "settings": {
+        "surface": "cream",
+        "eyebrow": "THE NEOLIVA EDIT",
+        "line_1": "The harmony between",
+        "line_2": "and beautiful, simple routines.",
+        "description": "<p>Discover skincare and beauty essentials to make your daily routine your own.</p>",
+        "collection": "skin-care-1",
+        "button_label": "Explore skincare"
+      },
+      "blocks": {
+        "care": {
+          "type": "word",
+          "settings": {
+            "word": "thoughtful"
+          }
+        },
+        "ingredients": {
+          "type": "word",
+          "settings": {
+            "word": "beauty"
+          }
+        }
+      },
+      "block_order": [
+        "care",
+        "ingredients"
+      ]
+    },
+    "promos": {
+      "type": "campaign-grid",
+      "settings": {
+        "eyebrow": "EXPLORE",
+        "heading": "Find Your Beauty Ritual",
+        "columns": "3"
+      },
+      "blocks": {
+        "skincare": {
+          "type": "campaign",
+          "settings": {
+            "collection": "skin-care-1",
+            "eyebrow": "SKIN CARE",
+            "heading": "Skin Care",
+            "text": "<p>Explore daily skincare essentials.</p>",
+            "button_label": "Explore"
+          }
+        },
+        "hair": {
+          "type": "campaign",
+          "settings": {
+            "collection": "hair-care-1",
+            "eyebrow": "HAIR CARE",
+            "heading": "Hair Care",
+            "text": "<p>Discover hair essentials for your routine.</p>",
+            "button_label": "Explore"
+          }
+        },
+        "makeup": {
+          "type": "campaign",
+          "settings": {
+            "collection": "makeup",
+            "eyebrow": "MAKEUP",
+            "heading": "Makeup",
+            "text": "<p>Choose your everyday beauty favourites.</p>",
+            "button_label": "Explore"
+          }
+        }
+      },
+      "block_order": [
+        "skincare",
+        "hair",
+        "makeup"
+      ]
+    },
+    "story": {
+      "type": "home-story-mosaic",
+      "settings": {
+        "surface": "white",
+        "eyebrow": "CARE THAT FITS YOUR LIFE",
+        "heading": "Where Every Skincare Moment Counts.",
+        "body": "<p>Taking time for yourself looks different for everyone. Discover beauty essentials for skin, hair, and everyday rituals.</p>",
+        "collection": "skin-care-1",
+        "button_label": "Explore skincare"
+      },
+      "blocks": {
+        "p1": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {}
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "routine": {
+      "type": "home-routine-video",
+      "settings": {
+        "eyebrow": "YOUR EVERYDAY EDIT",
+        "heading": "Your Daily Routine",
+        "body": "<p>Bring your favourite products together and make your everyday routine feel like you.</p>",
+        "collection": "skin-care-1",
+        "button_label": "Explore the routine"
+      }
+    },
+    "bestsellers": {
+      "type": "home-product-rail",
+      "settings": {
+        "surface": "white",
+        "eyebrow": "CURATED TO DISCOVER",
+        "heading": "Beauty Favourites",
+        "product_limit": 8,
+        "button_label": "Shop the collection"
+      },
+      "blocks": {
+        "skincare": {
+          "type": "tab",
+          "settings": {
+            "label": "Skin Care",
+            "collection": "skin-care-1"
+          }
+        },
+        "hair": {
+          "type": "tab",
+          "settings": {
+            "label": "Hair Care",
+            "collection": "hair-care-1"
+          }
+        },
+        "makeup": {
+          "type": "tab",
+          "settings": {
+            "label": "Makeup",
+            "collection": "makeup"
+          }
+        }
+      },
+      "block_order": [
+        "skincare",
+        "hair",
+        "makeup"
+      ]
+    },
+    "hydration": {
+      "type": "home-feature-scene",
+      "settings": {
+        "scene": "blue",
+        "eyebrow": "FOR YOUR DAILY ROUTINE",
+        "heading": "Give Your Skin Some Care",
+        "body": "<p>Explore skincare products for your own everyday routine.</p>",
+        "collection": "skin-care-1",
+        "button_label": "Explore skin care"
+      }
+    },
+    "skin_spotlight": {
+      "type": "home-product-rail",
+      "settings": {
+        "surface": "cream",
+        "eyebrow": "THE SKIN EDIT",
+        "heading": "Best Skincare Products",
+        "product_limit": 8,
+        "button_label": "See all skincare"
+      },
+      "blocks": {
+        "skin": {
+          "type": "tab",
+          "settings": {
+            "collection": "skin-care-1",
+            "label": "Skin Care"
+          }
+        }
+      },
+      "block_order": [
+        "skin"
+      ]
+    },
+    "hair_spotlight": {
+      "type": "home-feature-scene",
+      "settings": {
+        "scene": "olive",
+        "reverse": true,
+        "eyebrow": "THE HAIR EDIT",
+        "heading": "A Little Love for Your Hair",
+        "body": "<p>Explore shampoos, conditioners and hair treatments for everyday care.</p>",
+        "collection": "hair-care-1",
+        "button_label": "Explore hair care"
+      }
+    },
+    "type_collections": {
+      "type": "home-collection-type",
+      "settings": {
+        "surface": "white",
+        "eyebrow": "POPULAR COLLECTIONS",
+        "heading": "Explore by category"
+      },
+      "blocks": {
+        "skin": {
+          "type": "link",
+          "settings": {
+            "collection": "skin-care-1",
+            "label": "Skin Care"
+          }
+        },
+        "hair": {
+          "type": "link",
+          "settings": {
+            "collection": "hair-care-1",
+            "label": "Hair Care"
+          }
+        },
+        "makeup": {
+          "type": "link",
+          "settings": {
+            "collection": "makeup",
+            "label": "Makeup"
+          }
+        }
+      },
+      "block_order": [
+        "skin",
+        "hair",
+        "makeup"
+      ]
+    },
+    "hotspots": {
+      "type": "home-shoppable-photo",
+      "settings": {
+        "eyebrow": "SHOP THE BEAUTY EDIT",
+        "heading": "Love Your Skin",
+        "collection": "skin-care-1",
+        "button_label": "View all products"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "new_beauty": {
+      "type": "home-product-rail",
+      "settings": {
+        "surface": "white",
+        "eyebrow": "JUST DISCOVERED",
+        "heading": "New Beauty Products",
+        "product_limit": 8,
+        "button_label": "Explore more"
+      },
+      "blocks": {
+        "new": {
+          "type": "tab",
+          "settings": {
+            "label": "Makeup & Beauty",
+            "collection": "makeup"
+          }
+        }
+      },
+      "block_order": [
+        "new"
+      ]
+    },
+    "testimonials": {
+      "type": "home-testimonials",
+      "disabled": true,
+      "settings": {
+        "eyebrow": "YOUR BEAUTY STORIES",
+        "heading": "Real Words From Our Community"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "beauty_vibes": {
+      "type": "home-beauty-vibes",
+      "settings": {
+        "eyebrow": "THE NEOLIVA COMMUNITY",
+        "heading": "#BeautyVibes",
+        "collection": "skin-care-1"
+      },
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {}
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {}
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {}
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "newsletter": {
+      "type": "home-newsletter",
+      "settings": {
+        "eyebrow": "STAY INSPIRED",
+        "heading": "A Little Beauty in Your Inbox",
+        "description": "Discover the latest beauty edits and updates.",
+        "label": "Your email address",
+        "button_label": "Subscribe",
+        "success_text": "Thanks for subscribing.",
+        "privacy_text": "Unsubscribe anytime."
+      }
     }
   },
   "order": [
     "logo_banner",
+    "editorial_line",
+    "promos",
+    "story",
+    "routine",
+    "bestsellers",
+    "hydration",
+    "skin_spotlight",
+    "hair_spotlight",
+    "type_collections",
+    "hotspots",
+    "new_beauty",
+    "testimonials",
+    "beauty_vibes",
+    "benefits",
+    "newsletter",
     "hero",
     "campaigns",
     "collections",
     "featured",
-    "editorial",
-    "benefits"
+    "editorial"
   ]
 }
