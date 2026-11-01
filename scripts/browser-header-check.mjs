@@ -70,6 +70,48 @@ for(const options of points){
   assert.ok(top.top>=-2 && top.top<120,options.name+': header should begin near announcement');
   assert.ok(top.width>=options.viewport.width-2,options.name+': header must cover viewport');
   assert.ok(top.surface<0.08,options.name+': header should start visually transparent');
+
+  const portrait=await page.evaluate(async()=>{
+    const hero=document.querySelector('[data-logo-banner]');
+    const image=hero?.querySelector('.nl-logo-banner__background-image');
+    if(!image)return {error:'No banner image'};
+    try{await image.decode()}catch{}
+    const photoStyle=getComputedStyle(image);
+    const photoContainer=image.closest('.nl-logo-banner__picture');
+    const containerRect=photoContainer?.getBoundingClientRect();
+    const heroRect=hero.getBoundingClientRect();
+    return{
+      hasCampaignClass:hero.classList.contains('nl-logo-banner--campaign-portrait'),
+      url:image.currentSrc||image.src,
+      ready:image.complete&&image.naturalWidth>=300&&image.naturalHeight>=600,
+      naturalSize:[image.naturalWidth,image.naturalHeight],
+      objectFit:photoStyle.objectFit,
+      objectPosition:photoStyle.objectPosition,
+      photoWidth:containerRect?.width,
+      heroWidth:heroRect.width,
+      heroHeight:heroRect.height,
+      overlayDisplay:getComputedStyle(hero.querySelector('.nl-logo-banner__overlay')).display,
+      logoTransparent:hero.classList.contains('nl-logo-banner--image-only'),
+      animated:hero.dataset.logoDock==='true'
+    };
+  });
+  console.log(options.name,'real-neoliva-campaign-photo',JSON.stringify(portrait));
+  assert.ok(portrait.hasCampaignClass,options.name+': portrait arrangement must be activated');
+  assert.ok(portrait.url.includes('neoliva-home-logo-banner-campaign-2026.jpg'),options.name+': correct uploaded merchant image');
+  assert.ok(portrait.ready,options.name+': uploaded merchant campaign image must load');
+  assert.equal(portrait.objectFit,'cover',options.name+': portrait media requires cover fit');
+  assert.equal(portrait.objectPosition,'50% 100%',options.name+': product-focused photo should align to bottom');
+  assert.equal(portrait.overlayDisplay,'none',options.name+': no dark overlay should obscure products');
+  assert.equal(portrait.logoTransparent,true,options.name+': logo must remain image-only');
+  assert.equal(portrait.animated,true,options.name+': existing scroll logo dock must remain active');
+  if(options.name==='mobile'){
+    assert.ok(portrait.heroHeight>=830,options.name+': full portrait image preserved');
+    assert.ok(portrait.photoWidth>=options.viewport.width-2,options.name+': photo should cover width');
+  }else{
+    assert.ok(portrait.photoWidth<portrait.heroWidth*.55,options.name+': portrait image must be right-hand composition');
+    assert.ok(portrait.photoWidth>=450,options.name+': showcase should be prominent');
+  }
+
   await page.screenshot({path:output+'/'+options.name+'-top.png',fullPage:false});
 
   // Inspect real intermediate desktop/mobile animation frames — the earlier
