@@ -102,10 +102,12 @@ for(const options of points){
   assert.equal(portrait.objectFit,'cover',options.name+': portrait media requires cover fit');
   assert.equal(portrait.objectPosition,'50% 100%',options.name+': product-focused photo should align to bottom');
   assert.equal(portrait.overlayDisplay,'none',options.name+': no dark overlay should obscure products');
+  assert.equal(portrait.logoTransparent,true);
+  if(options.name==='desktop') assert.ok(portrait.photoWidth<=520,options.name+': photo layout only must not cover original centered logo');
   assert.equal(portrait.logoTransparent,true,options.name+': logo must remain image-only');
   assert.equal(portrait.animated,true,options.name+': existing scroll logo dock must remain active');
   if(options.name==='mobile'){
-    assert.ok(portrait.heroHeight>=830,options.name+': full portrait image preserved');
+    assert.ok(Math.abs(portrait.heroHeight-680)<3,options.name+': previous 680px mobile hero height restored');
     assert.ok(portrait.photoWidth>=options.viewport.width-2,options.name+': photo should cover width');
   }else{
     assert.ok(portrait.photoWidth<portrait.heroWidth*.55,options.name+': portrait image must be right-hand composition');
@@ -150,7 +152,12 @@ for(const options of points){
     assert.ok(ratio>1.70&&ratio<1.85,options.name+': uniform image ratio, no aspect distortion');
     if(mid.length) assert.ok(snapshot.rect.width<mid[mid.length-1].rect.width,options.name+': size must decrease smoothly');
     mid.push(snapshot);
-    if(fraction===.5) await page.screenshot({path:output+'/'+options.name+'-logo-mid.png',fullPage:false});
+    if (fraction===.5) {
+      const legacyWidth=options.name==='mobile'?205.61:360.64;
+      assert.ok(Math.abs(snapshot.rect.width-legacyWidth)<12,
+        options.name+': logo must match v0.9.0 mid-scroll width '+legacyWidth+'px; current '+snapshot.rect.width+'px');
+      await page.screenshot({path:output+'/'+options.name+'-logo-mid.png',fullPage:false});
+    }
   }
   await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),thresholds.finish+15);
   await page.waitForTimeout(200);
