@@ -1,0 +1,60 @@
+{% liquid
+  assign chip_collection = section.settings.collection
+%}
+<section class="nv-editorial-line nv-surface--{{ section.settings.surface }} section-space" id="HomeEditorial-{{ section.id }}">
+  <div class="site-width nv-editorial-line__inner">
+    {% if section.settings.eyebrow != blank %}<p class="nv-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+    <h2 class="nv-editorial-line__heading">
+      <span>{{ section.settings.line_1 | escape }}</span>
+      {% for block in section.blocks %}
+        {% liquid
+          assign chip_image = block.settings.image
+          assign chip_product = block.settings.product
+          if chip_image == blank and chip_product != blank and chip_product.available
+            assign chip_image = chip_product.featured_image
+          endif
+          if chip_image == blank and chip_collection != blank
+            for candidate in chip_collection.products limit: 16
+              if candidate.available and candidate.featured_image != blank
+                assign chip_image = candidate.featured_image
+                break
+              endif
+            endfor
+          endif
+        %}
+        <span class="nv-editorial-line__interlude" {{ block.shopify_attributes }}>
+          <span class="nv-editorial-line__chip" aria-hidden="true">
+            {% if chip_image != blank %}
+              {{ chip_image | image_url: width: 180 | image_tag: class: 'nv-editorial-line__chip-image', widths: '90,120,180', sizes: '70px', loading: 'lazy', alt: '' }}
+            {% else %}<span class="nv-editorial-line__chip-symbol">✳</span>{% endif %}
+          </span>
+          <span>{{ block.settings.word | escape }}</span>
+        </span>
+      {% endfor %}
+      <span>{{ section.settings.line_2 | escape }}</span>
+    </h2>
+    {% if section.settings.description != blank %}<div class="nv-editorial-line__description rte">{{ section.settings.description }}</div>{% endif %}
+    {% if chip_collection != blank %}<a class="nv-text-cta" href="{{ chip_collection.url }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Editorial statement",
+  "settings":[
+    {"type":"select","id":"surface","label":"Background","options":[{"value":"cream","label":"Warm cream"},{"value":"white","label":"White"}],"default":"cream"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"BEAUTY, THE NEOLIVA WAY"},
+    {"type":"text","id":"line_1","label":"First headline line","default":"The harmony between"},
+    {"type":"text","id":"line_2","label":"Final headline line","default":"and simple, thoughtful routines."},
+    {"type":"richtext","id":"description","label":"Supporting copy","default":"<p>Find the beauty essentials that fit your own everyday rhythm.</p>"},
+    {"type":"collection","id":"collection","label":"Collection for real imagery"},
+    {"type":"text","id":"button_label","label":"Collection link","default":"Explore the edit"}
+  ],
+  "blocks":[{"type":"word","name":"Inline image and word","settings":[
+    {"type":"text","id":"word","label":"Word","default":"care"},
+    {"type":"image_picker","id":"image","label":"Real photo (optional)"},
+    {"type":"product","id":"product","label":"Real product image fallback"}
+  ]}],
+  "max_blocks":3,
+  "presets":[{"name":"Editorial statement","blocks":[{"type":"word","settings":{"word":"effective"}},{"type":"word","settings":{"word":"ingredients"}}]}]
+}
+{% endschema %}

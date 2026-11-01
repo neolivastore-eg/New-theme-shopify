@@ -1,0 +1,57 @@
+<section class="nv-story nv-surface--{{ section.settings.surface }} section-space" id="HomeStory-{{ section.id }}">
+  <div class="site-width nv-story__inner">
+    <div class="nv-story__copy">
+      {% if section.settings.eyebrow != blank %}<p class="nv-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 class="nv-serif nv-story__heading">{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.body != blank %}<div class="nv-story__body rte">{{ section.settings.body }}</div>{% endif %}
+      {% if section.settings.link != blank and section.settings.button_label != blank %}<a href="{{ section.settings.link }}" class="nv-text-cta">{{ section.settings.button_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    </div>
+    <div class="nv-story__mosaic">
+      {% for block in section.blocks %}
+        {% liquid
+          assign photo = block.settings.image
+          assign linked_product = block.settings.product
+          if photo == blank and linked_product != blank and linked_product.available
+            assign photo = linked_product.featured_image
+          endif
+          if photo == blank and section.settings.collection != blank
+            assign offset = forloop.index0
+            for candidate in section.settings.collection.products limit: 20 offset: offset
+              if candidate.available and candidate.featured_image != blank
+                assign photo = candidate.featured_image
+                break
+              endif
+            endfor
+          endif
+        %}
+        <div class="nv-story__photo nv-story__photo--{{ forloop.index }}" {{ block.shopify_attributes }}>
+          {% if photo != blank %}
+            {{ photo | image_url: width: 1000 | image_tag: class: 'nv-story__image', widths: '320,500,750,1000', sizes: '(max-width:749px) 46vw, 22vw', loading: 'lazy' }}
+          {% elsif request.design_mode %}
+            <span class="nv-media-hint">Choose a real image or product</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+ "name":"Editorial brand story",
+ "settings":[
+   {"type":"select","id":"surface","label":"Background","options":[{"value":"cream","label":"Warm cream"},{"value":"white","label":"White"}],"default":"white"},
+   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"A MORE PERSONAL EDIT"},
+   {"type":"text","id":"heading","label":"Heading","default":"Where Every Skincare Moment Counts."},
+   {"type":"richtext","id":"body","label":"Editorial text","default":"<p>A beauty routine is personal. Explore care for skin, hair and the little moments in between, with products that suit your needs.</p>"},
+   {"type":"collection","id":"collection","label":"Real image fallback collection"},
+   {"type":"url","id":"link","label":"Optional link"},
+   {"type":"text","id":"button_label","label":"Link label","default":"Explore our collections"}
+ ],
+ "blocks":[{"type":"photo","name":"Story photo","settings":[
+   {"type":"image_picker","id":"image","label":"Real photo"},
+   {"type":"product","id":"product","label":"Product image fallback"}
+ ]}],
+ "max_blocks":4,
+ "presets":[{"name":"Editorial brand story","blocks":[{"type":"photo"},{"type":"photo"},{"type":"photo"}]}]
+}
+{% endschema %}
