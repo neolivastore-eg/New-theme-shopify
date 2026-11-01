@@ -16,7 +16,7 @@ assert.ok(header.includes('data-logo-dock-target'));
 assert.ok(layout.includes('logo-dock.js'));
 assert.ok(css.includes('.nl-logo-dock-sticky-host'));
 assert.ok(css.includes('nl-logo-dock-floating'));
-assert.ok(source.includes("window.addEventListener('scroll', schedule, { passive: true })"));
+assert.ok(source.includes("window.addEventListener('scroll',onScroll,{passive:true})"));
 assert.ok(source.includes("window.requestAnimationFrame(render)"));
 assert.ok(source.includes("prefers-reduced-motion: reduce"));
 assert.ok(source.includes("shopify:section:load"));
