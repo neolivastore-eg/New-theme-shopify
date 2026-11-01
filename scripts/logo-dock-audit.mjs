@@ -96,5 +96,5 @@ assert.match(source,/shopify:section:select/,'Theme Editor section selection mus
 assert.match(source,/Logo animation preview/,'Design mode motion preview must be labeled');
 assert.match(source,/floating\\.style\\.width = src\\.width/,'Image copy starts at source painted dimensions');
 assert.match(source,/const scale = 1 \\+ \\(targetScale-1\\)\\*p/,'Uniform linear scale, not geometric');
-assert.match(source,/const targetScale = Math\\.min\\(1, dst\\.width\\/src\\.width, dst\\.height\\/src\\.height\\)/);
+assert.ok(source.includes('const targetScale = Math.min(1, dst.width/src.width, dst.height/src.height)'), 'Must calculate uniform image ratio');
 console.log('HOME-01 logo docking, shape-preserving scale, and editor preview source contracts passed');
