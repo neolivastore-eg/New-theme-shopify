@@ -216,8 +216,8 @@
         "dock_start": 10,
         "dock_end": 80,
         "show_logo_plate": false,
-        "desktop_image": "shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg",
-        "mobile_image": "shopify://shop_images/neoliva-home-logo-banner-campaign-2026.jpg",
+        "desktop_image": "shopify://shop_images/neoliva-logo-banner-hanging-gifts-2026.jpg",
+        "mobile_image": "shopify://shop_images/neoliva-logo-banner-hanging-gifts-2026.jpg",
         "photo_layout": "portrait_campaign"
       }
     },
