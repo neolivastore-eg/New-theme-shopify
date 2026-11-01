@@ -26,7 +26,7 @@ assert.equal(home.order[0],'logo_banner');
 assert.equal(home.sections.logo_banner.type,'logo-banner');
 assert.equal(home.sections.hero.disabled,true,'Keep old hero for rollback, not duplicate visible masthead');
 assert.ok(home.order.includes('hero'));
-assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.6');
+assert.equal(JSON.parse(read('config/settings_schema.json'))[0].theme_version,'0.8.7');
 console.log('HOME-01 native image art direction, editorial logo frame and homepage integration passed');
 
 assert.match(read('sections/logo-banner.liquid'),/data-logo-dock-source/);
@@ -53,9 +53,9 @@ assert.match(read('assets/logo-banner.css'),/\.nl-logo-dock-image\{/,'Floating i
 
 const dockScript=read('assets/logo-dock.js');
 assert.match(dockScript,/floating\.classList\.add\('nl-logo-dock-image'\)/,'Logo-only animation must clone IMG itself');
-assert.match(dockScript,/sourceFrame\.querySelector\('\.nl-logo-banner__brand-image'\)/);
-assert.match(dockScript,/targetLink\.querySelector\('\.site-header__logo'\)/);
-assert.match(dockScript,/Math\.exp\(Math\.log\(minScale\) \* t\)/);
+assert.ok(dockScript.includes("frame.querySelector('.nl-logo-banner__brand-image')"));
+assert.ok(dockScript.includes("headerLink.querySelector('.site-header__logo')"));
+assert.ok(dockScript.includes('const scale = 1 + (targetScale-1)*p'), 'Scale must be uniform and eased without changing image aspect ratio');
 assert.match(dockScript,/floating\.src = source\.currentSrc \|\| source\.src/);
 assert.match(read('assets/logo-banner.css'),/\.nl-logo-dock-image\{/);
 assert.match(read('assets/logo-banner.css'),/height:43px/);

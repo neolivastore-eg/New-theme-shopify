@@ -16,8 +16,8 @@ assert.ok(header.includes('data-logo-dock-target'));
 assert.ok(layout.includes('logo-dock.js'));
 assert.ok(css.includes('.nl-logo-dock-sticky-host'));
 assert.ok(css.includes('nl-logo-dock-floating'));
-assert.ok(source.includes("window.addEventListener('scroll', schedule, { passive: true })"));
-assert.ok(source.includes("window.requestAnimationFrame(paint)"));
+assert.ok(source.includes("window.addEventListener('scroll',onScroll,{passive:true})"));
+assert.ok(source.includes("window.requestAnimationFrame(render)"));
 assert.ok(source.includes("prefers-reduced-motion: reduce"));
 assert.ok(source.includes("shopify:section:load"));
 assert.ok(homepage.sections.logo_banner.settings.dock_on_scroll);
@@ -28,7 +28,7 @@ const attributes = new Map();
 function el(rect, extras={}) {
   const classes = new Set();
   return {
-    style:{},hidden:false,
+    style:{},dataset:{},hidden:false,
     classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)},
     setAttribute:(key,value)=>attributes.set(key,String(value)),
     getAttribute:key=>attributes.has(key)?attributes.get(key):null,
@@ -91,4 +91,10 @@ scrollY=0;listeners.scroll();flush();
 assert.equal(frame.style.opacity,'1','Scroll up restores full-sized hero card');
 assert.equal(target.style.opacity,'0','Scroll up hides header logo again');
 assert.equal(overlays[0].hidden,true);
-console.log('HOME-01 scroll docking simulation passed at top, mid-scroll, docked and reversed');
+assert.ok(source.includes('window.Shopify?.designMode === true'),'Theme Editor must offer interactive logo preview');
+assert.match(source,/shopify:section:select/,'Theme Editor section selection must schedule re-render');
+assert.match(source,/Logo animation preview/,'Design mode motion preview must be labeled');
+assert.ok(source.includes("floating.style.width = src.width.toFixed(3)+'px'"),'Image copy starts at painted source dimensions');
+assert.ok(source.includes('const scale = 1 + (targetScale-1)*p'),'Uniform linear scale, not geometric');
+assert.ok(source.includes('const targetScale = Math.min(1, dst.width/src.width, dst.height/src.height)'), 'Must calculate uniform image ratio');
+console.log('HOME-01 logo docking, shape-preserving scale, and editor preview source contracts passed');
