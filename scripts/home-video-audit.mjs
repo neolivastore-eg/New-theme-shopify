@@ -3,7 +3,7 @@ import {readFileSync,existsSync} from 'node:fs';
 const read=p=>readFileSync(p,'utf8');
 const home=JSON.parse(read('templates/index.json'));
 const version=JSON.parse(read('config/settings_schema.json'))[0].theme_version;
-assert.equal(version,'0.9.0');
+assert.equal(version,'0.9.1');
 const order=[
  ['logo_banner','logo-banner'],['editorial_line','home-editorial-line'],['promos','campaign-grid'],
  ['story','home-story-mosaic'],['routine','home-routine-video'],['bestsellers','home-product-rail'],

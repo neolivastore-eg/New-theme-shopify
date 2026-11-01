@@ -28,3 +28,11 @@ Old `hero`, `campaigns`, `featured`, `collections`, and `editorial` are preserve
 - New `scripts/home-video-audit.mjs` validates order, schema, available-product guards, live-price links, disabled empty reviews, real-asset policy, accessibility and JS inclusion.
 - Shopify Theme Check on PR and browser screenshot/desktop-mobile traversal after preview sync.
 - Merchant visual review and original Lifestyle/UGC/video configuration is required before any claim of exact pixel/video parity.
+
+
+## v0.9.1 — Original Neoliva campaign image in HOME-01
+Merchant uploaded a real 709 × 1536 portrait campaign shot with Neoliva shopping bag, products and peach/olive art direction. Uploaded as Shopify Files MediaImage `gid://shopify/MediaImage/46731701256421`, permanent media URL `https://cdn.shopify.com/s/files/1/0780/8077/0277/files/neoliva-home-logo-banner-campaign-2026.jpg?v=1793496369`. The homepage template image picker uses the matching Shopify image reference in both `desktop_image` and `mobile_image`, not a hardcoded public CDN URL.
+
+The optional `photo_layout=portrait_campaign` mode keeps the vertical image on the right on desktop (bottom-aligned so the products/bag remain visible) and fills a tall 840px mobile banner at approximately the native image aspect ratio. The original green logo remains a separate transparent overlay **with its existing scroll-to-header animation**, but visually sits on the left on desktop and high above the photo products on mobile. Remove the generic dark photographic overlay. `show_logo_plate=false` unchanged.
+
+Do not replace the real photo with generated or stock artwork. Uploaded artwork as provided by merchant is not edited. Shopify MAIN published theme must stay unchanged.
