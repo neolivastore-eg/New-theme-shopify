@@ -53,9 +53,9 @@ assert.match(read('assets/logo-banner.css'),/\.nl-logo-dock-image\{/,'Floating i
 
 const dockScript=read('assets/logo-dock.js');
 assert.match(dockScript,/floating\.classList\.add\('nl-logo-dock-image'\)/,'Logo-only animation must clone IMG itself');
-assert.match(dockScript,/sourceFrame\.querySelector\('\.nl-logo-banner__brand-image'\)/);
+assert.ok(dockScript.includes("frame.querySelector('.nl-logo-banner__brand-image')"));
 assert.match(dockScript,/targetLink\.querySelector\('\.site-header__logo'\)/);
-assert.match(dockScript,/Math\.exp\(Math\.log\(minScale\) \* t\)/);
+assert.ok(dockScript.includes('const scale = 1 + (targetScale-1)*p'), 'Scale must be uniform and eased without changing image aspect ratio');
 assert.match(dockScript,/floating\.src = source\.currentSrc \|\| source\.src/);
 assert.match(read('assets/logo-banner.css'),/\.nl-logo-dock-image\{/);
 assert.match(read('assets/logo-banner.css'),/height:43px/);
