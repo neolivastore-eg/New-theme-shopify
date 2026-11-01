@@ -10,6 +10,16 @@
           if photo == blank and product != blank and product.available
             assign photo = product.featured_image
           endif
+          if photo == blank and section.settings.collection != blank
+            assign offset = forloop.index0
+            for candidate in section.settings.collection.products limit: 24 offset: offset
+              if candidate.available and candidate.featured_image != blank
+                assign photo = candidate.featured_image
+                assign product = candidate
+                break
+              endif
+            endfor
+          endif
           assign link = block.settings.link
           if link == blank and product != blank and product.available
             assign link = product.url
@@ -33,7 +43,8 @@
  "name":"Beauty vibes gallery",
  "settings":[
   {"type":"text","id":"eyebrow","label":"Eyebrow","default":"DISCOVER & SHARE"},
-  {"type":"text","id":"heading","label":"Heading","default":"#BeautyVibes"}
+  {"type":"text","id":"heading","label":"Heading","default":"#BeautyVibes"},
+  {"type":"collection","id":"collection","label":"Real product image fallback"}
  ],
  "blocks":[{"type":"tile","name":"Real image tile","settings":[
   {"type":"image_picker","id":"image","label":"Original photo"},

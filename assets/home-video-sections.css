@@ -142,3 +142,18 @@
  .nv-vibes__image,.nv-type-collections__link,.nv-text-cta span{transition:none!important}
  .nv-story__photo--2,.nv-story__photo--4{transform:none}
 }
+
+/* HOME-15 editorial footer */
+.nv-footer{background:#242822;color:#f7f5ee;padding-block:clamp(3.2rem,6vw,6rem) 1.4rem}
+.nv-footer__top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,.75fr) minmax(0,.85fr);gap:clamp(1.3rem,5vw,6rem)}
+.nv-footer__about{max-width:55ch}
+.nv-footer__logo{height:70px;max-width:200px;object-fit:contain;object-position:left center;margin-bottom:1rem}
+.nv-footer__wordmark{display:inline-block;font-family:Georgia,serif;font-size:clamp(2rem,3vw,3.1rem);margin-bottom:1rem}
+.nv-footer h2{font-family:Georgia,serif;font-weight:400;letter-spacing:-.025em;font-size:clamp(1.2rem,1.7vw,1.75rem);margin:0 0 1rem}
+.nv-footer__about .rte{font-size:.91rem;line-height:1.75;opacity:.8}
+.nv-footer__nav,.nv-footer__contact{display:flex;flex-direction:column;gap:.75rem;align-items:start}
+.nv-footer__nav a,.nv-footer__contact a{font-size:.9rem;opacity:.88;text-decoration:none}
+.nv-footer__nav a:hover,.nv-footer__contact a:hover{text-decoration:underline;text-underline-offset:3px;opacity:1}
+.nv-footer__social{display:flex;flex-wrap:wrap;gap:.8rem 1.1rem;margin-top:1.3rem}
+.nv-footer__bottom{border-top:1px solid #ffffff30;margin-top:clamp(3rem,6vw,5rem);padding-top:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.75rem;opacity:.7}
+@media(max-width:749px){.nv-footer__top{grid-template-columns:1fr 1fr}.nv-footer__about{grid-column:1/-1}.nv-footer__bottom{flex-direction:column}}

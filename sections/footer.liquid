@@ -1,9 +1,51 @@
-<footer class="site-footer">
-  <div class="site-width site-footer__grid">
-    <div><h2>{{ shop.name | escape }}</h2><div class="rte">{{ section.settings.description }}</div></div>
-    <nav aria-label="Footer">{% for link in section.settings.menu.links %}<p><a href="{{ link.url }}">{{ link.title | escape }}</a></p>{% endfor %}</nav>
+<footer class="site-footer nv-footer" id="Footer-{{ section.id }}">
+  <div class="site-width nv-footer__top">
+    <div class="nv-footer__about">
+      {% if settings.logo != blank %}
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+          {{ settings.logo | image_url: width: 360 | image_tag: class: 'nv-footer__logo', loading: 'lazy', widths: '180,360', sizes: '180px', alt: shop.name }}
+        </a>
+      {% else %}
+        <a href="{{ routes.root_url }}" class="nv-footer__wordmark">{{ shop.name | escape }}</a>
+      {% endif %}
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
+      {% if section.settings.description != blank %}<div class="rte">{{ section.settings.description }}</div>{% endif %}
+    </div>
+    <nav aria-label="Footer navigation" class="nv-footer__nav">
+      {% if section.settings.nav_heading != blank %}<h2>{{ section.settings.nav_heading | escape }}</h2>{% endif %}
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}">{{ link.title | escape }}</a>
+      {% endfor %}
+    </nav>
+    <div class="nv-footer__contact">
+      <h2>{{ section.settings.contact_heading | escape }}</h2>
+      {% if section.settings.email != blank %}<a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>{% endif %}
+      <div class="nv-footer__social">
+        {% if section.settings.instagram != blank %}<a href="{{ section.settings.instagram }}" rel="noopener noreferrer" target="_blank">Instagram</a>{% endif %}
+        {% if section.settings.facebook != blank %}<a href="{{ section.settings.facebook }}" rel="noopener noreferrer" target="_blank">Facebook</a>{% endif %}
+        {% if section.settings.tiktok != blank %}<a href="{{ section.settings.tiktok }}" rel="noopener noreferrer" target="_blank">TikTok</a>{% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="site-width nv-footer__bottom">
+    <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</small>
+    <span>{{ section.settings.bottom_caption | escape }}</span>
   </div>
 </footer>
 {% schema %}
-{"name":"Footer","settings":[{"type":"richtext","id":"description","label":"Description","default":"<p>Curated care for your everyday rituals.</p>"},{"type":"link_list","id":"menu","label":"Footer navigation","default":"footer"}]}
+{
+ "name":"Footer",
+ "settings":[
+  {"type":"text","id":"heading","label":"About heading","default":"About Us"},
+  {"type":"richtext","id":"description","label":"Description","default":"<p>Beauty essentials for everyday rituals, chosen with care.</p>"},
+  {"type":"text","id":"nav_heading","label":"Menu heading","default":"Explore"},
+  {"type":"link_list","id":"menu","label":"Footer navigation","default":"footer"},
+  {"type":"text","id":"contact_heading","label":"Contact heading","default":"Stay Connected"},
+  {"type":"text","id":"email","label":"Contact email"},
+  {"type":"url","id":"instagram","label":"Instagram URL"},
+  {"type":"url","id":"facebook","label":"Facebook URL"},
+  {"type":"url","id":"tiktok","label":"TikTok URL"},
+  {"type":"text","id":"bottom_caption","label":"Bottom caption","default":"Thoughtfully chosen beauty."}
+ ]
+}
 {% endschema %}
