@@ -83,7 +83,7 @@ for(const options of points){
     return{
       hasCampaignClass:hero.classList.contains('nl-logo-banner--campaign-portrait'),
       url:image.currentSrc||image.src,
-      ready:image.complete&&image.naturalWidth>=600,
+      ready:image.complete&&image.naturalWidth>=300&&image.naturalHeight>=600,
       naturalSize:[image.naturalWidth,image.naturalHeight],
       objectFit:photoStyle.objectFit,
       objectPosition:photoStyle.objectPosition,
@@ -97,7 +97,7 @@ for(const options of points){
   });
   console.log(options.name,'real-neoliva-campaign-photo',JSON.stringify(portrait));
   assert.ok(portrait.hasCampaignClass,options.name+': portrait arrangement must be activated');
-  assert.match(portrait.url,/neoliva-home-logo-banner-campaign-2026\\.jpg/);
+  assert.ok(portrait.url.includes('neoliva-home-logo-banner-campaign-2026.jpg'),options.name+': correct uploaded merchant image');
   assert.ok(portrait.ready,options.name+': uploaded merchant campaign image must load');
   assert.equal(portrait.objectFit,'cover',options.name+': portrait media requires cover fit');
   assert.equal(portrait.objectPosition,'50% 100%',options.name+': product-focused photo should align to bottom');
