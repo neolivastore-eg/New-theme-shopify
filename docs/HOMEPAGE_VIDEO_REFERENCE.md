@@ -36,3 +36,7 @@ Merchant uploaded a real 709 × 1536 portrait campaign shot with Neoliva shoppin
 The optional `photo_layout=portrait_campaign` mode keeps the vertical image on the right on desktop (bottom-aligned so the products/bag remain visible) and fills a tall 840px mobile banner at approximately the native image aspect ratio. The original green logo remains a separate transparent overlay **with its existing scroll-to-header animation**, but visually sits on the left on desktop and high above the photo products on mobile. Remove the generic dark photographic overlay. `show_logo_plate=false` unchanged.
 
 Do not replace the real photo with generated or stock artwork. Uploaded artwork as provided by merchant is not edited. Shopify MAIN published theme must stay unchanged.
+
+## v0.9.2: Restore original logo dimensions, preserve campaign photograph
+
+The campaign-specific CSS overrides of the logo frame, logo center, content alignment, caption placement and text geometry have been removed. The default HOME-01 v0.9.0 image-only logo dimensions and centered position are restored by the original CSS. Mobile banner height returns from 840 to 680px. The Shopify campaign photo remains on desktop and mobile, with its portrait presentation; the actual logo-dock JavaScript remains untouched. The hero keeps all previously approved transparent-header and responsive behavior. Preview only; no live theme publish.
