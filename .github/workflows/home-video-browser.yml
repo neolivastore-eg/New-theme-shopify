@@ -1,0 +1,40 @@
+name: HOME-02–15 Browser QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/browser-home-video-check.mjs'
+      - '.github/workflows/home-video-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/browser-home-video-check.mjs'
+      - '.github/workflows/home-video-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-and-interaction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test package
+        run: npm install --no-save --no-package-lock playwright-core
+      - name: Find Chrome
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "CHROME_BIN=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright install chromium
+          fi
+      - name: Test unpublished Shopify HOME-02–15 on mobile & desktop
+        run: node scripts/browser-home-video-check.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neoliva-home-video-full-page
+          path: browser-proof/
+          retention-days: 7
+          if-no-files-found: ignore
