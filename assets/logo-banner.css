@@ -136,3 +136,25 @@ body:has([data-mobile-navigation][open]) .nl-logo-dock-floating{visibility:hidde
     max-width:125px;
   }
 }
+
+/* v0.8.7 — preview player visible only inside Shopify Theme Editor. */
+.nl-logo-dock-editor{
+  position:fixed;bottom:18px;inset-inline-end:18px;z-index:120;
+  display:flex;flex-wrap:wrap;align-items:center;gap:9px;
+  width:min(340px,calc(100vw - 36px));
+  padding:12px 14px;border:1px solid #b7bfaf;border-radius:8px;
+  background:#f7f5f0;color:#272a25;
+  box-shadow:0 7px 28px #151a1133;font:600 12px/1.4 system-ui,sans-serif;
+}
+.nl-logo-dock-editor label{flex-basis:100%;letter-spacing:.02em}
+.nl-logo-dock-editor input[type=range]{flex:1 1 60%;min-width:80px;accent-color:#636e4e}
+.nl-logo-dock-editor output{min-width:36px;text-align:end;font-variant-numeric:tabular-nums}
+.nl-logo-dock-editor button{
+  border:1px solid #636e4e;border-radius:5px;
+  padding:6px 10px;min-height:36px;
+  background:#fff;color:#272a25;cursor:pointer;
+}
+.nl-logo-dock-editor button:focus-visible,.nl-logo-dock-editor input:focus-visible{
+  outline:2px solid #636e4e;outline-offset:2px;
+}
+@media(max-width:749px){.nl-logo-dock-editor{bottom:12px;inset-inline-end:12px}}
