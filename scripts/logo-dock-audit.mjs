@@ -28,7 +28,7 @@ const attributes = new Map();
 function el(rect, extras={}) {
   const classes = new Set();
   return {
-    style:{},hidden:false,
+    style:{},dataset:{},hidden:false,
     classList:{add:x=>classes.add(x),remove:x=>classes.delete(x),contains:x=>classes.has(x)},
     setAttribute:(key,value)=>attributes.set(key,String(value)),
     getAttribute:key=>attributes.has(key)?attributes.get(key):null,
